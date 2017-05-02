@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+       <description>spring applicationContext Configuration</description>	
+	<!-- 引入多配置文件 -->  
+    <context:property-placeholder ignore-unresolvable="true" location="classpath:config/init/jdbc.properties,classpath:config/init/sysConfig.properties"/>  
+	<!-- 自动扫描dao和service包(自动注入) -->
+	<!-- 加载service,此时要排除要controller,因为controller已经spring-mvc中加载过了防止与spring mvc集成事物失效 -->
+	<context:component-scan base-package="com.wbsf.module.*" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+	<!-- 用于监控spring是否初始化完成 -->
+	<bean id="BeanDefineConfigue" class="com.wbsf.core.spring.BeanDefineConfigue" />  
+	
+	<!-- Spring 工具类 -->
+	<bean id="springContextUtil" class="com.wbsf.common.utils.spring.SpringContextUtil" />
+	
+	<!-- 加载数据库相关配置 -->
+	<import resource="spring-jdbc.xml"/>
+</beans>
