@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd"
+	default-lazy-init="true">
+
+	<description>Spring jdbc Configuration</description>
+
+	<bean name="mainDataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		init-method="init" destroy-method="close">
+		<!-- 数据源驱动类可不写，Druid默认会自动根据URL识别Driver,为了方便更换其他数据库连接池，此处进行配置 -->
+	    <property name="driverClassName" value="${jdbc.driver.main}" />
+		<property name="url" value="${jdbc.url.main}" />
+		<property name="username" value="${jdbc.username.main}" />
+		<property name="password" value="${jdbc.password.main}" />
+		<!-- 初始化连接大小 -->
+		<property name="initialSize" value="${jdbc.initialSize}" />
+		<!-- 连接池最大使用连接数量 -->
+		<property name="maxActive" value="${jdbc.maxActive}" />
+		<!-- 连接池最小空闲 -->
+		<property name="minIdle" value="${jdbc.minIdle}" />
+		<!-- 获取连接最大等待时间 -->
+		<property name="maxWait" value="60000" />
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+		<property name="validationQuery" value="${jdbc.testSql}" />
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+		<!-- 打开removeAbandoned功能 -->
+		<property name="removeAbandoned" value="true" />
+		<!-- 1800秒，30分钟 -->
+		<property name="removeAbandonedTimeout" value="1800" />
+		<!-- 关闭abanded连接时输出错误日志 -->
+		<property name="logAbandoned" value="true" />
+
+		<!-- 开启Druid的监控统计功能 -->
+		<property name="filters" value="stat" />
+	</bean>
+
+	<!-- <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"> 
+		重写改类，支持通配符扫描 -->
+	<bean id="mainSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="typeAliasesPackage" value="com.wbsf.module.entity" />
+		<property name="configLocation" value="classpath:config/mybatis/mybatis-config.xml" />
+		<!-- 该配置文件用来指定Mapper映射文件的位置 ，如果映射文件与相应的接口同名，且在同一路径下，那么可以不配置该选项 -->
+		<!-- 在classpath后面的*必不可少，缺少星号的话后面的通配符不起作用。 **表示可以表示任意多级目录 -->
+		<property name="mapperLocations">
+			<list>
+				<value>classpath:com/wbsf/module/**/mapping/*Mapper.xml</value>
+				<!-- 需要时开放 -->
+				<!-- <value>classpath:com/rmsframework/mapper/**/*Mapper.xml</value> -->
+			</list>
+		</property>
+	</bean>
+
+	<!--basePackage指定要扫描的包，在此包之下的映射器都会被 搜索到。可指定多个包，包与包之间用逗号或分号分隔 -->
+	<!-- 和Spring集成时，允许通过markerInterface属性配置通用接口（注意该属性的原有作用不变），想要让该接口自动注册，该接口就需要继承tk.mybatis.mapper.common.Marker接口，Mapper<T>默认继承该接口，所以如果自己的接口是继承Mapper<T>的，不需要再继承。 -->
+	<bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="mainSqlSessionFactory" />
+		<property name="basePackage" value="com.wbsf.module.*.mapper" />
+		<property name="properties">
+	        <value>
+	            mappers=com.wbsf.core.mapper.BaseMapper
+	        </value>
+   		 </property>
+		<!-- 通用Mapper通过属性注入进行配置，默认不配置时会注册Mapper<T>接口 <property name="properties"> 
+			<value> mappers=tk.mybatis.mapper.common.Mapper </value> </property> -->
+	</bean>
+
+	<bean id="mainTransactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="mainDataSource" />
+	</bean>
+
+	<tx:advice id="mainTxAdvice" transaction-manager="mainTransactionManager">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="query*" read-only="true" />
+			<tx:method name="find*" read-only="true" />
+			<tx:method name="load*" read-only="true" />
+			<tx:method name="select*" read-only="true" />
+			<tx:method name="count*" read-only="true" />
+			<tx:method name="search*" read-only="true" />
+			<tx:method name="list*" read-only="true" />
+			<tx:method name="*" propagation="REQUIRED" rollback-for="Exception" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<aop:advisor
+			pointcut="execution(* com.wbsf.module..*.service..*.*(..))"
+			advice-ref="mainTxAdvice" />
+	</aop:config>
+
+	<tx:annotation-driven transaction-manager="mainTransactionManager" proxy-target-class="true"/>
+</beans>
