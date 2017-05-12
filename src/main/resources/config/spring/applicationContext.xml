@@ -37,7 +37,6 @@
 	
 	<!-- Spring 工具类 -->
 	<bean id="springContextUtil" class="com.wbsf.core.spring.utils.SpringContextUtil" />
-	
 	<!-- 加载数据库相关配置 -->
 	<import resource="spring-jdbc.xml"/>
 </beans>
