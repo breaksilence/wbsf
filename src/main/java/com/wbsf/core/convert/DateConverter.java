@@ -6,7 +6,11 @@ import java.util.Date;
 
 import org.springframework.core.convert.converter.Converter;
 
-
+/**
+ * Spring 日期转换器
+ * @author hubery
+ *
+ */
 public class DateConverter implements Converter<String, Date> {  
 	// 支持转换的多种日期格式,可增加时间格式
 	private final DateFormat[] dfs = { 

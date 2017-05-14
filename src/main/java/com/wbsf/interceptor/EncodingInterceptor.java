@@ -1,4 +1,4 @@
-package com.wbsf.core.interceptor;
+package com.wbsf.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

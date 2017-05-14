@@ -154,6 +154,15 @@
 		    <version>${mapper.version}</version>
 		</dependency>
 		
+		 <!-- Mybatis Generator -->
+        <dependency>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-core</artifactId>
+            <version>1.3.4</version>
+            <scope>compile</scope>
+            <optional>true</optional>
+        </dependency>
+        
 		<!-- 配置数据库连接池-->
 		<dependency>
 		    <groupId>com.alibaba</groupId>
