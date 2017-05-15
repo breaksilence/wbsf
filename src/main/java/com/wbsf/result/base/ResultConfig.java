@@ -14,7 +14,7 @@ public enum ResultConfig implements ResultEnum {
 	/** 失败默认枚举类型 */
 	,FAILED("error", "failed", false)
 	/** 异常默认枚举类型 */
-	,EXCEPTION("exception", "some exception happened ! but the error not be init." ,false);
+	,EXCEPTION("exception", "some exception happened ! but the error info not be init." ,false);
 
 	/** 结果编码 */
 	private String resultCode;
@@ -24,7 +24,15 @@ public enum ResultConfig implements ResultEnum {
 	
 	/** 处理成功状态 */
 	private boolean isSuccess;
-
+	
+	/**
+	 * 结果枚举构造器
+	 * @param resultCode 结果状态吗
+	 * @param resultMsg 结果信息
+	 * @param successFlag 结果是否成功返回 
+	 * <li>true 处理成功</li>
+	 * <li>false 处理失败</li>
+	 */
 	private ResultConfig(String resultCode, String resultMsg ,boolean successFlag) {
 		this.resultCode = resultCode;
 		this.resultMsg = resultMsg;
