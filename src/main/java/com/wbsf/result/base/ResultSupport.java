@@ -1,29 +1,66 @@
 package com.wbsf.result.base;
 
+import java.text.MessageFormat;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.json.JSONObject;
 
 import com.wbsf.result.Result;
+import com.wbsf.result.ResultEnum;
 
+/**
+ * 基础实现类
+ * @author xiangzheng
+ *
+ * @param <T>
+ */
 public abstract class ResultSupport<T> implements Result<T> {
-
-	protected T result;
-	protected boolean success = true;
-	protected String resultCode;
-	protected String resultMsg;
-	private Map<String, Object> atrributes = new LinkedHashMap<>();
 	
-	public void setResultConfig(ResultConfig rsConfig){
-		this.resultCode = rsConfig.getCode();
-		this.resultMsg = rsConfig.getMsg();
+	/** 返回结果数据 */
+	protected T result;
+	
+	/** 处理是否成功 */
+	protected boolean success = true;
+	
+	/** 请求处理返回的状态码 */
+	protected String resultCode;
+	
+	/** 请求处理返回的消息 */
+	protected String resultMsg;
+	
+	/** 处理过过程中设置的扩展属性 */
+	private Map<String ,Object> atrributes = new LinkedHashMap<>();
+	
+	protected ResultSupport() {
+		this.success = true;
+	}
+	
+	protected ResultSupport(ResultEnum resultEnum) {
+		setResultConfig(resultEnum);
 	}
 	
 	@Override
-	public T setResult(T result) {
+	public Result<T> setResultConfig(ResultEnum resultEnum){
+		return setResultConfig(resultEnum.getCode() ,resultEnum.getMsg() ,resultEnum.successFlag());
+	}
+	
+	@Override
+	public Result<T> setResultConfig(String resultCode, String resultMsg) {
+		return setResultConfig(resultCode ,resultMsg ,this.success);
+	}
+
+	protected  Result<T> setResultConfig(String resultCode, String resultMsg ,boolean success) {
+		this.resultCode = resultCode;
+		this.resultMsg = resultMsg;
+		this.success = success;
+		return this;
+	}
+	
+	@Override
+	public Result<T> setResult(T result) {
 		this.result = result;
-		return this.result;
+		return this;
 	}
 
 	@Override
@@ -42,8 +79,9 @@ public abstract class ResultSupport<T> implements Result<T> {
 	}
 
 	@Override
-	public void setResultCode(String resultCode) {
+	public Result<T> setResultCode(String resultCode) {
 		this.resultCode = resultCode;
+		return this;
 	}
 
 	@Override
@@ -52,9 +90,20 @@ public abstract class ResultSupport<T> implements Result<T> {
 	}
 
 	@Override
-	public void setResultMsg(String resultMsg) {
+	public Result<T> setResultMsg(String resultMsg) {
 		this.resultMsg = resultMsg;
+		return this;
+	}
+	
+	@Override
+	public Result<T> setResultMsg(String resultMsg, Object ...  formateValues) {
+		return this.setResultMsg(MessageFormat.format(resultMsg, formateValues));
+	}
 
+	@Override
+	public Result<T> setResultMsg(Object ...  formateValues) {
+		this.setResultMsg(this.getResultMsg(), formateValues);
+		return this;
 	}
 
 	@Override
@@ -63,36 +112,42 @@ public abstract class ResultSupport<T> implements Result<T> {
 	}
 
 	@Override
-	public Map<String, Object> setAttributes(Map<String, ?> atrributes) {
-		return this.setAttributes(atrributes, false);
+	public Result<T> putAttributes(Map<String, ?> atrributes) {
+		return this.putAttributes(atrributes, false);
 	}
 
 	@Override
-	public Map<String, Object> setAttributes(Map<String, ?> atrributes, boolean clearAtrributes) {
+	public Result<T> putAttributes(Map<String, ?> atrributes, boolean clearAtrributes) {
 		if (clearAtrributes)
 			this.atrributes.clear();
 		if (atrributes != null && !atrributes.isEmpty())
 			this.atrributes.putAll(atrributes);
-		return this.atrributes;
+		return this;
 	}
 
 	@Override
-	public Map<String, Object> setAttribute(String attributeKey, Object attributeValue) {
+	public Result<T> putAttribute(String attributeKey, Object attributeValue) {
 		if (attributeKey != null && !attributeKey.trim().isEmpty()) {
 			this.atrributes.put(attributeKey, attributeValue);
 		}
-		return this.atrributes;
+		return this;
 
 	}
 
 	@Override
-	public Map<String, Object> getAttributes() {
+	public Map<String ,Object> getAttributes() {
 		return this.atrributes;
 	}
 
 	@Override
 	public Object getAttributeValue(String attributeKey) {
 		return this.atrributes.get(attributeKey);
+	}
+
+	
+	@Override
+	public void clearAttributes() {
+		this.getAttributes().clear();
 	}
 
 	@Override

@@ -1,18 +1,29 @@
 package com.wbsf.result.impl;
 
+import com.wbsf.result.ResultEnum;
 import com.wbsf.result.base.ResultConfig;
 import com.wbsf.result.base.ResultSupport;
-
+/**
+ * 失败结果实现类，继承ResultSupport
+ * @author xiangzheng
+ *
+ * @param <T>
+ */
 public class FailedResult<T> extends ResultSupport<T> {
 	public FailedResult(){
-		super();
-		this.setResultConfig(ResultConfig.FAILED);
-		this.success = false;
+		super(ResultConfig.FAILED);
 	}
 	
 	public FailedResult(String resultMsg){
-		this.setResultConfig(ResultConfig.FAILED);
+		super(ResultConfig.FAILED);
 		this.setResultMsg(resultMsg);
-		this.success = false;
+	}
+	
+	/**
+	 * 构建失败实例
+	 * @param resultEnum
+	 */
+	public FailedResult(ResultEnum resultEnum){
+		super(resultEnum);
 	}
 }
