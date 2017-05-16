@@ -18,7 +18,8 @@ public class PropertyConfigurer extends PropertyPlaceholderConfigurer {
     protected void processProperties(ConfigurableListableBeanFactory beanFactoryToProcess, Properties props)
                             throws BeansException {
         super.processProperties(beanFactoryToProcess, props);
-        PropertyConfigurer.props = props;
+        if(PropertyConfigurer.props == null)
+        	PropertyConfigurer.props = props;
     }
     
     /**
