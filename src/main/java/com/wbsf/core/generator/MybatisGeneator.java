@@ -1,4 +1,4 @@
-package com.wbsf.generator;
+package com.wbsf.core.generator;
 
 import java.util.ArrayList;
 import java.util.List;
