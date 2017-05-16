@@ -11,8 +11,9 @@ wbsf 目前定位为基础的网络服务技术平台，对Spring、Spring Mvc�
 3. 集成pagehelper √
 4. 集成redis
 5. 完成基础框架构建 SpringMvc+Spring+Mybatis+Mapper3+Pagehelper+Redis
-6. 通用代码生成器:持久层
-6. 构建通用的业务处理结果类
+6. 通用代码生成器:持久层 √
+7. 构建通用的业务处理结果类 
+8. 编写单元测试
 
 ## 预期内置功能
 
