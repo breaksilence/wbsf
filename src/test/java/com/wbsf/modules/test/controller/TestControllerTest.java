@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 
+import com.wbsf.core.spring.utils.PropertyConfigurer;
 import com.wbsf.core.test.JunitTestSupport;
 public class TestControllerTest extends JunitTestSupport{
 	@Before
@@ -23,6 +24,8 @@ public class TestControllerTest extends JunitTestSupport{
 		logger.info("测试demo insert");
 		Long startTime = System.currentTimeMillis();
 		logger.info("测试demo insert---start>>>time:"+startTime);
+		logger.info("输出配置文件加载的驱动:"+PropertyConfigurer.getProperty("jdbc.driver.main"));
+		logger.info("输出配置文件加载状态："+PropertyConfigurer.getProperty("property.init.check"));
 		this.mockMvc
 				.perform(post("/test/insert").characterEncoding("UTF-8") 
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
