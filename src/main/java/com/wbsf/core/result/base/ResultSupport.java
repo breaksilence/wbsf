@@ -15,7 +15,7 @@ import com.wbsf.core.result.ResultEnum;
  * @param <T>
  */
 public abstract class ResultSupport<T> implements Result<T> {
-	protected JSONObject resultJson = new JSONObject();
+	protected JSONObject resultJson = new JSONObject(true);
 	/** 返回结果数据 */
 	protected T result;
 	

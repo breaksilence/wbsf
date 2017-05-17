@@ -22,16 +22,16 @@ public class TestControllerTest extends JunitTestSupport{
 	@Test
 	public void testInsertTest() throws Exception {
 		logger.info("测试demo insert");
-		Long startTime = System.currentTimeMillis();
-		logger.info("测试demo insert---start>>>time:"+startTime);
 		logger.info("输出配置文件加载的驱动:"+PropertyConfigurer.getProperty("jdbc.driver.main"));
 		logger.info("输出配置文件加载状态："+PropertyConfigurer.getProperty("property.init.check"));
+		Long startTime = System.currentTimeMillis();
+		logger.info("测试demo insert---start>>>time:"+startTime);
 		this.mockMvc
 				.perform(post("/test/insert").characterEncoding("UTF-8") 
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
 						.param("name", "testName01")
 						.param("code", "testCode01"))
-				//.andDo(print())
+				.andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(jsonPath("$.resultCode", is("success")))
