@@ -28,7 +28,7 @@ public class TestControllerTest extends JunitTestSupport{
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
 						.param("name", "testName01")
 						.param("code", "testCode01"))
-				.andDo(print())
+				//.andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(jsonPath("$.resultCode", is("success")))

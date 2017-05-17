@@ -43,7 +43,7 @@
         <tomcat.port.version>8080</tomcat.port.version>
         <tomcat.encoding.version>UTF-8</tomcat.encoding.version>
         <!-- tomcat 插件 ↑-->
-        <maven-war.version></maven-war.version>
+        <maven-war.version>3.1.0</maven-war.version>
 	</properties>
 	<dependencies>
 		<!-- Spring 配置 ↓ -->

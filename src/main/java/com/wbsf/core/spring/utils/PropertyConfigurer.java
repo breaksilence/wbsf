@@ -2,6 +2,8 @@ package com.wbsf.core.spring.utils;
 
 import java.util.Properties;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
@@ -13,13 +15,14 @@ import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
  */
 public class PropertyConfigurer extends PropertyPlaceholderConfigurer {
 	private static Properties props;       // 存取properties配置文件key-value结果
-
+	private static final Logger logger = LogManager.getLogger(PropertyConfigurer.class);
     @Override
     protected void processProperties(ConfigurableListableBeanFactory beanFactoryToProcess, Properties props)
                             throws BeansException {
         super.processProperties(beanFactoryToProcess, props);
         if(PropertyConfigurer.props == null)
         	PropertyConfigurer.props = props;
+        logger.info(getProperty("property.init.check","init properties failed"));
     }
     
     /**
