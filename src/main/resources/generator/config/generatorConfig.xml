@@ -5,37 +5,48 @@
 <generatorConfiguration>
 	<!-- 详细配置请参考同级目录下的generatorApi.xml文件 -->
 	<!-- http://mbg.cndocs.tk/configreference/context.html -->
-	<properties resource="generator/config/generatorConfig.properties"/>
-    <context id="MysqlContext" targetRuntime="MyBatis3Simple" defaultModelType="flat">
-        <property name="beginningDelimiter" value="`"/>
-        <property name="endingDelimiter" value="`"/>
-        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+	<properties resource="generator/config/generatorConfig.properties" />
+	<context id="MysqlContext" targetRuntime="MyBatis3"
+		defaultModelType="flat">
+		<!-- 生成的Java文件的编码 -->
+		<property name="javaFileEncoding" value="UTF-8" />
+		<!-- 格式化java代码 -->
+		<property name="javaFormatter"
+			value="org.mybatis.generator.api.dom.DefaultJavaFormatter" />
+		<!-- 格式化XML代码 -->
+		<property name="xmlFormatter"
+			value="org.mybatis.generator.api.dom.DefaultXmlFormatter" />
+		<property name="beginningDelimiter" value="`" />
+		<property name="endingDelimiter" value="`" />
+		<plugin type="tk.mybatis.mapper.generator.MapperPlugin">
 			<property name="mappers" value="com.wbsf.core.mapper.BaseMapper" />
 			<!-- caseSensitive默认false，当数据库表名区分大小写时，可以将该属性设置为true -->
 			<property name="caseSensitive" value="true" />
 		</plugin>
-		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />  
-		<plugin type="org.mybatis.generator.plugins.ToStringPlugin" />  
-        <commentGenerator>
-		    <property name="suppressAllComments" value="true"/>
-		    <property name="suppressDate" value="true"/>
-		    <property name="" value=""/>
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+		<plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" />
+			<property name="suppressDate" value="true" />
+			<property name="" value="" />
 		</commentGenerator>
 		<jdbcConnection driverClass="${jdbc.driver}"
-			connectionURL="${jdbc.url}" userId="${jdbc.username}"
-			password="${jdbc.password}">
+			connectionURL="${jdbc.url}" userId="${jdbc.username}" password="${jdbc.password}">
 		</jdbcConnection>
-        <javaModelGenerator targetPackage="${javaModelGenerator.targetPackage}" targetProject="${javaModelGenerator.targetProject}">
-            <property name="trimStrings" value="true" />
-        </javaModelGenerator>
-        <sqlMapGenerator targetPackage="${sqlMapGenerator.targetPackage}"  targetProject="${sqlMapGenerator.targetProject}"/>
-        <javaClientGenerator targetPackage="${javaClientGenerator.targetPackage}"  targetProject="${javaClientGenerator.targetProject}" type="XMLMAPPER"/>
-        <table tableName="%">
-            <!-- <generatedKey column="id" sqlStatement="Mysql"/> -->
-        </table>
-        <!--  <table schema="dbo" catalog="MyDB" tableName="t_user" alias="user"> -->
-        <!-- <table tableName="T_USER" domainObjectName="User">
-	      <generatedKey column="id" sqlStatement="Mysql" identity="false"/>
-	    </table> -->
-    </context>
+		<javaModelGenerator targetPackage="${javaModelGenerator.targetPackage}"
+			targetProject="${javaModelGenerator.targetProject}">
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+		<sqlMapGenerator targetPackage="${sqlMapGenerator.targetPackage}"
+			targetProject="${sqlMapGenerator.targetProject}" />
+		<javaClientGenerator targetPackage="${javaClientGenerator.targetPackage}"
+			targetProject="${javaClientGenerator.targetProject}" type="XMLMAPPER" />
+		<!-- 生成实体示例，只生成基础的entity、mapper、xml -->
+		<table tableName="T_TEST_DEMO" domainObjectName="TestDemo"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<generatedKey column="id" sqlStatement="Mysql" />
+		</table>
+	</context>
 </generatorConfiguration>

@@ -7,14 +7,12 @@ import java.text.ParseException;
 import java.util.Date;
 
 import org.apache.commons.lang3.time.DateFormatUtils;
-import org.apache.commons.lang3.time.DateUtils;
-
 /**
  * 日期工具类, 继承org.apache.commons.lang.time.DateUtils类
  * @author ThinkGem
  * @version 2014-4-15
  */
-public class DateUtil extends DateUtils {
+public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	
 	private static String[] parsePatterns = {
 		"yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "yyyy-MM", 
@@ -169,16 +167,5 @@ public class DateUtil extends DateUtils {
 		long beforeTime = before.getTime();
 		long afterTime = after.getTime();
 		return (afterTime - beforeTime) / (1000 * 60 * 60 * 24);
-	}
-	
-	/**
-	 * @param args
-	 * @throws ParseException
-	 */
-	public static void main(String[] args) throws ParseException {
-//		System.out.println(formatDate(parseDate("2010/3/6")));
-//		System.out.println(getDate("yyyy年MM月dd日 E"));
-//		long time = new Date().getTime()-parseDate("2012-11-19").getTime();
-//		System.out.println(time/(24*60*60*1000));
 	}
 }

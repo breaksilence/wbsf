@@ -1,6 +1,6 @@
-package com.wbsf.result.base;
+package com.wbsf.core.result.base;
 
-import com.wbsf.result.ResultEnum;
+import com.wbsf.core.result.ResultEnum;
 
 /**
  * 处理结果默认的枚举实现类

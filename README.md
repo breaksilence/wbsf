@@ -2,9 +2,9 @@
 
 ## 平台简介
 
-wbsf 目前定位为基础的网络服务技术平台，对Spring、Spring Mvc、Mybatis、redis等多种开源技术的整合、集成，尽量做到清晰的模块划分，简单实用的变成目的。
+wbsf:个人随手搭建的框架， 目前定位为基础的网络服务技术平台，对Spring、Spring Mvc、Mybatis、redis等多种开源技术的整合、集成，尽量做到清晰的模块划分，简单实用的框架。
 
-## 内置功能
+## 集成开源框架
 
 1. 集成mybatis √
 2. 集成mapper3插件 √
@@ -12,9 +12,16 @@ wbsf 目前定位为基础的网络服务技术平台，对Spring、Spring Mvc�
 4. 集成redis
 5. 完成基础框架构建 SpringMvc+Spring+Mybatis+Mapper3+Pagehelper+Redis
 6. 通用代码生成器:持久层 √
-7. 构建通用的业务处理结果类 
-8. 编写单元测试
+7. 构建通用的业务处理结果类  √
+8. 编写单元测试 √
 
+#内置功能
+
+1. 全局异常管理,简单配置，可按需求进行详细配置
+	com.wbsf.core.exception.ExceptionHandler 
+2. 统一的结果辅助类，符合绝大多数结果传递
+	com.wbsf.core.result.Result:建议通过ResultHelper构建
+3. 单元测试基础类：JunitTestSupport
 ## 预期内置功能
 
 1.	用户管理：用户是系统操作者，该功能主要完成系统用户配置。

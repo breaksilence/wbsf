@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns="http://www.springframework.org/schema/beans"
@@ -8,11 +9,15 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/util 
+       http://www.springframework.org/schema/util/spring-util.xsd
        http://www.springframework.org/schema/aop
        http://www.springframework.org/schema/aop/spring-aop.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd">
-       <description>spring applicationContext Configuration</description>	
+    
+    <description>spring applicationContext Configuration</description>	
+	
 	<!-- 加载配置文件 -->  
 	<bean id="propertyConfigurer" class="com.wbsf.core.spring.utils.PropertyConfigurer">
 	   <property name="ignoreUnresolvablePlaceholders" value="true"/>
@@ -24,19 +29,30 @@
 	       </list>
 	   </property>
 	</bean>
-	<!-- 自动扫描dao和service包(自动注入) -->
+	
+	<!-- 在java对象种可通过  @Value("#{proSet['jdbc.username.main']}") 引用 -->
+    <!-- <util:properties id="proSet" location="classpath:config/init/jdbc.properties,classpath:config/init/sysConfig.properties" local-override="true"/> -->
+	
+	<!-- 自动扫描service包,mybatis管理dao层实现-->
 	<!-- 加载service,此时要排除要controller,因为controller已经spring-mvc中加载过了防止与spring mvc集成事物失效 -->
-	<context:component-scan base-package="com.wbsf.module.*" use-default-filters="false">
+	<context:component-scan base-package="com.wbsf.core.service.*,com.wbsf.modules.*.service.impl" use-default-filters="false">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
-		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
-		<context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>
-		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
+	
+	<!-- 自定义组件扫描，若需要扩展添加需要扫描的组件包 -->
+	<context:component-scan base-package="com.wbsf.modules.component.*" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>
+	</context:component-scan>
+	
 	<!-- 用于监控spring是否初始化完成 -->
 	<bean id="BeanDefineConfigue" class="com.wbsf.core.spring.BeanDefineConfigue" />  
 	
 	<!-- Spring 工具类 -->
 	<bean id="springContextUtil" class="com.wbsf.core.spring.utils.SpringContextUtil" />
+	
+	<!-- 全局统一异常处理 -->
+	<bean id="exceptionHandler" class="com.wbsf.core.exception.ExceptionHandler"/>
+	 
 	<!-- 加载数据库相关配置 -->
 	<import resource="spring-jdbc.xml"/>
 </beans>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component("BeanDefineConfigue")
 public class BeanDefineConfigue implements ApplicationListener<ContextRefreshedEvent> {
+	
 	private static final Logger logger = LoggerFactory.getLogger(BeanDefineConfigue.class);
 	
 	/**

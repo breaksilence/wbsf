@@ -73,6 +73,8 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
+	
+	<!-- 服务异常捕获 -->  
 	<error-page>
 		<exception-type>java.lang.Throwable</exception-type>
 		<location>/error/500</location>

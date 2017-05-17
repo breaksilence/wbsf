@@ -1,4 +1,4 @@
-package com.wbsf.result;
+package com.wbsf.core.result;
 
 /**
  * 处理结果枚举接口，自定义枚举类型可以实现该接口

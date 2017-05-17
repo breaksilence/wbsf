@@ -1,13 +1,12 @@
-package com.wbsf.result.base;
+package com.wbsf.core.result.base;
 
 import java.text.MessageFormat;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.json.JSONObject;
-
-import com.wbsf.result.Result;
-import com.wbsf.result.ResultEnum;
+import com.alibaba.fastjson.JSONObject;
+import com.wbsf.core.result.Result;
+import com.wbsf.core.result.ResultEnum;
 
 /**
  * 基础实现类
@@ -16,7 +15,7 @@ import com.wbsf.result.ResultEnum;
  * @param <T>
  */
 public abstract class ResultSupport<T> implements Result<T> {
-	
+	protected JSONObject resultJson = new JSONObject();
 	/** 返回结果数据 */
 	protected T result;
 	
@@ -152,12 +151,17 @@ public abstract class ResultSupport<T> implements Result<T> {
 
 	@Override
 	public String toJson() {
-		JSONObject result =  new JSONObject();
-		result.put("resultCode", this.resultCode);
-		result.put("resultMsg", this.resultMsg);
-		result.put("result", this.result);
-		result.put("atrributes", this.atrributes);
-		return result.toString();
+		resultJson.put("isSuccess", this.success);
+		resultJson.put("resultCode", this.resultCode);
+		resultJson.put("resultMsg", this.resultMsg);
+		resultJson.put("result", this.result);
+		resultJson.put("atrributes", this.atrributes);
+		return resultJson.toJSONString();
 	}
 
+	@Override
+	public String toString() {
+		return toJson();
+	}
+	/*Map<String,User> result = mapper.readValue(src, new TypeReference<Map<String,User>>() { });*/
 }

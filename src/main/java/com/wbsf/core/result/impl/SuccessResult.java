@@ -1,8 +1,8 @@
-package com.wbsf.result.impl;
+package com.wbsf.core.result.impl;
 
-import com.wbsf.result.ResultEnum;
-import com.wbsf.result.base.ResultConfig;
-import com.wbsf.result.base.ResultSupport;
+import com.wbsf.core.result.ResultEnum;
+import com.wbsf.core.result.base.ResultConfig;
+import com.wbsf.core.result.base.ResultSupport;
 
 /**
  * 成功结果实现类，继承ResultSupport

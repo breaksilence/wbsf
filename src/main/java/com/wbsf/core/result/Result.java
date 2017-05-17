@@ -1,4 +1,4 @@
-package com.wbsf.result;
+package com.wbsf.core.result;
 
 import java.util.Map;
 

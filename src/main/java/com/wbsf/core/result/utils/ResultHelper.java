@@ -1,10 +1,10 @@
-package com.wbsf.result.utils;
+package com.wbsf.core.result.utils;
 
-import com.wbsf.result.Result;
-import com.wbsf.result.ResultEnum;
-import com.wbsf.result.impl.ExceptionResult;
-import com.wbsf.result.impl.FailedResult;
-import com.wbsf.result.impl.SuccessResult;
+import com.wbsf.core.result.Result;
+import com.wbsf.core.result.ResultEnum;
+import com.wbsf.core.result.impl.ExceptionResult;
+import com.wbsf.core.result.impl.FailedResult;
+import com.wbsf.core.result.impl.SuccessResult;
 
 /**
  * 处理结果帮助类，用于构建不同类型的结果实例
@@ -19,7 +19,7 @@ public class ResultHelper {
 	 * 
 	 * @return Result<T>
 	 */
-	public <T> Result<T> buildSuccess() {
+	public static <T> Result<T> buildSuccess() {
 		return new SuccessResult<T>();
 	}
 
@@ -30,7 +30,7 @@ public class ResultHelper {
 	 *            返回的附件信息
 	 * @return Result<T>
 	 */
-	public <T> Result<T> buildSuccess(String resultMsg) {
+	public static  <T> Result<T> buildSuccess(String resultMsg) {
 		return new SuccessResult<T>(resultMsg);
 	}
 	
@@ -39,7 +39,7 @@ public class ResultHelper {
 	 * @param resultEnum
 	 * @return
 	 */
-	public <T> Result<T> buildSuccess(ResultEnum resultEnum) {
+	public static  <T> Result<T> buildSuccess(ResultEnum resultEnum) {
 		return new SuccessResult<T>(resultEnum);
 	}
 
@@ -48,7 +48,7 @@ public class ResultHelper {
 	 * 
 	 * @return Result<T>
 	 */
-	public <T> Result<T> buildFailed() {
+	public static  <T> Result<T> buildFailed() {
 		return new FailedResult<T>();
 	}
 
@@ -58,7 +58,7 @@ public class ResultHelper {
 	 * @param resultMsg
 	 * @return Result<T>
 	 */
-	public <T> Result<T> buildFailed(String resultMsg) {
+	public static  <T> Result<T> buildFailed(String resultMsg) {
 		return new FailedResult<T>(resultMsg);
 	}
 	
@@ -67,7 +67,7 @@ public class ResultHelper {
 	 * @param resultEnum
 	 * @return
 	 */
-	public <T> Result<T> buildFailed(ResultEnum resultEnum) {
+	public static  <T> Result<T> buildFailed(ResultEnum resultEnum) {
 		return new FailedResult<T>(resultEnum);
 	}
 	
@@ -77,7 +77,7 @@ public class ResultHelper {
 	 * @param exception
 	 * @return Result<T>
 	 */
-	public <T> Result<T> buildException(Exception exception) {
+	public static  <T> Result<T> buildException(Exception exception) {
 		return new ExceptionResult<T>(exception);
 	}
 
@@ -87,7 +87,7 @@ public class ResultHelper {
 	 * @param resultMsg
 	 * @return Result<T>
 	 */
-	public <T> Result<T> buildException(String resultMsg) {
+	public static  <T> Result<T> buildException(String resultMsg) {
 		return new ExceptionResult<T>(resultMsg);
 	}
 	
@@ -96,7 +96,7 @@ public class ResultHelper {
 	 * @param resultEnum
 	 * @return
 	 */
-	public <T> Result<T> buildException(ResultEnum resultEnum) {
+	public static  <T> Result<T> buildException(ResultEnum resultEnum) {
 		return new ExceptionResult<T>(resultEnum);
 	}
 	
