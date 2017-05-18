@@ -66,6 +66,47 @@ public class TestControllerTest extends JunitTestSupport{
 		logger.info("测试demo insert---end>>>time:"+(System.currentTimeMillis()-startTime));
 	}
 
+	/**
+	 * 测试英文国际化
+	 * @throws Exception
+	 */
+	@Test
+	public void i18nTesten_US() throws Exception{
+		Long startTime = System.currentTimeMillis();
+		logger.info("测试国际化---start>>>time:"+startTime);
+		this.mockMvc
+		.perform(post("/test/i18n").characterEncoding("UTF-8") 
+				.accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.param("locale", "en_US")
+				)
+		.andDo(print())
+		.andExpect(status().isOk())
+		.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+		.andExpect(jsonPath("$.resultCode", is("success")))
+		.andExpect(jsonPath("$.isSuccess", is(true)));
+		logger.info("测试国际化---end>>>time:"+(System.currentTimeMillis()-startTime));
+	}
+	
+	/**
+	 * 测试中文国际化
+	 * @throws Exception
+	 */
+	@Test
+	public void i18nzh_CNTest() throws Exception{
+		Long startTime = System.currentTimeMillis();
+		logger.info("测试国际化---start>>>time:"+startTime);
+		this.mockMvc
+		.perform(post("/test/i18n").characterEncoding("UTF-8") 
+				.accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.param("locale", "zh_CN")
+				)
+		.andDo(print())
+		.andExpect(status().isOk())
+		.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+		.andExpect(jsonPath("$.resultCode", is("success")))
+		.andExpect(jsonPath("$.isSuccess", is(true)));
+		logger.info("测试国际化---end>>>time:"+(System.currentTimeMillis()-startTime));
+	}
 }
 
 
