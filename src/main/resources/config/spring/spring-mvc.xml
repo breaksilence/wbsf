@@ -174,9 +174,7 @@
 	<!-- 拦截器 -->
 	<mvc:interceptors>
 		<!-- 设置本地化信息的拦截器 -->
-		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
-			<property name="paramName" value="language" />
-		</bean>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"/>
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
 			<bean class="com.wbsf.interceptor.EncodingInterceptor" />
