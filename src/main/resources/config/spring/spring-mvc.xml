@@ -12,6 +12,7 @@
    	  http://cxf.apache.org/schemas/jaxws.xsd">
   	
   	<description>Spring MVC Configuration</description>
+  	<mvc:annotation-driven validator="validator" />
   	<context:property-placeholder location="classpath:config/init/sysConfig.properties"/>
 	<!-- 由ServletContextListener产生的是父容器，springMVC产生的是子容器，子容器Controller进行扫描装配时装配了@Service注解的实例，而该实例理应由父容器进行初始化以保证事务的增强处理，所以此时得到的将是原样的Service（没有经过事务加强处理，故而没有事务处理能力。 -->
 	<context:component-scan base-package="com.wbsf.modules.*.controller"
@@ -74,8 +75,7 @@
 		<property name="basenames">
 			<list>
 				<value>classpath:config/messages/local/locale_messages</value>
-				<value>classpath:config/messages/validator/ValidationMessages
-				</value>
+				<value>classpath:config/messages/validator/ValidationMessages</value>
 			</list>
 		</property>
 		<property name="fileEncodings" value="utf-8" />
@@ -100,13 +100,13 @@
 		<!-- 如果不加默认到 使用classpath下的 ValidationMessages.properties -->
 		<property name="validationMessageSource" ref="messageSource" />
 	</bean>
+	
 
 	<bean
 		class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor">
 		<property name="validator" ref="validator" />
 	</bean>
 
-	<mvc:annotation-driven validator="validator" />
 
 	<!-- 默认的视图解析器 在上边的解析错误时使用 (默认使用html)- -->
 	<bean id="viewResolvers"
