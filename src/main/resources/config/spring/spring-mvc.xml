@@ -12,7 +12,9 @@
    	  http://cxf.apache.org/schemas/jaxws.xsd">
   	
   	<description>Spring MVC Configuration</description>
+  	<mvc:annotation-driven />
   	<mvc:annotation-driven validator="validator" />
+  	<mvc:annotation-driven conversion-service="conversionService"/>
   	<context:property-placeholder location="classpath:config/init/sysConfig.properties"/>
 	<!-- 由ServletContextListener产生的是父容器，springMVC产生的是子容器，子容器Controller进行扫描装配时装配了@Service注解的实例，而该实例理应由父容器进行初始化以保证事务的增强处理，所以此时得到的将是原样的Service（没有经过事务加强处理，故而没有事务处理能力。 -->
 	<context:component-scan base-package="com.wbsf.modules.*.controller"
@@ -83,22 +85,21 @@
 		<property name="defaultEncoding" value="UTF-8" />
 	</bean>
 
-	<!-- ①注册ConversionService -->
-	<bean id="conversionService"
-		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
-		<property name="converters">
-			<list>
-				<bean class="com.wbsf.core.convert.DateConverter" />
-			</list>
-		</property>
-	</bean>
 
-	<!-- 以下 validator ConversionService 在使用 mvc:annotation-driven 会 自动注册 -->
 	<bean id="validator"
 		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
 		<property name="providerClass" value="org.hibernate.validator.HibernateValidator" />
 		<!-- 如果不加默认到 使用classpath下的 ValidationMessages.properties -->
 		<property name="validationMessageSource" ref="messageSource" />
+	</bean>
+	<!-- ①注册ConversionService -->
+	<bean id="conversionService"
+		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="converters">
+			<set>
+				<bean class="com.wbsf.core.spring.convert.DateConverter" />
+			</set>
+		</property>
 	</bean>
 	
 	<!-- 基于Session的本地化解析器 -->
