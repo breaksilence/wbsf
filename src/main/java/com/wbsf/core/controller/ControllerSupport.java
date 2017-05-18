@@ -17,9 +17,9 @@ import com.google.common.collect.Maps;
 public abstract class ControllerSupport {
 	
 	/**
-	 * 获取错误信息map
+	 * 获取错误信息,同一字段多种错误信息只会保留一种
 	 * @param bindingResult 参数校验结果
-	 * @return Map
+	 * @return 返回表单验证的错误信息集合
 	 */
 	protected Map<String, String> getError(BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
