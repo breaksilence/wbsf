@@ -48,7 +48,7 @@
 	<bean id="BeanDefineConfigue" class="com.wbsf.core.spring.BeanDefineConfigue" />  
 	
 	<!-- Spring 工具类 -->
-	<bean id="springContextUtil" class="com.wbsf.core.spring.utils.SpringContextUtil" />
+	<bean id="contextUtil" class="com.wbsf.core.spring.utils.ContextUtil" />
 	
 	<!-- 全局统一异常处理 -->
 	<bean id="exceptionHandler" class="com.wbsf.core.exception.ExceptionHandler"/>
