@@ -18,6 +18,9 @@ import com.wbsf.core.result.utils.ResultHelper;
 import com.wbsf.modules.test.entity.TestDemo;
 import com.wbsf.modules.test.form.TestInsertForm;
 import com.wbsf.modules.test.service.TestService;
+import static com.wbsf.core.spring.utils.ContextUtil.text;
+
+import java.util.Locale;
 
 /**
  * demo controller
@@ -62,6 +65,13 @@ public class TestController extends ControllerSupport {
 	@RequestMapping(value="/delete", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,method={RequestMethod.POST})
 	public String deleteTest(){
 		return null;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/i18n", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,method={RequestMethod.POST})
+	public String i18n(String locale){
+		//Locale.CHINA; 
+		return ResultHelper.buildSuccess().setResultMsg(locale).putAttribute("i18n", text("request.send")).toJson();
 	}
 	
 }
