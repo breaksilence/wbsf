@@ -1,30 +1,22 @@
 package com.wbsf.modules.test.form;
 
-import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 import com.wbsf.modules.test.entity.TestDemo;
 
+/**
+ * 测试服务端进行表单数据校验demo
+ * @author xiangzheng
+ *
+ */
 public class TestInsertForm extends TestDemo{
 
 	private static final long serialVersionUID = -4018613008756626672L;
-
+	
+	@NotNull(message="{test.code.NotNull}")
+	@Size(min=3,message="{test.code.min}")
 	@Override
-	@Max(value=10,message="最大值为10")
-	public Long getId() {
-		return super.getId();
-	}
-
-	@Override
-	@NotEmpty(message = "用户名不能为空")
-	public String getName() {
-		return super.getName();
-	}
-
-	@Override
-	@Size(min=6,message="最小6位字符")
 	public String getCode() {
 		return super.getCode();
 	}

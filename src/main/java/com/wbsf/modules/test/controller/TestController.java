@@ -38,7 +38,7 @@ public class TestController extends ControllerSupport {
 		Result<TestDemo> result = ResultHelper.buildSuccess();
 		if(testValid.hasErrors()){
 			result = ResultHelper.buildFailed(ResultConfig.FAILED);
-			result.setResultMsg(getFirstError(testValid));
+			result.putAttribute("errorField",getError(testValid));
 			return result.toJson();
 		}
 		int rs = testService.save(test);
