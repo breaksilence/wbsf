@@ -1,5 +1,7 @@
 package com.wbsf.modules.test.controller;
 
+import static com.wbsf.core.spring.utils.ContextUtil.text;
+
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
@@ -18,9 +20,6 @@ import com.wbsf.core.result.utils.ResultHelper;
 import com.wbsf.modules.test.entity.TestDemo;
 import com.wbsf.modules.test.form.TestInsertForm;
 import com.wbsf.modules.test.service.TestService;
-import static com.wbsf.core.spring.utils.ContextUtil.text;
-
-import java.util.Locale;
 
 /**
  * demo controller
