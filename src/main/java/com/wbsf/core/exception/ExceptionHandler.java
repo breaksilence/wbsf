@@ -1,7 +1,5 @@
 package com.wbsf.core.exception;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,11 +30,4 @@ public class ExceptionHandler implements HandlerExceptionResolver{
             return new ModelAndView("error", model);  
         }  
     }
-/*
-	@Override
-	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
-			Exception ex) {
-		// TODO Auto-generated method stub
-		return null;
-	}  */
 }
