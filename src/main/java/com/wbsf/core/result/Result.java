@@ -99,7 +99,7 @@ public interface Result<T> {
 	 * @param atrribute
 	 * @return
 	 */
-	public Result<T> putAttributes(Map<String, ?> atrributes);
+	public Result<T> putAttributes(Map<String, Object> atrributes);
 
 	/**
 	 * 设置属性
@@ -109,7 +109,7 @@ public interface Result<T> {
 	 *            是否在设置属性前清空所有属性
 	 * @return
 	 */
-	public Result<T> putAttributes(Map<String, ?> atrributes, boolean clearAtrributes);
+	public Result<T> putAttributes(Map<String, Object> atrributes, boolean clearAtrributes);
 
 	/**
 	 * 设置属性

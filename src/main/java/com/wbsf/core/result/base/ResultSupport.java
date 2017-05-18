@@ -111,12 +111,12 @@ public abstract class ResultSupport<T> implements Result<T> {
 	}
 
 	@Override
-	public Result<T> putAttributes(Map<String, ?> atrributes) {
+	public Result<T> putAttributes(Map<String, Object> atrributes) {
 		return this.putAttributes(atrributes, false);
 	}
 
 	@Override
-	public Result<T> putAttributes(Map<String, ?> atrributes, boolean clearAtrributes) {
+	public Result<T> putAttributes(Map<String, Object> atrributes, boolean clearAtrributes) {
 		if (clearAtrributes)
 			this.atrributes.clear();
 		if (atrributes != null && !atrributes.isEmpty())
