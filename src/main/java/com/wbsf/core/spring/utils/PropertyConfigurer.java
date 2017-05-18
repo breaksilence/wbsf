@@ -43,14 +43,4 @@ public class PropertyConfigurer extends PropertyPlaceholderConfigurer {
     public static String getProperty(String key, String defaultValue) {
         return props.getProperty(key, defaultValue);
     }
-
-    /**
-     * 根据key设定值
-     * @param key
-     * @param value
-     * @return Object
-     */
-    public static Object setProperty(String key, String value) {
-        return props.setProperty(key, value);
-    }
 }
