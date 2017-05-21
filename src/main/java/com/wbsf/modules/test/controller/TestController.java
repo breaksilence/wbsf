@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wbsf.core.controller.ControllerSupport;
 import com.wbsf.core.result.Result;
-import com.wbsf.core.result.base.ResultConfig;
+import com.wbsf.core.result.config.ResultConfig;
 import com.wbsf.core.result.utils.ResultHelper;
 import com.wbsf.modules.test.entity.TestDemo;
 import com.wbsf.modules.test.form.TestInsertForm;
@@ -44,7 +44,7 @@ public class TestController extends ControllerSupport {
 			return result.toJson();
 		}
 		int rs = testService.save(test);
-		result.setResultMsg("共有{0}条数据插入", rs);
+		result.setMessage("共有{0}条数据插入", rs);
 		return result.toJson();
 	}
 	
@@ -70,7 +70,7 @@ public class TestController extends ControllerSupport {
 	@RequestMapping(value="/i18n", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,method={RequestMethod.POST})
 	public String i18n(String locale){
 		//Locale.CHINA; 
-		return ResultHelper.buildSuccess().setResultMsg(locale).putAttribute("i18n", text("request.send")).toJson();
+		return ResultHelper.buildSuccess().setMessage(locale).putAttribute("i18n", text("request.send")).toJson();
 	}
 	
 }
