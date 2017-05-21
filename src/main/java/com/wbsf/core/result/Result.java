@@ -20,10 +20,10 @@ public interface Result<T> {
 
 	/**
 	 * 初始化rsult code和返回的消息信息
-	 * @param resultCode 返回状态码
-	 * @param resultMsg 返回消息
+	 * @param Code 返回状态码
+	 * @param Message 返回消息
 	 */
-	public Result<T> setResultConfig(String resultCode ,String resultMsg);
+	public Result<T> setResultConfig(String Code ,String Message);
 
 	/**
 	 * 设置结果
@@ -59,39 +59,39 @@ public interface Result<T> {
 	 * 
 	 * @return Result<T>
 	 */
-	public Result<T> setResultCode(String resultCode);
+	public Result<T> setCode(String Code);
 
 	/**
 	 * 获取返回的错误编码
 	 * 
 	 * @return
 	 */
-	public String getResultCode();
+	public String getCode();
 
 	/**
 	 * 设置返回的结果信息
 	 */
-	public Result<T> setResultMsg(String resultMsg);
+	public Result<T> setMessage(String Message);
 
 	/**
 	 * 设置返回的结果信息
-	 * @param resultMsg 设置返回消息
+	 * @param Message 设置返回消息
 	 * @param formateValues 格式化参数
 	 */
-	public Result<T> setResultMsg(String resultMsg ,Object ...  formateValues);
+	public Result<T> setMessage(String Message ,Object ...  formateValues);
 	
 	/**
 	 * 格式化范围消息
 	 * @param formateValues
 	 */
-	public Result<T> setResultMsg(Object ...  formateValues);
+	public Result<T> setMessage(Object ...  formateValues);
 
 	/**
 	 * 获取返回的结果信息
 	 * 
 	 * @return
 	 */
-	public String getResultMsg();
+	public String getMessage();
 
 	/**
 	 * 设置属性
