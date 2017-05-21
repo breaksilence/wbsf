@@ -1,8 +1,7 @@
 package com.wbsf.core.result.impl;
 
 import com.wbsf.core.result.ResultEnum;
-import com.wbsf.core.result.base.ResultConfig;
-import com.wbsf.core.result.base.ResultSupport;
+import com.wbsf.core.result.config.ResultConfig;
 
 /**
  * 异常结果实现类，继承ResultSupport
@@ -29,7 +28,7 @@ public class ExceptionResult<T> extends ResultSupport<T> {
 	 */
 	public ExceptionResult(String exceptionMsg){
 		super(ResultConfig.EXCEPTION);
-		this.setResultMsg(exceptionMsg);
+		this.setMessage(exceptionMsg);
 	}
 	
 	/**

@@ -1,8 +1,7 @@
 package com.wbsf.core.result.impl;
 
 import com.wbsf.core.result.ResultEnum;
-import com.wbsf.core.result.base.ResultConfig;
-import com.wbsf.core.result.base.ResultSupport;
+import com.wbsf.core.result.config.ResultConfig;
 /**
  * 失败结果实现类，继承ResultSupport
  * @author xiangzheng
@@ -16,7 +15,7 @@ public class FailedResult<T> extends ResultSupport<T> {
 	
 	public FailedResult(String resultMsg){
 		super(ResultConfig.FAILED);
-		this.setResultMsg(resultMsg);
+		this.setMessage(resultMsg);
 	}
 	
 	/**
