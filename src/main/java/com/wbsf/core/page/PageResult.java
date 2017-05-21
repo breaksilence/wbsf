@@ -65,6 +65,9 @@ public class PageResult<T> extends ResultSupport<PageInfo<T>> {
 	public PageResult<T> initPage(List<T> queryResult, int navigatePages) {
 		if (navigatePages <= 0)
 			navigatePages = DEFUALT_NAVIGATE_PAGES;
+		if (queryResult == null || queryResult.isEmpty()) {
+			super.setSuccess(false);
+		}
 		this.pageInfo = new PageInfo<>(queryResult, navigatePages);
 		return this;
 	}

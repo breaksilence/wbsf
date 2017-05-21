@@ -39,6 +39,14 @@ public abstract class ResultSupport<T> implements Result<T> {
 		setResultConfig(resultEnum);
 	}
 	
+	/**
+	 * 受保护的方法，改变处理结果的状态
+	 * @param success
+	 */
+	protected void setSuccess(boolean success) {
+		this.success = success;
+	}
+	
 	@Override
 	public Result<T> setResultConfig(ResultEnum resultEnum){
 		return setResultConfig(resultEnum.getCode() ,resultEnum.getMsg() ,resultEnum.successFlag());

@@ -13,7 +13,7 @@
 	default-lazy-init="true">
 
 	<description>Spring jdbc Configuration</description>
-
+	
 	<bean name="mainDataSource" class="com.alibaba.druid.pool.DruidDataSource"
 		init-method="init" destroy-method="close">
 		<!-- 数据源驱动类可不写，Druid默认会自动根据URL识别Driver,为了方便更换其他数据库连接池，此处进行配置 -->

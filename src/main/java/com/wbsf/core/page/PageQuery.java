@@ -1,5 +1,6 @@
 package com.wbsf.core.page;
 
+import java.util.List;
 import java.util.Map;
 
 import com.github.pagehelper.PageHelper;
@@ -236,5 +237,14 @@ public class PageQuery<T> {
 	public void startPage() {
 		PageHelper.startPage(pageNum, pageSize, isCount);
 		PageHelper.orderBy(getOrderBy());
+	}
+	
+	/**
+	 * 可以通过PageQuery直接构建PageResult
+	 * @param queryResult
+	 * @return
+	 */
+	public PageResult<T> buildResult(List<T> queryResult){
+		return new PageResult<T>(queryResult);
 	}
 }

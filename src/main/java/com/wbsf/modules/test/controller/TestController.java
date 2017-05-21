@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wbsf.core.controller.ControllerSupport;
+import com.wbsf.core.page.PageQuery;
+import com.wbsf.core.page.PageResult;
 import com.wbsf.core.result.Result;
 import com.wbsf.core.result.config.ResultConfig;
 import com.wbsf.core.result.utils.ResultHelper;
 import com.wbsf.modules.test.entity.TestDemo;
+import com.wbsf.modules.test.form.QueryForm;
 import com.wbsf.modules.test.form.TestInsertForm;
 import com.wbsf.modules.test.service.TestService;
 
@@ -48,10 +51,23 @@ public class TestController extends ControllerSupport {
 		return result.toJson();
 	}
 	
+	/**
+	 * 分页查询示例
+	 * @param demo 查询的表单，通过validate验证 其中本查询中利用code作为一个动态变量进行查询，基本展示了如何使用PageQuery以及PageResult
+	 * @param pageQuery 查询辅助工具类，所有的分页查询都通过该对象完成
+	 * @param maxId 示例参数最大id
+	 * @param minId 示例参数 最小id 
+	 * 
+	 * @return 分页结果
+	 */
 	@ResponseBody
-	@RequestMapping(value="/select", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,method={RequestMethod.POST})
-	public String selectByPage(){
-		return null;
+	@RequestMapping(value="/pageQuery", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,method={RequestMethod.POST})
+	public String pageQuery(@Valid QueryForm demo, BindingResult testValid ,PageQuery<TestDemo> pageQuery,Long maxId,Long minId){
+		pageQuery.setVo(demo);
+		pageQuery.addParam("maxId", maxId);
+		pageQuery.addParam("minId", minId);
+		PageResult<TestDemo> pageResult = testService.pageQuery(pageQuery);
+		return pageResult.toJson();
 	}
 	
 	@ResponseBody

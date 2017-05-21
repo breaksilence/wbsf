@@ -21,7 +21,9 @@ public class TestControllerTest extends JunitTestSupport{
 	}
 	
 	/**
-	 * 测试code不符合条件插入，验证不通过
+	 * 测试code不符合条件插入，验证不通过 错误消息占位符规则：
+	 * {验证注解属性名}，如@Length有min和max属性，则在错误消息文件中可以通过{min}和{max}来获取；如@Max有value属性，则在错误消息文件中可以通过{value}来获取
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -89,6 +91,24 @@ public class TestControllerTest extends JunitTestSupport{
 		.andExpect(jsonPath("$.isSuccess", is(true)));
 		logger.info("测试demo insert---end>>>time:"+(System.currentTimeMillis()-startTime));
 	}
+	
+	/**
+	 * 分页查询
+	 */
+	@Test
+	public void testPageQuery() throws Exception {
+		Long startTime = System.currentTimeMillis();
+		logger.info("测试demo pageQueyr 分页查询---start>>>time:"+startTime);
+			this.mockMvc
+			.perform(post("/test/pageQuery").characterEncoding("UTF-8") 
+					.accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
+					.param("maxId", "500")
+					.param("minId", "20")
+					.param("code", "testCode04")
+					)
+			.andDo(print());
+		logger.info("测试demo pageQueyr 分页查询---end>>>time:"+(System.currentTimeMillis()-startTime));
+	}	
 
 	/**
 	 * 测试英文国际化
@@ -130,6 +150,13 @@ public class TestControllerTest extends JunitTestSupport{
 		.andExpect(jsonPath("$.resultCode", is("success")))
 		.andExpect(jsonPath("$.isSuccess", is(true)));
 		logger.info("测试国际化---end>>>time:"+(System.currentTimeMillis()-startTime));
+	}
+	
+	/**
+	 * 测试分页查询
+	 */
+	public void pageQuery(){
+		
 	}
 }
 
