@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.google.common.collect.Maps;
 
+/**
+ * 基本的controller
+ * @author hubery
+ *
+ */
 public abstract class ControllerSupport {
 	
 	/**
