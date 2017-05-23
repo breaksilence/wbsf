@@ -61,7 +61,7 @@ public class TestController extends ControllerSupport {
 	 * @return 分页结果
 	 */
 	@ResponseBody
-	@RequestMapping(value="/pageQuery", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,method={RequestMethod.POST})
+	@RequestMapping(value="/pageQuery", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,method={RequestMethod.POST,RequestMethod.GET})
 	public String pageQuery(@Valid QueryForm demo, BindingResult testValid ,PageQuery<TestDemo> pageQuery,Long maxId,Long minId){
 		pageQuery.setVo(demo);
 		pageQuery.addParam("maxId", maxId);
