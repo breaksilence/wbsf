@@ -8,7 +8,7 @@ private static final Logger logger = LogManager.getLogger(实际类名.class.get
 （2）需要注意日志文件备份数和日志文件大小，注意预留目录空间
 （3）实际部署的时候backupFilePatch变量需要修改成linux目录
  -->
-<configuration status="error">
+<configuration status="info">
     <Properties>
         <Property name="fileName">wbsf.log</Property>
         <Property name="backupFilePatch">d:/usr/front/log/</Property>
@@ -39,11 +39,11 @@ private static final Logger logger = LogManager.getLogger(实际类名.class.get
     <!--然后定义logger，只有定义了logger并引入的appender，appender才会生效-->
     <loggers>
         <!--建立一个默认的root的logger-->
-        <Logger name="com.wbsf" level="trace"
+        <Logger name="com.wbsf" level="info"
             additivity="true">
             <AppenderRef ref="RollingFile" />
         </Logger>
-        <Root level="error">
+        <Root level="info">
             <AppenderRef ref="Console" />
         </Root>
     </loggers>
