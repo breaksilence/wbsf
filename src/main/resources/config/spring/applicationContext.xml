@@ -18,7 +18,7 @@
     
     <description>spring applicationContext Configuration</description>	
 	
-	<!-- 加载配置文件 -->  
+	<!-- 加载配置文件 继承PropertyPlaceholderConfigurer -->  
 	<bean id="propertyConfigurer" class="com.wbsf.core.spring.utils.PropertyConfigurer">
 	   <property name="ignoreUnresolvablePlaceholders" value="true"/>
 	   <property name="ignoreResourceNotFound" value="true"/>
@@ -33,15 +33,13 @@
 	<!-- 在java对象种可通过  @Value("#{proSet['jdbc.username.main']}") 引用 -->
     <!-- <util:properties id="proSet" location="classpath:config/init/jdbc.properties,classpath:config/init/sysConfig.properties" local-override="true"/> -->
 
-	<!-- 加载数据库相关配置 -->
-	<import resource="spring-jdbc.xml"/>
-	
 	<!-- 自动扫描service包,mybatis管理dao层实现-->
 	<!-- 加载service,此时要排除要controller,因为controller已经spring-mvc中加载过了防止与spring mvc集成事物失效 -->
 	<context:component-scan base-package="com.wbsf.core.service.*,com.wbsf.modules.*.service.impl,com.wbsf.*.modules.mapper" use-default-filters="false">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
 	
 	<!-- 自定义组件扫描，若需要扩展添加需要扫描的组件包 -->
@@ -54,8 +52,6 @@
 	
 	<!-- Spring 工具类 实现了ApplicationContextAware接口 -->
 	<bean id="contextUtil" class="com.wbsf.core.spring.utils.ContextUtil" />
-	
-	<!-- 全局统一异常处理 -->
-	<bean id="exceptionHandler" class="com.wbsf.core.exception.ExceptionHandler"/>
-	 
+		<!-- 加载数据库相关配置 -->
+	<import resource="spring-jdbc.xml"/>
 </beans>
