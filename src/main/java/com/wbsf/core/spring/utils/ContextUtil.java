@@ -17,6 +17,7 @@ public class ContextUtil implements ApplicationContextAware {
   * @param applicationContext
   * @throws BeansException
   */
+  @Override
   public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {	
       if(ContextUtil.applicationContext == null)
     	  ContextUtil.applicationContext = applicationContext;
