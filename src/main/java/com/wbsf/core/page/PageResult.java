@@ -15,8 +15,7 @@ import com.wbsf.core.result.impl.ResultSupport;
  *            结果泛型
  */
 public class PageResult<T> extends ResultSupport<PageInfo<T>> {
-	/** 分页后的信息实体 */
-	private PageInfo<T> pageInfo;
+	
 	/** 默认分页导航展示的页数 */
 	private static final int DEFUALT_NAVIGATE_PAGES = 8;
 
@@ -68,7 +67,7 @@ public class PageResult<T> extends ResultSupport<PageInfo<T>> {
 		if (queryResult == null || queryResult.isEmpty()) {
 			super.setSuccess(false);
 		}
-		this.pageInfo = new PageInfo<>(queryResult, navigatePages);
+		this.result = new PageInfo<>(queryResult, navigatePages);
 		return this;
 	}
 
@@ -78,6 +77,6 @@ public class PageResult<T> extends ResultSupport<PageInfo<T>> {
 	 * @return 获取当前分页的查询结果
 	 */
 	public List<T> getQueryList() {
-		return this.pageInfo.getList();
+		return this.result.getList();
 	}
 }
