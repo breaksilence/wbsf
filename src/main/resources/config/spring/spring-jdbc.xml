@@ -48,11 +48,12 @@
 		<property name="filters" value="stat" />
 	</bean>
 
-	<!-- <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"> 
-		重写改类，支持通配符扫描 -->
-	<bean id="mainSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<!-- 重写改类，支持通配符扫描 -->
+	<!-- <bean id="mainSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"> -->
+	<bean id="mainSqlSessionFactory" class="com.wbsf.core.spring.mybatis.MybatisSqlSessionFactoryBean">
 		<property name="dataSource" ref="mainDataSource" />
-		<property name="typeAliasesPackage" value="com.wbsf.module.entity" />
+		<!-- 支持通配符扫描,多个用逗号隔开 -->
+		<property name="typeAliasesPackage" value="com.wbsf.modules.*.entity" />
 		<property name="configLocation" value="classpath:config/mybatis/mybatis-config.xml" />
 		<!-- 该配置文件用来指定Mapper映射文件的位置 ，如果映射文件与相应的接口同名，且在同一路径下，那么可以不配置该选项 -->
 		<!-- 在classpath后面的*必不可少，缺少星号的话后面的通配符不起作用。 **表示可以表示任意多级目录 -->
