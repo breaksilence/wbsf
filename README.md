@@ -32,6 +32,7 @@
 9. 在服务段代码中进行国际化建议通过静态方法引用的形式：import static com.wbsf.core.spring.utils.ContextUtil.text;
 10. 数据插入、参数服务端校、国际化都已提供单元测试，详见TestControllerTes、PropertyConfigurerTest
 11. 自定义返回的结果编码、结果消息、结果对应的处理状态（成功or失败）建议通过实现ResultEnum接口且以枚举的形式定义，详细定义方式建议参考ResultConfig，这些消息都可以通过国际化的形式实现
+12. 简单的方式重写org.mybatis.spring.SqlSessionFactoryBean，实现通配符扫描实体类包名
 
 #下一步计划：
 ###### 提供分页的常规操作+单元测试
