@@ -12,7 +12,7 @@
   <sql id="Base_Column_List">
     id, name, code, create_time, modify_time
   </sql>
-  <select id="pageQuery" resultMap="BaseResultMap" parameterType="com.wbsf.modules.test.entity.TestDemo">
+  <select id="pageQuery" resultMap="BaseResultMap" parameterType="com.wbsf.core.page.PageQuery">
   	select <include refid="Base_Column_List"/> from t_test_demo 
   	where code like '${vo.code}%' and id &lt;=#{params.maxId} and id &gt;=#{params.minId}
   </select>
