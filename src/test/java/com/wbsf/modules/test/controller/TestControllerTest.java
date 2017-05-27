@@ -40,7 +40,7 @@ public class TestControllerTest extends JunitTestSupport{
 				.andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-				.andExpect(jsonPath("$.resultCode", is("error")))
+				.andExpect(jsonPath("$.code", is("error")))
 				.andExpect(jsonPath("$.isSuccess", is(false)));
 		logger.info("测试demo insert---end>>>time:"+(System.currentTimeMillis()-startTime));
 	}
@@ -63,7 +63,7 @@ public class TestControllerTest extends JunitTestSupport{
 		.andDo(print())
 		.andExpect(status().isOk())
 		.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(jsonPath("$.resultCode", is("success")))
+		.andExpect(jsonPath("$.code", is("success")))
 		.andExpect(jsonPath("$.isSuccess", is(true)));
 		logger.info("测试demo insert---end>>>time:"+(System.currentTimeMillis()-startTime));
 	}
@@ -87,7 +87,7 @@ public class TestControllerTest extends JunitTestSupport{
 		.andDo(print())
 		.andExpect(status().isOk())
 		.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(jsonPath("$.resultCode", is("success")))
+		.andExpect(jsonPath("$.code", is("success")))
 		.andExpect(jsonPath("$.isSuccess", is(true)));
 		logger.info("测试demo insert---end>>>time:"+(System.currentTimeMillis()-startTime));
 	}
@@ -126,7 +126,7 @@ public class TestControllerTest extends JunitTestSupport{
 		.andDo(print())
 		.andExpect(status().isOk())
 		.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(jsonPath("$.resultCode", is("success")))
+		.andExpect(jsonPath("$.code", is("success")))
 		.andExpect(jsonPath("$.isSuccess", is(true)));
 		logger.info("测试国际化---end>>>time:"+(System.currentTimeMillis()-startTime));
 	}
@@ -147,16 +147,9 @@ public class TestControllerTest extends JunitTestSupport{
 		.andDo(print())
 		.andExpect(status().isOk())
 		.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(jsonPath("$.resultCode", is("success")))
+		.andExpect(jsonPath("$.code", is("success")))
 		.andExpect(jsonPath("$.isSuccess", is(true)));
 		logger.info("测试国际化---end>>>time:"+(System.currentTimeMillis()-startTime));
-	}
-	
-	/**
-	 * 测试分页查询
-	 */
-	public void pageQuery(){
-		
 	}
 }
 
