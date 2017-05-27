@@ -17,8 +17,8 @@ public class QueryForm extends TestDemo {
 	 */
 	private static final long serialVersionUID = 3806351174877423732L;
 
-	@Max(value=500,message="{}")
-	@Min(value=300,message="{}")
+	@Min(value=20,message="{test.pagequery.min}")
+	@Max(value=400,message="{test.pagequery.max}")
 	@Override
 	public Long getId() {
 		return super.getId();
