@@ -16,7 +16,7 @@ import org.springframework.web.context.WebApplicationContext;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration(value = "src/main/webapp")  
 @DirtiesContext
-@ContextConfiguration(locations = {"classpath:config/spring/applicationContext.xml","classpath:config/spring/spring-mvc.xml","classpath:config/mybatis/mybatis-config.xml"})
+@ContextConfiguration(locations = {"classpath:config/spring/applicationContext.xml","classpath:config/spring/spring-mvc.xml"})
 public class JunitTestSupport {
 	@Autowired
     protected WebApplicationContext wac;
