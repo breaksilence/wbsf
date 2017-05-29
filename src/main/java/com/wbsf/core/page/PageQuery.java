@@ -3,6 +3,7 @@ package com.wbsf.core.page;
 import java.util.List;
 import java.util.Map;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Maps;
 import com.wbsf.core.enums.SortType;
@@ -234,9 +235,15 @@ public class PageQuery<T> {
 	/**
 	 * 开始分页线程
 	 */
-	public void startPage() {
-		PageHelper.startPage(pageNum, pageSize, isCount);
-		PageHelper.orderBy(getOrderBy());
+	public Page<T> startPage() {
+		return PageHelper.startPage(pageNum, pageSize, isCount);
+	}
+	
+    /**
+     * 手动清空分页数据
+     */
+	public void clearPage() {
+		PageHelper.clearPage();
 	}
 	
 	/**
@@ -245,6 +252,7 @@ public class PageQuery<T> {
 	 * @return
 	 */
 	public PageResult<T> buildResult(List<T> queryResult){
-		return new PageResult<T>(queryResult);
+		return new PageResult<T>(queryResult,navigatePages);
 	}
+	
 }
