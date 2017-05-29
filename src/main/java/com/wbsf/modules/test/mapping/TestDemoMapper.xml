@@ -15,6 +15,9 @@
   <select id="pageQuery" resultMap="BaseResultMap" parameterType="com.wbsf.core.page.PageQuery">
   	select <include refid="Base_Column_List"/> from t_test_demo 
   	where code like '${vo.code}%' and id &lt;=#{params.maxId} and id &gt;=#{params.minId}
+  	<if test="orderBy != null">
+  		order by #{orderBy ,jdbcType=VARCHAR}
+  	</if>
   </select>
 
   <select id="countquery" resultType="long">
