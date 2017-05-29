@@ -240,7 +240,7 @@ public class PageQuery<T> {
 	}
 	
     /**
-     * 手动清空分页数据
+     * 清空分页数据
      */
 	public void clearPage() {
 		PageHelper.clearPage();
@@ -252,6 +252,7 @@ public class PageQuery<T> {
 	 * @return
 	 */
 	public PageResult<T> buildResult(List<T> queryResult){
+		clearPage();
 		return new PageResult<T>(queryResult,navigatePages);
 	}
 	
