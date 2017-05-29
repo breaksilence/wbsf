@@ -14,5 +14,4 @@ public interface TestDemoMapper extends BaseMapper<TestDemo> {
 	 * @return
 	 */
 	public List<TestDemo> pageQuery(PageQuery<TestDemo> pageQuery);
-	public Long countquery();
 }

@@ -19,8 +19,4 @@
   		order by #{orderBy ,jdbcType=VARCHAR}
   	</if>
   </select>
-
-  <select id="countquery" resultType="long">
-  	select count(*) from t_test_demo
-  </select>
 </mapper>
