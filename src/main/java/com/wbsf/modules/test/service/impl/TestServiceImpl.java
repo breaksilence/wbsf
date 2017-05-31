@@ -14,8 +14,6 @@ import com.wbsf.modules.test.service.TestService;
 public class TestServiceImpl extends ServiceSupportImpl<TestDemo, TestDemoMapper> implements TestService {
 	@Override
 	public PageResult<TestDemo> pageQuery(PageQuery<TestDemo> pageQuery) {
-		Long s = mapper.countquery();
-		System.out.println(s);
 		pageQuery.startPage();
 		List<TestDemo> queryResult = mapper.pageQuery(pageQuery);
 		return pageQuery.buildResult(queryResult);
