@@ -53,13 +53,13 @@
 	<bean id="mainSqlSessionFactory" class="com.wbsf.core.spring.mybatis.MybatisSqlSessionFactoryBean">
 		<property name="dataSource" ref="mainDataSource" />
 		<!-- 支持通配符扫描,多个用逗号隔开 -->
-		<property name="typeAliasesPackage" value="com.wbsf.modules.*.entity" />
+		<property name="typeAliasesPackage" value="com.wbsf.modules.*.entity"/>
 		<property name="configLocation" value="classpath:config/mybatis/mybatis-config.xml" />
 		<!-- 该配置文件用来指定Mapper映射文件的位置 ，如果映射文件与相应的接口同名，且在同一路径下，那么可以不配置该选项 -->
 		<!-- 在classpath后面的*必不可少，缺少星号的话后面的通配符不起作用。 **表示可以表示任意多级目录 -->
 		<property name="mapperLocations">
 			<list>
-				<value>classpath:com/wbsf/modules/**/mapping/*Mapper.xml</value>
+				<value>classpath*:com/wbsf/modules/**/mapping/*Mapper.xml</value>
 				<!-- 需要时开放 -->
 				<!-- <value>classpath:com/rmsframework/mapper/**/*Mapper.xml</value> -->
 			</list>

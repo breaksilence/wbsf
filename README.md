@@ -6,15 +6,15 @@
 
 ## 集成开源框架
 
-1. 集成mybatis √
-2. 集成mapper3插件 √
-3. 集成pagehelper √
-4. 集成redis
-5. 完成基础框架构建 SpringMvc+Spring+Mybatis+Mapper3+Pagehelper+Redis
-6. 通用代码生成器:持久层 √
-7. 构建通用的业务处理结果类  √
-8. 编写单元测试 √
-9. 防止重复提交
+1.  集成mybatis √
+2.  集成mapper3插件 √
+3.  集成pagehelper √
+4.  集成redis
+5.  完成基础框架构建 SpringMvc+Spring+Mybatis+Mapper3+Pagehelper+Redis
+6.  通用代码生成器:持久层 √
+7.  构建通用的业务处理结果类  √
+8.  编写单元测试 √
+9.  防止重复提交
 10. 文件上传下载
 
 #内置功能
@@ -33,13 +33,13 @@
 10. 数据插入、参数服务端校、国际化都已提供单元测试，详见TestControllerTes、PropertyConfigurerTest
 11. 自定义返回的结果编码、结果消息、结果对应的处理状态（成功or失败）建议通过实现ResultEnum接口且以枚举的形式定义，详细定义方式建议参考ResultConfig，这些消息都可以通过国际化的形式实现
 12. 简单的方式重写org.mybatis.spring.SqlSessionFactoryBean，实现通配符扫描实体类包名
+13. 实现PageHelper分页的常规操作+单元测试使用实例
 
 #下一步计划：
-###### 提供分页的常规操作+单元测试
 ###### 验证项目依赖、通过工程依赖的形式构建其他实际项目
-###### 分页使用demo
 ###### 防止重复提交
 ###### 文件上传下载
+###### 集成redis服务器
 
 #启动项目
 

@@ -27,7 +27,7 @@ public class TestControllerTest extends JunitTestSupport{
 	 * @throws Exception
 	 */
 	@Test
-	public void testInsertTest() throws Exception {
+	public void testErrorInsert() throws Exception {
 		logger.info("测试demo insert");
 		Long startTime = System.currentTimeMillis();
 		logger.info("测试demo insert---start>>>time:"+startTime);
@@ -40,7 +40,7 @@ public class TestControllerTest extends JunitTestSupport{
 				.andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-				.andExpect(jsonPath("$.resultCode", is("error")))
+				.andExpect(jsonPath("$.code", is("error")))
 				.andExpect(jsonPath("$.isSuccess", is(false)));
 		logger.info("测试demo insert---end>>>time:"+(System.currentTimeMillis()-startTime));
 	}
@@ -50,7 +50,7 @@ public class TestControllerTest extends JunitTestSupport{
 	 * @throws Exception
 	 */
 	@Test
-	public void testInsertTest1() throws Exception {
+	public void testInsert() throws Exception {
 		logger.info("测试demo insert");
 		Long startTime = System.currentTimeMillis();
 		logger.info("测试demo insert---start>>>time:"+startTime);
@@ -63,7 +63,7 @@ public class TestControllerTest extends JunitTestSupport{
 		.andDo(print())
 		.andExpect(status().isOk())
 		.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(jsonPath("$.resultCode", is("success")))
+		.andExpect(jsonPath("$.code", is("success")))
 		.andExpect(jsonPath("$.isSuccess", is(true)));
 		logger.info("测试demo insert---end>>>time:"+(System.currentTimeMillis()-startTime));
 	}
@@ -87,7 +87,7 @@ public class TestControllerTest extends JunitTestSupport{
 		.andDo(print())
 		.andExpect(status().isOk())
 		.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(jsonPath("$.resultCode", is("success")))
+		.andExpect(jsonPath("$.code", is("success")))
 		.andExpect(jsonPath("$.isSuccess", is(true)));
 		logger.info("测试demo insert---end>>>time:"+(System.currentTimeMillis()-startTime));
 	}
@@ -105,6 +105,7 @@ public class TestControllerTest extends JunitTestSupport{
 					.param("maxId", "500")
 					.param("minId", "20")
 					.param("code", "testCode04")
+					.param("orderBy", "modify_time desc,code asc")
 					)
 			.andDo(print());
 		logger.info("测试demo pageQueyr 分页查询---end>>>time:"+(System.currentTimeMillis()-startTime));
@@ -126,7 +127,7 @@ public class TestControllerTest extends JunitTestSupport{
 		.andDo(print())
 		.andExpect(status().isOk())
 		.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(jsonPath("$.resultCode", is("success")))
+		.andExpect(jsonPath("$.code", is("success")))
 		.andExpect(jsonPath("$.isSuccess", is(true)));
 		logger.info("测试国际化---end>>>time:"+(System.currentTimeMillis()-startTime));
 	}
@@ -147,16 +148,9 @@ public class TestControllerTest extends JunitTestSupport{
 		.andDo(print())
 		.andExpect(status().isOk())
 		.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(jsonPath("$.resultCode", is("success")))
+		.andExpect(jsonPath("$.code", is("success")))
 		.andExpect(jsonPath("$.isSuccess", is(true)));
 		logger.info("测试国际化---end>>>time:"+(System.currentTimeMillis()-startTime));
-	}
-	
-	/**
-	 * 测试分页查询
-	 */
-	public void pageQuery(){
-		
 	}
 }
 
