@@ -7,6 +7,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Maps;
 import com.wbsf.core.enums.SortType;
+import com.wbsf.core.spring.utils.PropertyConfigurer;
 
 /**
  * 功能概要：分页工具帮助类 在Mapper层可以直接通过以PageQuery作为参数来进行分页查询
@@ -22,13 +23,13 @@ public class PageQuery<T> {
 	/** 查询的当前页码 */
 	private int pageNum = 1;
 	/** 每页展示的条数 */
-	private int pageSize = 10;
+	private int pageSize = Integer.parseInt(PropertyConfigurer.getProperty("sys.config.page.defualt.pageSize", "15"));
 	/** 分页查询排序属性，可以通过对象属性直接排序 */
 	private StringBuilder orderBy = new StringBuilder();
 	/** pagehelper 分页用于设置分页查询是否计算总数 */
 	private boolean isCount = true;
 	/** 预期导航页数 */
-	private int navigatePages;
+	private int navigatePages = Integer.parseInt(PropertyConfigurer.getProperty("sys.config.page.defualt.navigatePages", "8"));
 	/** 分页查询的参数 */
 	private Map<String, Object> params = Maps.newHashMap();
 

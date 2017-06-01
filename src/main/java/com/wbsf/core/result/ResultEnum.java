@@ -13,18 +13,18 @@ public interface ResultEnum {
 	 * 
 	 * @return String
 	 */
-	public String getCode();
+	String getCode();
 
 	/**
 	 * 获取结果附加信息
 	 * 
 	 * @return String
 	 */
-	public String getMsg();
+	String getMsg();
 	
 	/**
 	 * 获取成功状态
 	 * @return boolean
 	 */
-	public boolean successFlag();
+	boolean successFlag();
 }

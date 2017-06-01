@@ -11,5 +11,5 @@ public interface TestService extends ServiceSupport<TestDemo> {
 	 * @param pageQuery
 	 * @return
 	 */
-	public PageResult<TestDemo> pageQuery(PageQuery<TestDemo> pageQuery);
+	PageResult<TestDemo> pageQuery(PageQuery<TestDemo> pageQuery);
 }

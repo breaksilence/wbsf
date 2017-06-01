@@ -10,8 +10,8 @@
 1.  集成mybatis √
 2.  集成mapper3插件 √
 3.  集成pagehelper √
-4.  集成redis
-5.  完成基础框架构建 SpringMvc+Spring+Mybatis+Mapper3+Pagehelper+Redis
+4.  集成redis √
+5.  完成基础框架构建 SpringMvc+Spring+Mybatis+Mapper3+Pagehelper+Redis √
 6.  通用代码生成器:持久层 √
 7.  构建通用的业务处理结果类  √
 8.  编写单元测试 √
