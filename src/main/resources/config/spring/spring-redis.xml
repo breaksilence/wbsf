@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+	<!-- 加载redis配置文件 -->
+	<util:properties id="redisProps"
+		location="classpath:config/init/redis.properties" />
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<property name="maxTotal" value="#{redisProps['redis.pool.maxActive']}" />
+		<property name="maxIdle" value="#{redisProps['redis.pool.maxIdle']}" />
+		<property name="maxWaitMillis" value="#{redisProps['redis.pool.maxWait']}" />
+		<property name="testOnBorrow" value="#{redisProps['redis.pool.testOnBorrow']}" />
+	</bean>
+
+	<bean id="redisConnectionFactory"
+		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+		p:hostName="#{redisProps['redis.host']}" p:port="#{redisProps['redis.port']}"
+		p:timeout="#{redisProps['redis.expire.time']}" p:password="#{redisProps['redis.password']}"
+		p:database="#{redisProps['redis.database']}" p:poolConfig-ref="jedisPoolConfig"
+		p:usePool="true" />
+
+	<bean id="redisSupport" class="com.wbsf.core.redis.RedisSupport" p:connectionFactory-ref="redisConnectionFactory" />
+</beans>
