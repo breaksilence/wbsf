@@ -25,7 +25,8 @@ public class PropertyConfigurerTest extends JunitTestSupport {
 	@Test
 	public void testGetPropertyString() {
 		assertEquals(PropertyConfigurer.getProperty("jdbc.driver.main"), "com.mysql.jdbc.Driver");
-		assertEquals(PropertyConfigurer.getProperty("property.init.check"), "success");
+		assertEquals(PropertyConfigurer.getProperty("redis.host"), "127.0.0.1");
+		assertEquals(PropertyConfigurer.getProperty("sys.config.property.init.check"), "success");
 		logger.info("输出配置jdbc.driver.main值:"+PropertyConfigurer.getProperty("jdbc.driver.main"));
 		logger.info("输出配置property.init.check值："+PropertyConfigurer.getProperty("property.init.check"));
 	}
@@ -36,10 +37,10 @@ public class PropertyConfigurerTest extends JunitTestSupport {
 	@Test
 	public void testGetPropertyStringDefualt() {
 		assertEquals(PropertyConfigurer.getProperty("jdbc.driver.main","not set driver"), "com.mysql.jdbc.Driver");
-		assertEquals(PropertyConfigurer.getProperty("property.init.check","not set init check"), "success");
-		assertEquals(PropertyConfigurer.getProperty("property.notset.check","not set this value"), "not set this value");
+		assertEquals(PropertyConfigurer.getProperty("sys.config.property.init.check","not set init check"), "success");
+		assertEquals(PropertyConfigurer.getProperty("sys.config.property.notset.check","not set this value"), "not set this value");
 		logger.info("输出配置jdbc.driver.main值:"+PropertyConfigurer.getProperty("jdbc.driver.main","not set driver"));
-		logger.info("输出配置property.init.check值："+PropertyConfigurer.getProperty("property.init.check","not set init check"));
-		logger.info("输出配置property.init.check值："+PropertyConfigurer.getProperty("property.notset.check","没有设置该值"));
+		logger.info("输出配置property.init.check值："+PropertyConfigurer.getProperty("sys.config.property.init.check","not set init check"));
+		logger.info("输出配置property.init.check值："+PropertyConfigurer.getProperty("sys.config.property.notset.check","没有设置该值"));
 	}
 }
