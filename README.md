@@ -18,7 +18,7 @@
 9.  防止重复提交
 10. 文件上传下载
 
-#内置功能
+## 基础功能
 
 1. 全局异常管理,简单配置，可按需求进行详细配置
 	com.wbsf.core.exception.ExceptionHandler 
@@ -40,11 +40,10 @@
 ###### 验证项目依赖、通过工程依赖的形式构建其他实际项目
 ###### 防止重复提交
 ###### 文件上传下载
-###### 集成redis服务器
 
 #启动项目
 
-#方法1 通过tomcat插件启动>>>将依赖包放入到工程下命令为：：
+#方法1 通过tomcat插件启动>>>将依赖包放入到工程下命令为：
 	mvn dependency:copy-dependencies -DoutputDirectory=src/main/webapp/WEB-INF/lib  -DincludeScope=runtime
 	
 #方法2 直接通过maven-tomcat插件启动
