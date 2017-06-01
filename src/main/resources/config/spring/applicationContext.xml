@@ -35,20 +35,18 @@
 
 	<!-- 自动扫描service包,mybatis管理dao层实现-->
 	<!-- 加载service,此时要排除要controller,因为controller已经spring-mvc中加载过了防止与spring mvc集成事物失效 -->
-	<context:component-scan base-package="com.wbsf.core.service.*,com.wbsf.modules.*.service.impl" use-default-filters="false">
+	<context:component-scan base-package="com.wbsf.core.*,com.wbsf.modules.*.service.impl" use-default-filters="false">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
-	</context:component-scan>
-	
-	<!-- 自定义组件扫描，若需要扩展添加需要扫描的组件包 -->
-<!-- 	<context:component-scan base-package="com.wbsf.modules.component.*" use-default-filters="false">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>
-	</context:component-scan> -->
+	</context:component-scan>
 	
 	<!-- 用于监控spring是否初始化完成 -->
 	<bean id="BeanDefineConfigue" class="com.wbsf.core.spring.BeanDefineConfigue" />  
 	
 	<!-- Spring 工具类 实现了ApplicationContextAware接口 -->
 	<bean id="contextUtil" class="com.wbsf.core.spring.utils.ContextUtil" />
-		<!-- 加载数据库相关配置 -->
+	<!-- 加载数据库相关配置 -->
 	<import resource="spring-jdbc.xml"/>
+	<!-- 加载redis相关配置 -->
+	<import resource="spring-redis.xml"/>
 </beans>
