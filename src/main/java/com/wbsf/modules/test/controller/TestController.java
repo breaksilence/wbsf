@@ -38,7 +38,7 @@ public class TestController extends ControllerSupport {
 	private TestService testService;
 	
 	@ResponseBody
-	@RequestMapping(value="/insert", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,method={RequestMethod.POST})
+	@RequestMapping(value="/insert", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,method={RequestMethod.POST,RequestMethod.GET})
 	public String insertTest(@Valid TestInsertForm test, BindingResult testValid){
 		Result<TestDemo> result = ResultHelper.buildSuccess();
 		if(testValid.hasErrors()){
@@ -63,6 +63,12 @@ public class TestController extends ControllerSupport {
 	@ResponseBody
 	@RequestMapping(value="/pageQuery", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,method={RequestMethod.POST,RequestMethod.GET})
 	public String pageQuery(@Valid QueryForm demo, BindingResult testValid ,PageQuery<TestDemo> pageQuery,Long maxId,Long minId){
+		Result<TestDemo> result = ResultHelper.buildSuccess();
+		if(testValid.hasErrors()){
+			result = ResultHelper.buildFailed(ResultConfig.FAILED);
+			result.putAttribute("errorField",getError(testValid));
+			return result.toJson();
+		}
 		pageQuery.setVo(demo);
 		pageQuery.addParam("maxId", maxId);
 		pageQuery.addParam("minId", minId);
