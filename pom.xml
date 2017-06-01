@@ -12,6 +12,9 @@
 		<jdk.version>1.8</jdk.version>
 		<!-- spring -->
 		<springVersion>4.3.8.RELEASE</springVersion>
+		<spring.data.redis.version>1.8.3.RELEASE</spring.data.redis.version>
+		<!-- redis -->
+		<redis.version>2.9.0</redis.version>
 		<!-- hibernate-validator  -->
 		<hibernate-validator.version>5.2.4.Final</hibernate-validator.version>
 		<!-- log4j2  -->
@@ -117,6 +120,22 @@
             	</exclusion>
             </exclusions>
         </dependency>
+        
+        <!-- spring redis集成依赖 ↓ -->
+		<dependency>
+		    <groupId>org.springframework.data</groupId>
+		    <artifactId>spring-data-redis</artifactId>
+		    <version>${spring.data.redis.version}</version>
+		</dependency>
+        <!-- spring redis集成依赖 ↑ -->
+        
+        <!-- redis ↓ -->
+		<dependency>
+		    <groupId>redis.clients</groupId>
+		    <artifactId>jedis</artifactId>
+		    <version>${redis.version}</version>
+		</dependency>
+        <!-- redis ↑ -->
         
 		<!-- aspectj框架包 -->  
         <dependency>  
