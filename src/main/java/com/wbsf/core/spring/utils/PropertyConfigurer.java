@@ -24,7 +24,7 @@ public class PropertyConfigurer extends PropertyPlaceholderConfigurer {
 		super.processProperties(beanFactoryToProcess, props);
 		if (PropertyConfigurer.props == null)
 			PropertyConfigurer.props = props;
-		logger.info("配置文件加载状态为：" + getProperty("property.init.check", "init properties failed"));
+		logger.info("配置文件加载状态为：" + getProperty("sys.config.property.init.check", "init properties failed"));
 	}
 
 	/**
