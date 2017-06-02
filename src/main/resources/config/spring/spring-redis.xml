@@ -2,8 +2,10 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:cache="http://www.springframework.org/schema/cache"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+         http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
 	<!-- 加载redis配置文件 -->
 	<util:properties id="redisProps"
 		location="classpath:config/init/redis.properties" />
@@ -20,6 +22,11 @@
 		p:timeout="#{redisProps['redis.expire.time']}" p:password="#{redisProps['redis.password']}"
 		p:database="#{redisProps['redis.database']}" p:poolConfig-ref="jedisPoolConfig"
 		p:usePool="true" />
-
 	<bean id="redisSupport" class="com.wbsf.core.redis.RedisSupport" p:connectionFactory-ref="redisConnectionFactory" />
+    <bean id="redisCacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">  
+         <constructor-arg name="redisOperations" ref="redisSupport" />  
+        <property name="defaultExpiration" value="#{redisProps['redis.expire.time']}"/>  
+    </bean>
+    <!-- 启用缓存注解功能，这个是必须的，否则注解不会生效，另外，该注解一定要声明在spring主配置文件中才会生效 -->
+    <cache:annotation-driven cache-manager="redisCacheManager"/>
 </beans>
