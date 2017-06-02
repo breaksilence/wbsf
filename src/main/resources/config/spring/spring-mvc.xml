@@ -74,7 +74,7 @@
 		<!-- 多个国际化文件的配置方式 -->
 		<property name="basenames">
 			<list>
-				<value>classpath:config/messages/local/locale_messages</value>
+				<value>classpath:config/messages/locale/locale_messages</value>
 				<value>classpath:config/messages/validator/ValidationMessages</value>
 			</list>
 		</property>
