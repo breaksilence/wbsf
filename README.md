@@ -99,7 +99,16 @@
            </list>
        </property>
     </bean>
-    三、结果处理：无论是controller返回json数据还是service返回结果信息都要通过Result对象接收
+    三、结果处理：无论是controller返回json数据还是service返回结果信息都要通过Result对象接收，通过ResultHelper构建Result实例，将以自定的result信息通过ResultEnum接口实现枚举，通过枚举配置，虽然方法中暴露了通过code和message初始化的方式
+    四、分页查询的工具为PageQuery，提供了常规分页的所有信息，提供PageHeper分页拦截器的开启方法
+    五、分页结果通过PageResult来接收，该类继承了ResultSupport，提供了结果的所有辅助方法，同时构建了分页的常规实用方法
+    六、redis辅助工具为RedisSupport，该类继承了Spring的RedisTemplate,同时封装了对String\Set\Hash\List的常规操作方法，结合注解实用很方便
+    七、不要在新增时间工具类，如果需要请扩展DateUtil方法即可。
+    八、全局异常处理类为ExceptionHandler，可以修改该类的实现达到全局异常统一处理的效果。
+    九、程序中的配置文件加载请采用PropertyConfigurer结合applicationContext的配置文件实用，不需要增加额外的properties文件解析类
+    十、单表的crud操作不要新增额外的sql了，直接继承ServiceSupport接口，实现类继承ServiceSupportImpl即可完成基础的操作。
+    十一、所有的数据库实体类都要继承BaseEntity，为后期统一扩展预留余地。
+    十二、接口数据接收的表单要进行服务端验证，请参考Demo中的示例
  
 #启动项目
 
