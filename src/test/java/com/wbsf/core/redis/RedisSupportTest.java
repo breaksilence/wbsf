@@ -7,7 +7,11 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.wbsf.core.test.JunitTestSupport;
-
+/**
+ * redis 辅助工具测试类
+ * @author xiangzheng
+ *
+ */
 public class RedisSupportTest extends JunitTestSupport {
 
 	@Autowired
@@ -17,6 +21,9 @@ public class RedisSupportTest extends JunitTestSupport {
 		super.setUp();
 	}
 
+	/**
+	 * 测试缓存的设置和读取
+	 */
 	@Test
 	public void testCacheValueStringString() {
 		String key = "test-key-1";

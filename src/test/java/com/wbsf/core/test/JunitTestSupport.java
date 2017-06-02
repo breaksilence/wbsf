@@ -13,6 +13,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+/**
+ * spring mvc 单元测试基础父类，如果需要加载spring配置项<p>
+ * 进行完整的controller测试可以继承此类
+ * 
+ * @author xiangzheng
+ *
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration(value = "src/main/webapp")  
 @DirtiesContext
