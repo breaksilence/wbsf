@@ -9,6 +9,17 @@
 		<listener-class>org.apache.logging.log4j.web.Log4jServletContextListener</listener-class>
 	</listener>
 	<filter>
+		<description>spring-session</description>
+	    <filter-name>springSessionRepositoryFilter</filter-name>
+	    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+	    <filter-name>springSessionRepositoryFilter</filter-name>
+	    <url-pattern>/*</url-pattern>
+	        <dispatcher>REQUEST</dispatcher>
+	        <dispatcher>ERROR</dispatcher>
+	</filter-mapping>
+	<filter>
 		<filter-name>log4jServletFilter</filter-name>
 		<filter-class>org.apache.logging.log4j.web.Log4jServletFilter</filter-class>
 	</filter> 
@@ -99,7 +110,4 @@
 		<error-code>400</error-code>
 		<location>/error/400</location>
 	</error-page>
-	<session-config>
-		<session-timeout>30</session-timeout>
-	</session-config>
 </web-app>

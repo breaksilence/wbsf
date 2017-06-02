@@ -11,10 +11,11 @@
 2.  集成mapper3插件 √
 3.  集成pagehelper √
 4.  集成redis √
-5.  完成基础框架构建 SpringMvc+Spring+Mybatis+Mapper3+Pagehelper+Redis √
+5.  完成基础框架构建 SpringMvc+Spring+Mybatis+Mapper3+Pagehelper+Redis+spring-session √
 6.  通用代码生成器:持久层 √
 7.  构建通用的业务处理结果类  √
 8.  编写单元测试 √
+9.  实现spring-redis-seesion共享session √
 
 ## 基础功能
 
@@ -33,6 +34,7 @@
 11. 自定义返回的结果编码、结果消息、结果对应的处理状态（成功or失败）建议通过实现ResultEnum接口且以枚举的形式定义，详细定义方式建议参考ResultConfig，这些消息都可以通过国际化的形式实现
 12. 简单的方式重写org.mybatis.spring.SqlSessionFactoryBean，实现通配符扫描实体类包名
 13. 实现PageHelper分页的常规操作+单元测试使用实例
+14. 实现session缓存共享
 
 ## 配置文件说明
 

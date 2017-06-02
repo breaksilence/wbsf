@@ -7,8 +7,7 @@
          http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
          http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
 	<!-- 加载redis配置文件 -->
-	<util:properties id="redisProps"
-		location="classpath:config/init/redis.properties" />
+	<util:properties id="redisProps" location="classpath:config/init/redis.properties" />
 	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
 		<property name="maxTotal" value="#{redisProps['redis.pool.maxActive']}" />
 		<property name="maxIdle" value="#{redisProps['redis.pool.maxIdle']}" />
@@ -22,6 +21,7 @@
 		p:timeout="#{redisProps['redis.expire.time']}" p:password="#{redisProps['redis.password']}"
 		p:database="#{redisProps['redis.database']}" p:poolConfig-ref="jedisPoolConfig"
 		p:usePool="true" />
+	<bean id="jacksonSerializer" class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"/>
 	<bean id="redisSupport" class="com.wbsf.core.redis.RedisSupport" p:connectionFactory-ref="redisConnectionFactory" >
 	   <property name="keySerializer">
             <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
@@ -33,7 +33,7 @@
             <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
         </property>
         <property name="hashValueSerializer">
-            <bean class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"/>
+           <ref bean="jacksonSerializer"/>
         </property>
         <property name="defaultSerializer">
              <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>  
@@ -45,6 +45,24 @@
          <constructor-arg name="redisOperations" ref="redisSupport" />  
         <property name="defaultExpiration" value="#{redisProps['redis.expire.time']}"/>  
     </bean>
+    
     <!-- 启用缓存注解功能，这个是必须的，否则注解不会生效，另外，该注解一定要声明在spring主配置文件中才会生效 -->
     <cache:annotation-driven cache-manager="redisCacheManager"/>
+
+    <!-- 若要集成单点登陆默认路径为request.getContextPath() + "/"，在此修改为根 -->
+    <bean id="cookieSerializer" class="org.springframework.session.web.http.DefaultCookieSerializer">
+        <property name="cookiePath" value="/"></property>
+    </bean>
+    
+    <bean id="redisHttpSessionConfiguration"
+          class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
+        <!--超时时间,默认1800秒-->
+        <property name="maxInactiveIntervalInSeconds" value="${sys.config.session.sessionTimeout}" />
+        <property name="defaultRedisSerializer">
+        	<ref bean="jacksonSerializer"/>
+        </property>
+    </bean>
+    
+    <!-- 让Spring Session不再执行config命令 -->
+    <util:constant static-field="org.springframework.session.data.redis.config.ConfigureRedisAction.NO_OP"/>
 </beans>
