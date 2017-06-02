@@ -15,7 +15,7 @@ import com.wbsf.core.test.JunitTestSupport;
 public class RedisSupportTest extends JunitTestSupport {
 
 	@Autowired
-	private RedisSupport redisSupport;
+	private RedisSupport<String> redisSupport;
 	@Before
 	public void setUp() {
 		super.setUp();
@@ -25,12 +25,17 @@ public class RedisSupportTest extends JunitTestSupport {
 	 * 测试缓存的设置和读取
 	 */
 	@Test
-	public void testCacheValueStringString() {
+	public void testCacheValue() {
 		String key = "test-key-1";
 		String value = "test-value";
 		redisSupport.cacheValue(key, value);
+	}
+	
+	@Test
+	public void testGetValue() {
+		String key = "test-key-1";
 		String valueTemp = redisSupport.getValue(key);
 		logger.info("redis-key:"+key+";redis-value:"+valueTemp);
-		assertEquals(valueTemp, value);
+		assertEquals(valueTemp, "test-value");
 	}
 }

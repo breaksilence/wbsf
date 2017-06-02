@@ -34,9 +34,73 @@
 12. 简单的方式重写org.mybatis.spring.SqlSessionFactoryBean，实现通配符扫描实体类包名
 13. 实现PageHelper分页的常规操作+单元测试使用实例
 
-#下一步计划：
-###### 验证项目依赖、通过工程依赖的形式构建其他实际项目
+## 配置文件说明
 
+##### config/init/jdbc.properties
+    
+    配置用户数据库信息
+   
+##### config/init/sysConfig.properties
+    
+    配置系统相关信息
+
+##### config/init/redis.properties
+
+    配置redis缓存信息
+    
+##### config/messages/locale
+
+    本地国际化信息配置
+    
+##### config/messages/validator
+
+    表单校验国际化配置
+    
+##### config/spring/applicationContext.xml
+
+    项目spring加载xml的根文件，所有spring文件都通过该文件进行include
+    
+##### config/spring/spring-jdbc.xml  
+
+    spring 数据库配置文件
+    
+##### config/spring/spring-mvc.xml
+
+    spring mvc集成配置文件
+    
+##### config/spring/spring-redis.xml
+
+    spring redis集成配置文件 
+    
+##### generator/config
+    mybatis-generator代码生成器配置信息
+ 
+## 开发强制性
+
+    一、所有的业务模块开发请遵循如下规则：
+    1、业务模块开代码归档于：com/xx项目标识/modules/实际业务
+          如：com/demoproject/modules/user
+    2、业务controller
+        如：com/demoproject/modules/user/controller
+    3、业务service
+        如：com/demoproject/modules/user/service
+    4、业务mapper
+        如：com/demoproject/modules/user/mapper
+    5、业务mapping 就是mapper对应的xml文件
+        如：com/demoproject/modules/user/mapping
+    二、通过配置工具com.wbsf.core.spring.utils.PropertyConfigurer加载文件需要在applicationContext进行注册，如下：
+    <bean id="propertyConfigurer" class="com.wbsf.core.spring.utils.PropertyConfigurer">
+       <property name="ignoreUnresolvablePlaceholders" value="true"/>
+       <property name="ignoreResourceNotFound" value="true"/>
+       <property name="locations">
+           <list>
+              <value>classpath:config/init/jdbc.properties</value>
+              <value>classpath:config/init/sysConfig.properties</value>
+           </list>
+       </property>
+    </bean>
+    三、结果处理：无论是controller返回json数据还是service返回结果信息都要通过Result对象接收
+ 
 #启动项目
 
 #方法1 通过tomcat插件启动>>>将依赖包放入到工程下命令为：
