@@ -8,7 +8,7 @@ import com.wbsf.core.result.ResultEnum;
  * @author xiangzheng
  *
  */
-public enum ResultConfig implements ResultEnum {
+public enum ResponseEnum implements ResultEnum {
 	/** 成功默认枚举类型 */
 	SUCCESS("success", "success",true)
 	/** 失败默认枚举类型 */
@@ -33,7 +33,7 @@ public enum ResultConfig implements ResultEnum {
 	 * <li>true 处理成功</li>
 	 * <li>false 处理失败</li>
 	 */
-	private ResultConfig(String resultCode, String resultMsg ,boolean successFlag) {
+	private ResponseEnum(String resultCode, String resultMsg ,boolean successFlag) {
 		this.resultCode = resultCode;
 		this.resultMsg = resultMsg;
 		this.isSuccess = successFlag;

@@ -1,7 +1,7 @@
 package com.wbsf.core.result.impl;
 
 import com.wbsf.core.result.ResultEnum;
-import com.wbsf.core.result.config.ResultConfig;
+import com.wbsf.core.result.config.ResponseEnum;
 
 /**
  * 成功结果实现类，继承ResultSupport
@@ -15,7 +15,7 @@ public class SuccessResult<T> extends ResultSupport<T> {
 	 * 构建成功结果实例
 	 */
 	public SuccessResult() {
-		super(ResultConfig.SUCCESS);
+		super(ResponseEnum.SUCCESS);
 	}
 
 	/**
@@ -23,7 +23,7 @@ public class SuccessResult<T> extends ResultSupport<T> {
 	 * @param resultMsg
 	 */
 	public SuccessResult(String resultMsg) {
-		super(ResultConfig.SUCCESS);
+		super(ResponseEnum.SUCCESS);
 		this.setMessage(resultMsg);
 	}
 	

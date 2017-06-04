@@ -3,6 +3,8 @@ package com.wbsf.modules.test.controller;
 import static com.wbsf.core.spring.utils.ContextUtil.text;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.context.annotation.Scope;
@@ -17,7 +19,7 @@ import com.wbsf.core.controller.ControllerSupport;
 import com.wbsf.core.page.PageQuery;
 import com.wbsf.core.page.PageResult;
 import com.wbsf.core.result.Result;
-import com.wbsf.core.result.config.ResultConfig;
+import com.wbsf.core.result.config.ResponseEnum;
 import com.wbsf.core.result.utils.ResultHelper;
 import com.wbsf.modules.test.entity.TestDemo;
 import com.wbsf.modules.test.form.QueryForm;
@@ -42,7 +44,7 @@ public class TestController extends ControllerSupport {
 	public String insertTest(@Valid TestInsertForm test, BindingResult testValid){
 		Result<TestDemo> result = ResultHelper.buildSuccess();
 		if(testValid.hasErrors()){
-			result = ResultHelper.buildFailed(ResultConfig.FAILED);
+			result = ResultHelper.buildFailed(ResponseEnum.FAILED);
 			result.putAttribute("errorField",getError(testValid));
 			return result.toJson();
 		}
@@ -65,7 +67,7 @@ public class TestController extends ControllerSupport {
 	public String pageQuery(@Valid QueryForm demo, BindingResult testValid ,PageQuery<TestDemo> pageQuery,Long maxId,Long minId){
 		Result<TestDemo> result = ResultHelper.buildSuccess();
 		if(testValid.hasErrors()){
-			result = ResultHelper.buildFailed(ResultConfig.FAILED);
+			result = ResultHelper.buildFailed(ResponseEnum.FAILED);
 			result.putAttribute("errorField",getError(testValid));
 			return result.toJson();
 		}
@@ -94,5 +96,16 @@ public class TestController extends ControllerSupport {
 		//Locale.CHINA; 
 		return ResultHelper.buildSuccess().setMessage(locale).putAttribute("i18n", text("request.send")).toJson();
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/sessionTest", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,method={RequestMethod.POST,RequestMethod.GET})
+	public String sessionTest(HttpServletRequest request ,HttpServletResponse response){
+		request.getSession().setAttribute("sessionTemp1", "test");
+		Result<TestDemo> result = ResultHelper.buildSuccess();
+		result.setResultConfig(ResponseEnum.SUCCESS);
+		return result.toJson();
+	}
+	
+	
 	
 }
