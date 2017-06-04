@@ -35,6 +35,7 @@
 12. 简单的方式重写org.mybatis.spring.SqlSessionFactoryBean，实现通配符扫描实体类包名
 13. 实现PageHelper分页的常规操作+单元测试使用实例
 14. 实现session缓存共享
+15. 提供redis单机与集成配置，可以参考相关文件进行实际场景修改，目前配置已经经过测试可用
 
 ## 配置文件说明
 
