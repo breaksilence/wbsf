@@ -8,6 +8,11 @@
 	<listener>
 		<listener-class>org.apache.logging.log4j.web.Log4jServletContextListener</listener-class>
 	</listener>
+	<listener>  
+        <listener-class>  
+            org.springframework.web.context.request.RequestContextListener  
+        </listener-class>  
+	</listener> 
 	<filter>
 		<description>spring-session</description>
 	    <filter-name>springSessionRepositoryFilter</filter-name>

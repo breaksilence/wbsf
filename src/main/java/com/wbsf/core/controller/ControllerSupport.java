@@ -5,9 +5,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,6 +23,16 @@ import com.google.common.collect.Maps;
  */
 public abstract class ControllerSupport {
 	
+	/**
+	 * 获取request注入对象
+	 */
+	@Autowired
+	protected HttpServletRequest request;
+	/**
+	 * 获取response对象
+	 */
+	@Autowired
+	protected HttpServletResponse response;
 	/**
 	 * 获取错误信息,同一字段多种错误信息只会保留一种
 	 * @param bindingResult 参数校验结果
