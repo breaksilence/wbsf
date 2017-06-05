@@ -1,5 +1,7 @@
 package com.wbsf.core.controller;
 
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
@@ -73,10 +76,13 @@ public abstract class ControllerSupport {
 	/**
 	  * 获取IP地址
 	  * @param request
-	  * @return
+	  * @return ip地址
 	  */
-	 public String getIpAddr(HttpServletRequest request) {
-		String ip = request.getHeader("x-forwarded-for");
+	public String getIpAddr(HttpServletRequest request) {
+		String ip = request.getHeader("X-Real-IP");
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("x-forwarded-for");
+		}
 		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getHeader("Proxy-Client-IP");
 		}
@@ -87,5 +93,30 @@ public abstract class ControllerSupport {
 			ip = request.getRemoteAddr();
 		}
 		return ip;
+	}
+
+	/**
+	 * get user agent
+	 * 
+	 * @return
+	 */
+	protected String getUserAgent() {
+		return request.getHeader("user-agent");
+	}
+
+	/**
+	 * get request headers
+	 * 
+	 * @return
+	 */
+	protected Map<String, String> getHeadersInfo() {
+		Map<String, String> map = new HashMap<String, String>();
+		Enumeration<String> headerNames = request.getHeaderNames();
+		while (headerNames.hasMoreElements()) {
+			String key = (String) headerNames.nextElement();
+			String value = request.getHeader(key);
+			map.put(key, value);
+		}
+		return map;
 	}
 }
