@@ -7,7 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.springframework.context.annotation.Scope;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -20,10 +21,12 @@ import com.wbsf.core.page.PageQuery;
 import com.wbsf.core.page.PageResult;
 import com.wbsf.core.result.Result;
 import com.wbsf.core.result.config.ResponseEnum;
+import com.wbsf.core.result.impl.SuccessResult;
 import com.wbsf.core.result.utils.ResultHelper;
 import com.wbsf.modules.test.entity.TestDemo;
 import com.wbsf.modules.test.form.QueryForm;
 import com.wbsf.modules.test.form.TestInsertForm;
+import com.wbsf.modules.test.result.DemoResultEnum;
 import com.wbsf.modules.test.service.TestService;
 
 /**
@@ -32,10 +35,9 @@ import com.wbsf.modules.test.service.TestService;
  *
  */
 @Controller
-@Scope("prototype")
 @RequestMapping(value="/test")
 public class TestController extends ControllerSupport {
-	
+	private final static Logger logger = LogManager.getLogger();
 	@Resource
 	private TestService testService;
 	
@@ -104,6 +106,14 @@ public class TestController extends ControllerSupport {
 		Result<TestDemo> result = ResultHelper.buildSuccess();
 		result.setResultConfig(ResponseEnum.SUCCESS);
 		return result.toJson();
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/single", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,method={RequestMethod.POST,RequestMethod.GET})
+	public String testRequestSingle(){
+		String numStr = request.getParameter("num");
+		logger.info("获取到的num为{}",numStr);
+		return new SuccessResult<>(DemoResultEnum.SUCCESS).putAttribute("numStr", numStr).toJson();
 	}
 	
 	
