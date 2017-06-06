@@ -13,7 +13,7 @@
 		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
 		p:timeout="#{redisProps['redis.expire.time']}" p:database="#{redisProps['redis.database']}" p:password="#{redisProps['redis.password']}" p:usePool="true" >
 		<!-- 单机配置 ↓-->
-			<!-- <property name="hostName" value="#{redisProps['redis.host']}" />
+			<property name="hostName" value="#{redisProps['redis.host']}" />
 			<property name="port" value="#{redisProps['redis.port']}" />
 			<property name="poolConfig">
 				<bean class="redis.clients.jedis.JedisPoolConfig">
@@ -23,17 +23,16 @@
 					<property name="testOnBorrow" value="#{redisProps['redis.pool.testOnBorrow']}" />
 					<property name="testOnReturn" value="#{redisProps['redis.pool.testOnReturn']}" />
 				</bean>
-			</property> -->
+			</property>
 		<!-- 单机配置 ↑ -->
 		<!-- 集群配置 ↓ -->
-		<constructor-arg name="clusterConfig">
+		<!-- <constructor-arg name="clusterConfig">
 	            <bean class="org.springframework.data.redis.connection.RedisClusterConfiguration">
-	            	<!-- 集群节点配置方式一   根据构造器进行集合的方式初始化-->
 	                <constructor-arg name="clusterNodes">
 	                    <set>
 	                        <value>#{redisProps['redis.redisClusterConfiguration.clusters']}</value>
 	                    </set>
-	                </constructor-arg>
+	                </constructor-arg> -->
 	                <!-- 集群节点配置方式二  创建多个clusterNode-->
 	                <!-- <property name="clusterNodes">
 	                    <set>
@@ -43,9 +42,9 @@
 							</bean> 
 	                    </set>
 	                </property> -->
-                <property name="maxRedirects" value="#{redisProps['redis.redisClusterConfiguration.maxRedirects']}" />
+                <!-- <property name="maxRedirects" value="#{redisProps['redis.redisClusterConfiguration.maxRedirects']}" />
             </bean>
-        </constructor-arg>
+        </constructor-arg> -->
 
         <constructor-arg name="poolConfig">
             <bean class="redis.clients.jedis.JedisPoolConfig">

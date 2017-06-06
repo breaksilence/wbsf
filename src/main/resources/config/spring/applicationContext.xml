@@ -40,9 +40,6 @@
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>
 	</context:component-scan>
 	
-	<!-- 用于监控spring是否初始化完成 -->
-	<bean id="BeanDefineConfigue" class="com.wbsf.core.spring.BeanDefineConfigue" />  
-	
 	<!-- Spring 工具类 实现了ApplicationContextAware接口 -->
 	<bean id="contextUtil" class="com.wbsf.core.spring.utils.ContextUtil" />
 	<!-- 加载数据库相关配置 -->
