@@ -101,5 +101,5 @@
     </bean>
     
     <!-- 让Spring Session不再执行config命令 -->
-   <!--  <util:constant static-field="org.springframework.session.data.redis.config.ConfigureRedisAction.NO_OP"/> -->
+    <util:constant static-field="org.springframework.session.data.redis.config.ConfigureRedisAction.NO_OP"/>
 </beans>
