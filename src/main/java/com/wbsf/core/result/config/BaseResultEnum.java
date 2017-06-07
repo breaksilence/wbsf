@@ -16,7 +16,9 @@ public enum BaseResultEnum implements ResultInfo {
 	,FAILED("error", PropertyConfigurer.getProperty("request.failed", "操作失败！"), false)
 	/** 异常默认枚举类型 */
 	,EXCEPTION("exception", PropertyConfigurer.getProperty("request.exception", "操作异常！"), false)
+	/** 默认的文件上传过大响应信息 */
 	,FILE_MAX_UPLOAD_SIZE_EXCEEDED_EXCEPTION("exception", PropertyConfigurer.getProperty("request.fileMaxUploadSizeException","上传的文件过大！"), false)
+	/** 上传文件不合法的响应信息 */
 	,ILLEGAL_FILE_TYPE_EXCEPTION("exception", PropertyConfigurer.getProperty("request.IllegalFileTypeException", "上传的文件类型非法"), false);
 
 	/** 结果编码 */
