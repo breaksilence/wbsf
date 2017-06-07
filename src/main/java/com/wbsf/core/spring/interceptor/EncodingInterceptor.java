@@ -1,4 +1,4 @@
-package com.wbsf.interceptor;
+package com.wbsf.core.spring.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
