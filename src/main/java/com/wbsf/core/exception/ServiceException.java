@@ -3,8 +3,8 @@ package com.wbsf.core.exception;
 import com.wbsf.core.result.Result;
 import com.wbsf.core.result.ResultInfo;
 import com.wbsf.core.result.config.BaseResultEnum;
-import com.wbsf.core.result.config.ReusltInfoBuilder;
 import com.wbsf.core.result.impl.ExceptionResult;
+import com.wbsf.core.result.impl.ReusltInfoBuilder;
 
 /**
  * 为服务层提供基础异常服务类<p>

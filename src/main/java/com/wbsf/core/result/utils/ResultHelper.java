@@ -2,7 +2,6 @@ package com.wbsf.core.result.utils;
 
 import com.wbsf.core.result.Result;
 import com.wbsf.core.result.ResultInfo;
-import com.wbsf.core.result.config.BaseResultEnum;
 import com.wbsf.core.result.impl.ExceptionResult;
 import com.wbsf.core.result.impl.FailedResult;
 import com.wbsf.core.result.impl.ResultSupport;
@@ -21,8 +20,8 @@ public class ResultHelper<T> {
 	 * 
 	 * @return Result<T>
 	 */
-	public static <T> Result<T> buildResult(ResultInfo resultEnum) {
-		return new ResultSupport<T>(resultEnum) {};
+	public static <T> Result<T> buildResult(ResultInfo resultInfo) {
+		return new ResultSupport<T>(resultInfo) {};
 	}
 	
 	/**
@@ -47,11 +46,11 @@ public class ResultHelper<T> {
 	
 	/**
 	 *  构建成功结果实例
-	 * @param resultEnum
+	 * @param resultInfo
 	 * @return
 	 */
-	public static  <T> Result<T> buildSuccess(ResultInfo resultEnum) {
-		return new SuccessResult<T>(resultEnum);
+	public static  <T> Result<T> buildSuccess(ResultInfo resultInfo) {
+		return new SuccessResult<T>(resultInfo);
 	}
 
 	/**
@@ -75,11 +74,11 @@ public class ResultHelper<T> {
 	
 	/**
 	 * 构建失败实例
-	 * @param resultEnum
+	 * @param resultInfo
 	 * @return
 	 */
-	public static  <T> Result<T> buildFailed(ResultInfo resultEnum) {
-		return new FailedResult<T>(resultEnum);
+	public static  <T> Result<T> buildFailed(ResultInfo resultInfo) {
+		return new FailedResult<T>(resultInfo);
 	}
 	
 	/**
@@ -104,11 +103,11 @@ public class ResultHelper<T> {
 	
 	/**
 	 * 构建异常实例
-	 * @param resultEnum
+	 * @param resultInfo
 	 * @return
 	 */
-	public static  <T> Result<T> buildException(ResultInfo resultEnum) {
-		return new ExceptionResult<T>(resultEnum);
+	public static  <T> Result<T> buildException(ResultInfo resultInfo) {
+		return new ExceptionResult<T>(resultInfo);
 	}
 	
 }

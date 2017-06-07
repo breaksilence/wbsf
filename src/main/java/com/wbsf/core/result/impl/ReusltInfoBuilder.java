@@ -1,4 +1,4 @@
-package com.wbsf.core.result.config;
+package com.wbsf.core.result.impl;
 
 import com.wbsf.core.result.ResultInfo;
 
