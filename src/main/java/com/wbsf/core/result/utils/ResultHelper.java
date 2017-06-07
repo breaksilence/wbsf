@@ -1,9 +1,11 @@
 package com.wbsf.core.result.utils;
 
 import com.wbsf.core.result.Result;
-import com.wbsf.core.result.ResultEnum;
+import com.wbsf.core.result.ResultInfo;
+import com.wbsf.core.result.config.BaseResultEnum;
 import com.wbsf.core.result.impl.ExceptionResult;
 import com.wbsf.core.result.impl.FailedResult;
+import com.wbsf.core.result.impl.ResultSupport;
 import com.wbsf.core.result.impl.SuccessResult;
 
 /**
@@ -13,7 +15,16 @@ import com.wbsf.core.result.impl.SuccessResult;
  *
  */
 public class ResultHelper<T> {
-
+	
+	/**
+	 * 构建成功的结果实例
+	 * 
+	 * @return Result<T>
+	 */
+	public static <T> Result<T> buildResult(ResultInfo resultEnum) {
+		return new ResultSupport<T>(resultEnum) {};
+	}
+	
 	/**
 	 * 构建成功的结果实例
 	 * 
@@ -39,7 +50,7 @@ public class ResultHelper<T> {
 	 * @param resultEnum
 	 * @return
 	 */
-	public static  <T> Result<T> buildSuccess(ResultEnum resultEnum) {
+	public static  <T> Result<T> buildSuccess(ResultInfo resultEnum) {
 		return new SuccessResult<T>(resultEnum);
 	}
 
@@ -67,7 +78,7 @@ public class ResultHelper<T> {
 	 * @param resultEnum
 	 * @return
 	 */
-	public static  <T> Result<T> buildFailed(ResultEnum resultEnum) {
+	public static  <T> Result<T> buildFailed(ResultInfo resultEnum) {
 		return new FailedResult<T>(resultEnum);
 	}
 	
@@ -96,7 +107,7 @@ public class ResultHelper<T> {
 	 * @param resultEnum
 	 * @return
 	 */
-	public static  <T> Result<T> buildException(ResultEnum resultEnum) {
+	public static  <T> Result<T> buildException(ResultInfo resultEnum) {
 		return new ExceptionResult<T>(resultEnum);
 	}
 	

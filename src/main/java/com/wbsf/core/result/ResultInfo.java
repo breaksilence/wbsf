@@ -6,7 +6,7 @@ package com.wbsf.core.result;
  * @author xiangzheng
  *
  */
-public interface ResultEnum {
+public interface ResultInfo {
 
 	/**
 	 * 获取结果状态码

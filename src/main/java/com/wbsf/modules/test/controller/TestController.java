@@ -20,7 +20,7 @@ import com.wbsf.core.controller.ControllerSupport;
 import com.wbsf.core.page.PageQuery;
 import com.wbsf.core.page.PageResult;
 import com.wbsf.core.result.Result;
-import com.wbsf.core.result.config.ResponseEnum;
+import com.wbsf.core.result.config.BaseResultEnum;
 import com.wbsf.core.result.impl.SuccessResult;
 import com.wbsf.core.result.utils.ResultHelper;
 import com.wbsf.modules.test.entity.TestDemo;
@@ -46,12 +46,12 @@ public class TestController extends ControllerSupport {
 	public String insertTest(@Valid TestInsertForm test, BindingResult testValid){
 		Result<TestDemo> result = ResultHelper.buildSuccess();
 		if(testValid.hasErrors()){
-			result = ResultHelper.buildFailed(ResponseEnum.FAILED);
+			result = ResultHelper.buildFailed(BaseResultEnum.FAILED);
 			result.putAttribute("errorField",getError(testValid));
 			return result.toJson();
 		}
 		int rs = testService.save(test);
-		result.setMessage("共有{0}条数据插入", rs);
+		result.formateMessage("共有{0}条数据插入", rs);
 		return result.toJson();
 	}
 	
@@ -69,7 +69,7 @@ public class TestController extends ControllerSupport {
 	public String pageQuery(@Valid QueryForm demo, BindingResult testValid ,PageQuery<TestDemo> pageQuery,Long maxId,Long minId){
 		Result<TestDemo> result = ResultHelper.buildSuccess();
 		if(testValid.hasErrors()){
-			result = ResultHelper.buildFailed(ResponseEnum.FAILED);
+			result = ResultHelper.buildFailed(BaseResultEnum.FAILED);
 			result.putAttribute("errorField",getError(testValid));
 			return result.toJson();
 		}
@@ -96,7 +96,7 @@ public class TestController extends ControllerSupport {
 	@RequestMapping(value="/i18n", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,method={RequestMethod.POST})
 	public String i18n(String locale){
 		//Locale.CHINA; 
-		return ResultHelper.buildSuccess().setMessage(locale).putAttribute("i18n", text("request.send")).toJson();
+		return ResultHelper.buildSuccess().putAttribute("i18n", text("request.send")).toJson();
 	}
 	
 	@ResponseBody
@@ -104,7 +104,7 @@ public class TestController extends ControllerSupport {
 	public String sessionTest(HttpServletRequest request ,HttpServletResponse response){
 		request.getSession().setAttribute("sessionTemp1", "test");
 		Result<TestDemo> result = ResultHelper.buildSuccess();
-		result.setResultConfig(ResponseEnum.SUCCESS);
+		result.setResultConfig(BaseResultEnum.SUCCESS);
 		return result.toJson();
 	}
 	

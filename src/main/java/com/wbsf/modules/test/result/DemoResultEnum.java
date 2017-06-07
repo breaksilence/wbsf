@@ -1,8 +1,8 @@
 package com.wbsf.modules.test.result;
 
-import com.wbsf.core.result.ResultEnum;
+import com.wbsf.core.result.ResultInfo;
 
-public enum DemoResultEnum implements ResultEnum {
+public enum DemoResultEnum implements ResultInfo {
 	/** 成功默认枚举类型 */
 	SUCCESS("success", "success",true);
 	/** 结果编码 */

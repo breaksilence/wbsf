@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
 import com.wbsf.core.result.Result;
-import com.wbsf.core.result.ResultEnum;
+import com.wbsf.core.result.ResultInfo;
 
 /**
  * 基础实现类
@@ -15,7 +15,7 @@ import com.wbsf.core.result.ResultEnum;
  * @param <T>
  */
 public abstract class ResultSupport<T> implements Result<T> {
-	protected JSONObject resultJson = new JSONObject(true);
+	protected final static JSONObject resultJson = new JSONObject(true);
 	/** 返回结果数据 */
 	protected T result;
 	
@@ -23,19 +23,21 @@ public abstract class ResultSupport<T> implements Result<T> {
 	protected boolean success = true;
 	
 	/** 请求处理返回的状态码 */
-	protected String Code;
+	protected String code;
 	
 	/** 请求处理返回的消息 */
-	protected String Message;
+	protected String message;
 	
 	/** 处理过过程中设置的扩展属性 */
 	protected Map<String ,Object> atrributes = new LinkedHashMap<>();
 	
-	protected ResultSupport() {
-		this.success = true;
-	}
+	protected ResultSupport() {}
 	
-	protected ResultSupport(ResultEnum resultEnum) {
+	/**
+	 * 根据result枚举类型构造result实例
+	 * @param resultEnum
+	 */
+	public ResultSupport(ResultInfo resultEnum) {
 		setResultConfig(resultEnum);
 	}
 	
@@ -48,18 +50,14 @@ public abstract class ResultSupport<T> implements Result<T> {
 	}
 	
 	@Override
-	public Result<T> setResultConfig(ResultEnum resultEnum){
+	public Result<T> setResultConfig(ResultInfo resultEnum){
 		return setResultConfig(resultEnum.getCode() ,resultEnum.getMsg() ,resultEnum.successFlag());
 	}
 	
 	@Override
-	public Result<T> setResultConfig(String Code, String Message) {
-		return setResultConfig(Code ,Message ,this.success);
-	}
-
-	protected  Result<T> setResultConfig(String Code, String Message ,boolean success) {
-		this.Code = Code;
-		this.Message = Message;
+	public Result<T> setResultConfig(String Code, String Message, boolean success) {
+		this.code = Code;
+		this.message = Message;
 		this.success = success;
 		return this;
 	}
@@ -86,36 +84,27 @@ public abstract class ResultSupport<T> implements Result<T> {
 	}
 
 	@Override
-	public Result<T> setCode(String Code) {
-		this.Code = Code;
-		return this;
-	}
-
-	@Override
 	public String getCode() {
-		return this.Code;
+		return this.code;
 	}
 
 	@Override
-	public Result<T> setMessage(String Message) {
-		this.Message = Message;
-		return this;
+	public Result<T> formateMessage(String message, Object ...  formateValues) {
+		this.message = message;
+		return formateMessage(formateValues);
 	}
 	
 	@Override
-	public Result<T> setMessage(String Message, Object ...  formateValues) {
-		return this.setMessage(MessageFormat.format(Message, formateValues));
-	}
-
-	@Override
-	public Result<T> setMessage(Object ...  formateValues) {
-		this.setMessage(this.getMessage(), formateValues);
+	public Result<T> formateMessage(Object ...  formateValues) {
+		if(formateValues != null){
+			this.message = MessageFormat.format(this.getMessage(), formateValues);
+		}
 		return this;
 	}
 
 	@Override
 	public String getMessage() {
-		return this.Message;
+		return this.message;
 	}
 
 	@Override
@@ -151,7 +140,6 @@ public abstract class ResultSupport<T> implements Result<T> {
 		return this.atrributes.get(attributeKey);
 	}
 
-	
 	@Override
 	public void clearAttributes() {
 		this.getAttributes().clear();
@@ -160,10 +148,12 @@ public abstract class ResultSupport<T> implements Result<T> {
 	@Override
 	public String toJson() {
 		resultJson.put("isSuccess", this.success);
-		resultJson.put("code", this.Code);
-		resultJson.put("message", this.Message);
-		resultJson.put("result", this.result);
-		resultJson.put("atrributes", this.atrributes);
+		resultJson.put("code", this.code);
+		resultJson.put("message", this.message);
+		if(result != null)
+			resultJson.put("result", this.result);
+		if(!atrributes.isEmpty())
+			resultJson.put("atrributes", this.atrributes);
 		return resultJson.toJSONString();
 	}
 
@@ -171,5 +161,4 @@ public abstract class ResultSupport<T> implements Result<T> {
 	public String toString() {
 		return toJson();
 	}
-	/*Map<String,User> result = mapper.readValue(src, new TypeReference<Map<String,User>>() { });*/
 }

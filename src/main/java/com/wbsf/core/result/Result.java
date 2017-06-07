@@ -12,18 +12,19 @@ import java.util.Map;
 public interface Result<T> {
 
 	/**
-	 * 初始化rsult code和返回的消息信息
+	 * 初始化rsult code、返回的消息信息以及结果状态
 	 * 
 	 * @param rsConfig
 	 */
-	Result<T> setResultConfig(ResultEnum resultEnum);
+	Result<T> setResultConfig(ResultInfo resultEnum);
 
 	/**
 	 * 初始化rsult code和返回的消息信息
-	 * @param Code 返回状态码
-	 * @param Message 返回消息
+	 * @param code 返回状态码
+	 * @param message 返回消息
+	 * @param success 是否成功
 	 */
-	Result<T> setResultConfig(String Code ,String Message);
+	Result<T> setResultConfig(String code, String message, boolean success);
 
 	/**
 	 * 设置结果
@@ -55,13 +56,6 @@ public interface Result<T> {
 	boolean success();
 
 	/**
-	 * 设置结果编码
-	 * 
-	 * @return Result<T>
-	 */
-	Result<T> setCode(String Code);
-
-	/**
 	 * 获取返回的错误编码
 	 * 
 	 * @return
@@ -69,22 +63,17 @@ public interface Result<T> {
 	String getCode();
 
 	/**
-	 * 设置返回的结果信息
+	 * 格式化范围消息
+	 * @param message 重置消息内容，格式化消息，为偷懒的人准备的
+	 * @param formateValues
 	 */
-	Result<T> setMessage(String Message);
-
-	/**
-	 * 设置返回的结果信息
-	 * @param Message 设置返回消息
-	 * @param formateValues 格式化参数
-	 */
-	Result<T> setMessage(String Message ,Object ...  formateValues);
+	Result<T> formateMessage(String message, Object ...  formateValues);
 	
 	/**
 	 * 格式化范围消息
 	 * @param formateValues
 	 */
-	Result<T> setMessage(Object ...  formateValues);
+	Result<T> formateMessage(Object ...  formateValues);
 
 	/**
 	 * 获取返回的结果信息

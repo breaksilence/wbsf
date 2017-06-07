@@ -1,6 +1,6 @@
 package com.wbsf.core.result.config;
 
-import com.wbsf.core.result.ResultEnum;
+import com.wbsf.core.result.ResultInfo;
 
 /**
  * 处理结果默认的枚举实现类
@@ -8,7 +8,7 @@ import com.wbsf.core.result.ResultEnum;
  * @author xiangzheng
  *
  */
-public enum ResponseEnum implements ResultEnum {
+public enum BaseResultEnum implements ResultInfo {
 	/** 成功默认枚举类型 */
 	SUCCESS("success", "success",true)
 	/** 失败默认枚举类型 */
@@ -33,7 +33,7 @@ public enum ResponseEnum implements ResultEnum {
 	 * <li>true 处理成功</li>
 	 * <li>false 处理失败</li>
 	 */
-	private ResponseEnum(String resultCode, String resultMsg ,boolean successFlag) {
+	private BaseResultEnum(String resultCode, String resultMsg ,boolean successFlag) {
 		this.resultCode = resultCode;
 		this.resultMsg = resultMsg;
 		this.isSuccess = successFlag;

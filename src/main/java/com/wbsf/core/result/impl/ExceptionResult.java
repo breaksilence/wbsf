@@ -1,7 +1,7 @@
 package com.wbsf.core.result.impl;
 
-import com.wbsf.core.result.ResultEnum;
-import com.wbsf.core.result.config.ResponseEnum;
+import com.wbsf.core.result.ResultInfo;
+import com.wbsf.core.result.config.BaseResultEnum;
 
 /**
  * 异常结果实现类，继承ResultSupport
@@ -18,8 +18,9 @@ public class ExceptionResult<T> extends ResultSupport<T> {
 	 * @param excption
 	 */
 	public ExceptionResult(Exception excption){
-		super(ResponseEnum.EXCEPTION);
-		this.setException(excption);
+		super(BaseResultEnum.EXCEPTION);
+		super.message = excption.getMessage();
+		this.exception = excption;
 	}
 	
 	/**
@@ -27,24 +28,21 @@ public class ExceptionResult<T> extends ResultSupport<T> {
 	 * @param exceptionMsg
 	 */
 	public ExceptionResult(String exceptionMsg){
-		super(ResponseEnum.EXCEPTION);
-		this.setMessage(exceptionMsg);
+		super(BaseResultEnum.EXCEPTION);
+		super.message = exceptionMsg;
+		this.exception = new Exception(exceptionMsg);
 	}
 	
 	/**
 	 * 构建异常实例
 	 * @param resultEnum
 	 */
-	public ExceptionResult(ResultEnum resultEnum){
+	public ExceptionResult(ResultInfo resultEnum){
 		super(resultEnum);
+		this.exception = new Exception(resultEnum.getMsg());
 	}
 
 	public Exception getException() {
 		return exception;
-	}
-	
-
-	public void setException(Exception exception) {
-		this.exception = exception;
 	}
 }
