@@ -22,7 +22,7 @@ public class ServiceException extends Exception {
 	/**
 	 * 异常错误结果枚举，反应错误的状态码和附加信息
 	 */
-	private ResultInfo exceptionEnum;
+	private ResultInfo exceptionInfo;
 	
 	/**
 	 * 继承 Exception 父类构造方法
@@ -33,11 +33,11 @@ public class ServiceException extends Exception {
 	
 	/**
 	 * 通过结果枚举构建异常service异常类
-	 * @param exceptionEnum
+	 * @param exceptionInfo
 	 */
-	public ServiceException(ResultInfo exceptionEnum){
-		super(exceptionEnum.getMsg());
-		this.exceptionEnum = exceptionEnum;
+	public ServiceException(ResultInfo exceptionInfo){
+		super(exceptionInfo.getMsg());
+		this.exceptionInfo = exceptionInfo;
 	}
 	/**
 	 * 继承 Exception 父类构造方法
@@ -69,11 +69,11 @@ public class ServiceException extends Exception {
 	 * 获取异常处理的结果信息
 	 * @return
 	 */
-	public ResultInfo getExceptionEnum() {
-		if (exceptionEnum == null){
-			exceptionEnum = new ReusltInfoBuilder(BaseResultEnum.EXCEPTION.getCode(), this.getMessage(), BaseResultEnum.EXCEPTION.successFlag());
+	public ResultInfo getResultInfo() {
+		if (exceptionInfo == null){
+			exceptionInfo = new ReusltInfoBuilder(BaseResultEnum.EXCEPTION.getCode(), this.getMessage(), BaseResultEnum.EXCEPTION.successFlag());
 		}
-		return exceptionEnum;
+		return exceptionInfo;
 	}
 	
 	/**
@@ -81,8 +81,8 @@ public class ServiceException extends Exception {
 	 * @return
 	 */
 	public Result<?> exceptionResult(){
-		if(exceptionEnum != null){
-			return new ExceptionResult<>(exceptionEnum);
+		if(exceptionInfo != null){
+			return new ExceptionResult<>(exceptionInfo);
 		}else{
 			return new ExceptionResult<>(this);
 		}

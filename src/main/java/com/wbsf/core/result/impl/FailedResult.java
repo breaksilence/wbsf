@@ -20,9 +20,9 @@ public class FailedResult<T> extends ResultSupport<T> {
 	
 	/**
 	 * 构建失败实例
-	 * @param resultEnum
+	 * @param resultInfo
 	 */
-	public FailedResult(ResultInfo resultEnum){
-		super(resultEnum);
+	public FailedResult(ResultInfo resultInfo){
+		super(resultInfo);
 	}
 }

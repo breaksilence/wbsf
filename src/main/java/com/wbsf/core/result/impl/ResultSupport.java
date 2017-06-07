@@ -35,10 +35,20 @@ public abstract class ResultSupport<T> implements Result<T> {
 	
 	/**
 	 * 根据result枚举类型构造result实例
-	 * @param resultEnum
+	 * @param resultInfo
 	 */
-	public ResultSupport(ResultInfo resultEnum) {
-		setResultConfig(resultEnum);
+	public ResultSupport(ResultInfo resultInfo) {
+		setResultConfig(resultInfo);
+	}
+	
+	/**
+	 * 根据result枚举类型构造result实例
+	 * @param code 结果状态码
+	 * @param message 结果信息
+	 * @param success 结果状态
+	 */
+	public ResultSupport(String code, String message, boolean success) {
+		setResultConfig(code, message, success);
 	}
 	
 	/**
@@ -50,14 +60,14 @@ public abstract class ResultSupport<T> implements Result<T> {
 	}
 	
 	@Override
-	public Result<T> setResultConfig(ResultInfo resultEnum){
-		return setResultConfig(resultEnum.getCode() ,resultEnum.getMsg() ,resultEnum.successFlag());
+	public Result<T> setResultConfig(ResultInfo resultInfo){
+		return setResultConfig(resultInfo.getCode() ,resultInfo.getMsg() ,resultInfo.successFlag());
 	}
 	
 	@Override
-	public Result<T> setResultConfig(String Code, String Message, boolean success) {
-		this.code = Code;
-		this.message = Message;
+	public Result<T> setResultConfig(String code, String message, boolean success) {
+		this.code = code;
+		this.message = message;
 		this.success = success;
 		return this;
 	}

@@ -29,9 +29,9 @@ public class SuccessResult<T> extends ResultSupport<T> {
 	
 	/**
 	 * 构建成功实例
-	 * @param resultEnum
+	 * @param resultInfo
 	 */
-	public SuccessResult(ResultInfo resultEnum){
-		super(resultEnum);
+	public SuccessResult(ResultInfo resultInfo){
+		super(resultInfo);
 	}
 }
