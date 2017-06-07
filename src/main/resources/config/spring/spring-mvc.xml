@@ -103,8 +103,10 @@
 			</set>
 		</property>
 	</bean>
+	
 	<!-- 基于Session的本地化解析器 -->
 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />
+	
 	<!-- 默认的视图解析器 - -->
 	<bean id="viewResolvers"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:order="3">
@@ -150,21 +152,46 @@
 	</bean>
 
 	<!-- 上传文件大小 通过sysConfig.properties配置 -->
-	<bean id="multipartResolver"
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
-		p:defaultEncoding="UTF-8">
-		<property name="maxUploadSize">
-			<value>${sys.config.maxUploadSize}</value>
-		</property>
-		<property name="maxInMemorySize">
-			<value>${sys.config.maxInMemorySize}</value>
-		</property>
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8"/> 
+		<property name="maxUploadSize" value="${sys.config.maxUploadSize}"/>
+		<property name="maxInMemorySize" value="${sys.config.maxInMemorySize}"/>
+		<property name="uploadTempDir" value="${sys.config.uploadTempDir}"/>
 	</bean>
 
 	<!-- Bean解析器,级别高于默认解析器,寻找bean对象进行二次处理 -->
 	<bean id="beanNameViewResolver"
 		class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0">
 	</bean>
+	
+	<!-- 全局统一异常处理 ↓-->
+	<bean id="globalExceptionHandler" class="com.wbsf.core.spring.handler.ExceptionHandler">
+		<property name="exceptionMappings">
+			<props>
+				<!-- 处理超过大小时的异常 -->
+				<!--遇到MaxUploadSizeExceededException异常时，自动跳转到/WEB-INF/views/errors/upload.jsp页面 -->
+				<prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">errors/upload</prop>
+                <prop key="java.lang.Throwable">errors/error</prop>
+			</props>
+		</property>
+		<property name="statusCodes">     
+             <props>     
+                 <prop key="errors/500">500</prop>     
+                 <prop key="errors/404">404</prop>     
+             </props>     
+         </property>   
+         <!-- 设置日志输出级别，不定义则默认不输出警告等错误日志信息 -->     
+         <property name="warnLogCategory" value="WARN"/>     
+         <!-- 默认错误页面，当找不到上面mappings中指定的异常对应视图时，使用本默认配置 -->     
+         <property name="defaultErrorView" value="errors/error"/>     
+         <!-- 默认HTTP状态码 -->     
+         <property name="defaultStatusCode" value="500"/>
+	</bean>
+	<!-- 全局统一异常处理 ↑-->
+	
+	<mvc:resources location="/statics/" mapping="/statics/**" cache-period="0" />
+	<mvc:resources location="/plugins" mapping="/plugins/**" cache-period="0" />
+	<mvc:view-controller path="/" view-name="redirect:/login" />
 	
 	<!-- 拦截器 -->
 	<mvc:interceptors>
@@ -173,31 +200,16 @@
             <mvc:mapping path="/**"/>
 			<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"/>
         </mvc:interceptor>
-		
+        <!-- 统一处理请求编码拦截器 -->
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
-			<bean class="com.wbsf.interceptor.EncodingInterceptor" />
+			<bean class="com.wbsf.core.spring.interceptor.EncodingInterceptor" />
 		</mvc:interceptor>
-		<!-- <mvc:interceptor>
-			<mvc:mapping path="/**" />
-			<bean class="com.wbsf.interceptor.LoginInterceptor">
-				<property name="excludeUrls">
-					<list>
-						<value>loginController.do?goPwdInit</value>
-						<value>loginController.do?pwdInit</value>
-						<value>loginController.do?login</value>
-						<value>loginController.do?login2</value>
-						<value>index</value>
-						<value>shop</value>
-						<value>hall</value>
-					</list>
-				</property>
-			</bean>
-		</mvc:interceptor> -->
+		<!-- 文件拦截器用于处理文件类型校验 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/file/**" />
+			<!-- 配置自定义的文件上传类型限制拦截器 -->
+        	<bean class="com.wbsf.core.spring.interceptor.FileTypeInterceptor" />
+		</mvc:interceptor>
 	</mvc:interceptors>
-	<!-- 全局统一异常处理 -->
-	<bean id="exceptionHandler" class="com.wbsf.core.spring.handler.ExceptionHandler"/>
-	<mvc:resources location="/statics/" mapping="/statics/**" cache-period="0" />
-	<mvc:resources location="/plugins" mapping="/plugins/**" cache-period="0" />
-	<mvc:view-controller path="/" view-name="redirect:/login" />
 </beans>

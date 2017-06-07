@@ -1,6 +1,7 @@
 package com.wbsf.core.result.config;
 
 import com.wbsf.core.result.ResultInfo;
+import com.wbsf.core.spring.utils.PropertyConfigurer;
 
 /**
  * 处理结果默认的枚举实现类
@@ -10,11 +11,13 @@ import com.wbsf.core.result.ResultInfo;
  */
 public enum BaseResultEnum implements ResultInfo {
 	/** 成功默认枚举类型 */
-	SUCCESS("success", "success",true)
+	SUCCESS("success", PropertyConfigurer.getProperty("request.success", "操作成功！"), true)
 	/** 失败默认枚举类型 */
-	,FAILED("error", "failed", false)
+	,FAILED("error", PropertyConfigurer.getProperty("request.failed", "操作失败！"), false)
 	/** 异常默认枚举类型 */
-	,EXCEPTION("exception", "some exception happened ! but the error info not be init." ,false);
+	,EXCEPTION("exception", PropertyConfigurer.getProperty("request.exception", "操作异常！"), false)
+	,FILE_MAX_UPLOAD_SIZE_EXCEEDED_EXCEPTION("exception", PropertyConfigurer.getProperty("request.fileMaxUploadSizeException","上传的文件过大！"), false)
+	,ILLEGAL_FILE_TYPE_EXCEPTION("exception", PropertyConfigurer.getProperty("request.IllegalFileTypeException", "上传的文件类型非法"), false);
 
 	/** 结果编码 */
 	private String resultCode;
