@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @param <T>
  */
-public interface ServiceSupport<T>{
+public interface BaseService<T>{
 	
 	/**
 	 * 根据数据库实例的主键查询实体对象

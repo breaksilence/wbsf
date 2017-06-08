@@ -6,11 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wbsf.core.mapper.BaseMapper;
-import com.wbsf.core.service.ServiceSupport;
+import com.wbsf.core.service.BaseService;
 
-
-@Service("serviceSupport")
-public abstract class ServiceSupportImpl<T,M extends BaseMapper<T>> implements ServiceSupport<T>{
+/**
+ * 基础服务实现类，该类提供了数据库单表操作的基础方法
+ * @author xiangzheng
+ *
+ * @param <T>
+ * @param <M>
+ */
+@Service("baseService")
+public abstract class BaseServiceSupport<T,M extends BaseMapper<T>> implements BaseService<T>{
 	
 	@Autowired
 	protected M mapper;
