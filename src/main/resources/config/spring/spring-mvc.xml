@@ -15,7 +15,7 @@
   	<mvc:annotation-driven validator="validator" conversion-service="conversionService"/>
   	<context:property-placeholder location="classpath:config/init/sysConfig.properties"/>
 	<!-- 由ServletContextListener产生的是父容器，springMVC产生的是子容器，子容器Controller进行扫描装配时装配了@Service注解的实例，而该实例理应由父容器进行初始化以保证事务的增强处理，所以此时得到的将是原样的Service（没有经过事务加强处理，故而没有事务处理能力。 -->
-	<context:component-scan base-package="com.wbsf.modules.*.controller"
+	<context:component-scan base-package="com.wbsf.modules.*.controller,com.wbsf.core.controller"
 		use-default-filters="false">
 		<context:include-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />

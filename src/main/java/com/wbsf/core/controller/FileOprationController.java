@@ -1,4 +1,4 @@
-package com.wbsf.core.controller.file;
+package com.wbsf.core.controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-
-import com.wbsf.core.controller.ControllerSupport;
 /**
  * 文件上传下载基础服务接口类
 带参数上传如何同时处理文件和表单数据
@@ -23,8 +21,8 @@ import com.wbsf.core.controller.ControllerSupport;
  *
  */
 @Controller
-@RequestMapping(value="/file")
-public class FileController extends ControllerSupport {
+@RequestMapping(value="/fileOpration")
+public class FileOprationController extends ControllerSupport {
 	/**
 	 * 采用spring提供的上传文件的方法 
 	 * @return
