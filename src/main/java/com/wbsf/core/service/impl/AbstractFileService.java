@@ -8,6 +8,7 @@ import com.wbsf.core.service.FileOperationService;
  * @author xiangzheng
  *
  */
-public abstract class AbstractFileService<T extends FileOpration ,M extends FileOprationMapper<T>> extends BaseServiceSupport<T,M> implements FileOperationService {
-
+public abstract class AbstractFileService<T extends FileOpration ,M extends FileOprationMapper<T>> extends BaseServiceSupport<T,M> implements FileOperationService<T,M> {
+	
+	
 }

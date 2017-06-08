@@ -1,11 +1,17 @@
 package com.wbsf.modules.test.entity;
 
-import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import com.wbsf.core.persistence.BaseEntity;
 
 @Table(name = "t_test_demo")
-public class TestDemo implements Serializable {
+public class TestDemo extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "SELECT LAST_INSERT_ID()")
     private Long id;
