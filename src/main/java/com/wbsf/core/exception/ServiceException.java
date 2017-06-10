@@ -22,7 +22,9 @@ public class ServiceException extends Exception {
 	/**
 	 * 异常错误结果枚举，反应错误的状态码和附加信息
 	 */
-	private ResultInfo exceptionInfo;
+	private ResultInfo exceptionInfo = new ReusltInfoBuilder(BaseResultEnum.EXCEPTION.getCode(), this.getMessage(), BaseResultEnum.EXCEPTION.successFlag());;
+	
+	private Result<?> exceptionResult;
 	
 	/**
 	 * 继承 Exception 父类构造方法
@@ -39,18 +41,21 @@ public class ServiceException extends Exception {
 		super(exceptionInfo.getMsg());
 		this.exceptionInfo = exceptionInfo;
 	}
+	
 	/**
 	 * 继承 Exception 父类构造方法
 	 */
 	public ServiceException(String message) {
 		super(message);
 	}
+	
 	/**
 	 * 继承 Exception 父类构造方法
 	 */
 	public ServiceException(Throwable cause) {
 		super(cause);
 	}
+	
 	/**
 	 * 继承 Exception 父类构造方法
 	 */
@@ -70,22 +75,19 @@ public class ServiceException extends Exception {
 	 * @return
 	 */
 	public ResultInfo getResultInfo() {
-		if (exceptionInfo == null){
-			exceptionInfo = new ReusltInfoBuilder(BaseResultEnum.EXCEPTION.getCode(), this.getMessage(), BaseResultEnum.EXCEPTION.successFlag());
-		}
 		return exceptionInfo;
 	}
 	
+	
 	/**
-	 * 获取异常结果实例
+	 * 获取异常结果
+	 * @param <T>
 	 * @return
 	 */
-	public Result<?> exceptionResult(){
-		if(exceptionInfo != null){
-			return new ExceptionResult<>(exceptionInfo);
-		}else{
-			return new ExceptionResult<>(this);
-		}
-			
+	@SuppressWarnings("unchecked")
+	public <T> Result<T> getExceptionResult() {
+		if(this.exceptionResult == null)
+			this.exceptionResult = new ExceptionResult<>(this);
+		return (Result<T>) exceptionResult;
 	}
 }
