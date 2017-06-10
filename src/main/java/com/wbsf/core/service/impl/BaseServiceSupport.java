@@ -2,9 +2,14 @@ package com.wbsf.core.service.impl;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.wbsf.core.bean.UserSession;
+import com.wbsf.core.config.SystemConfig;
 import com.wbsf.core.mapper.BaseMapper;
 import com.wbsf.core.service.BaseService;
 
@@ -20,6 +25,12 @@ public abstract class BaseServiceSupport<T,M extends BaseMapper<T>> implements B
 	
 	@Autowired
 	protected M mapper;
+	
+	@Autowired
+	protected HttpServletRequest request;
+
+	@Autowired
+	protected HttpServletResponse response;
 	
 	@Override
     public T selectByKey(Object key) {
@@ -50,4 +61,13 @@ public abstract class BaseServiceSupport<T,M extends BaseMapper<T>> implements B
     public List<T> selectByExample(Object example) {
         return mapper.selectByExample(example);
     }
+	
+	protected Long operateUserId() {
+		UserSession userSession = (UserSession) request.getSession().getAttribute(SystemConfig.SESSION_KEY.config());
+		if(userSession != null){
+			return userSession.operateUserId();
+		}else{
+			return SystemConfig.SYSTEM_USER_ID.configLong();
+		}
+	}
 }

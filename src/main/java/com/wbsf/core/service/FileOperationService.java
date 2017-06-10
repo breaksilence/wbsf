@@ -1,118 +1,68 @@
 package com.wbsf.core.service;
 
-import java.io.File;
+import java.util.Date;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.wbsf.core.mapper.FileOprationMapper;
-import com.wbsf.core.persistence.FileOpration;
+import com.wbsf.core.mapper.FileOperationMapper;
+import com.wbsf.core.persistence.FileOperation;
 import com.wbsf.core.result.Result;
 
 /**
- * 统一的文件上传接口，通过该接口进行所有的文件处理操作
+ * <em> 统一的文件上传接口，通过该接口进行所有的文件处理操作 暴露上传文件持久化保存的接口，提供临时文件上传接口 </em>
+ * 
  * @author xiangzheng
  *
  */
-public interface FileOperationService<T extends FileOpration,M extends FileOprationMapper<T>> {
-	
+public interface FileOperationService<T extends FileOperation, M extends FileOperationMapper<T>> {
 
 	/**
-	 * 保存文件到指定目录下
+	 * 保存文件到指定文件夹，该相对文件路径以项目配置的根路径为父级，不会将记录保存到数据库中，如果文件已经存在且不允许覆盖原有文件会抛出异常
+	 * 
 	 * @param relativeStoragePath
-	 * @param multipartFiles 文件数组
-	 * @return 返回文件上传的数据库列表
+	 *            保存的相对路径
+	 * @param saveFile
+	 *            保存的文件数组
+	 * @return 返回保存的文件信息
+	 * @throws Exception
+	 *             抛出文件保存时发生的IO异常
 	 */
-	Result<List<T>> saveFile(String relativeStoragePath, MultipartFile... multipartFiles);
+	Result<List<T>> storage(String relativeStoragePath, MultipartFile... multipartFiles) throws Exception;
 
 	/**
-	 * 保存文件到指定目录下
+	 * 保存文件，同时将文件信息记录到数据库中，保存文件采用散列方式存储
+	 * 
 	 * @param relativeStoragePath
-	 * @param groupFolder 如果指定分组则按照分组进行保存文件信息，若未指定则生成新的
-	 * @param multipartFiles 文件数组
-	 * @return 返回文件上传的数据库列表
+	 *            文件存储的相对路径
+	 * @param multipartFiles
+	 *            spring 提供的上传文件对象的数组
+	 * @return 返回文件上传的数据库持久化列表
 	 */
-	Result<List<T>> saveFile(String relativeStoragePath, String groupFolder, MultipartFile... multipartFiles);
-	
+	Result<List<T>> saveFile(String relativeStoragePath, Date expiredDate, MultipartFile... multipartFiles)
+			throws Exception;
+
 	/**
-	 * 保存文件
-	 * @param request 请求的request
-	 * @param relativeStoragePath 保存文件的相对路径
-	 * @return 返回文件保存文件的处理结果
-	 */
-	Result<List<T>> saveFile(HttpServletRequest request, String relativeStoragePath);
-	
-	/**
-	 * 保存文件
-	 * @param request 请求的request
-	 * @param relativeStoragePath 保存文件的相对路径
-	 * @param groupFolder 如果指定分组则按照分组进行保存文件信息，若未指定则生成新
-	 * @return 返回文件保存文件的处理结果
-	 */
-	Result<List<T>> saveFile(HttpServletRequest request, String relativeStoragePath, String groupFolder);
-	
-	/**
-	 * 将保存文件设置分组
-	 * @param request 请求的request
-	 * @param relativeStoragePath 保存文件的相对路径
-	 * @param groupFolder 如果指定分组则按照分组进行保存文件信息，若未指定则生成新
-	 * @return 返回文件保存文件的处理结果
-	 */
-	Result<List<T>> saveFile(String relativeStoragePath, String groupFolder, File... saveFile);
-	
-	/**
-	 * 直接保存单个文件
-	 * @param request 请求的request
-	 * @param relativeStoragePath 保存文件的相对路径
-	 * @return 返回文件保存文件的处理结果
-	 */
-	Result<List<T>> saveFile(String relativeStoragePath,File... saveFile);
-	
-	/**
-	 * 根据文件资源Id删除文件
-	 * @param fileOperationId 删除文件的ID
+	 * 更新文件存储信息，该方法会根据资源ID确定具体的资源，然后进行资源信息的更新，资源ID为必填项，更新前会检查文件是否存在
+	 * @param updateFiles
 	 * @return
-	 * 	返回删除的文件信息
+	 * @throws Exception
 	 */
-	Result<T> deleteFileById(String fileOperationId);
-	/**
-	 * 根据文件资源名称删除文件
-	 * @param fileOperationId 删除文件的ID
-	 * @return
-	 * 	返回删除的文件信息
-	 */
-	Result<T> deleteFileByName(String fileOperationName);
+	Result<List<T>> updateFile(@SuppressWarnings("unchecked") T... updateFiles) throws Exception;
 	
 	/**
-	 * 根据资源分组删除文件
-	 * @param fileOperationName 文件名，保存后的文件名，非原文件名
-	 * @return
+	 * 根据资源实例删除资源，该方法会尝试根据资源ID，资源url，资源保存的文件名，获取能确定的唯一资源的条件进行删除文件
+	 * @param deleteFile
+	 *            删除的文件条件
+	 * @return 返回删除的文件信息列表
 	 */
-	Result<List<T>> deleteFileByGroup(String groupFolder);
-	
+	Result<List<T>> deleteFile(@SuppressWarnings("unchecked") T... deleteFiles) throws Exception;
+
 	/**
-	 * 根据资源id获取文件
-	 * @param fileOperationId 文件资源id
-	 * @return
-	 * 		文件的实例
+	 * 查询文件列表，该方法的实现会尝试根据资源ID，资源url，资源保存的文件名，获取能确定的唯一资源信息列表
+	 * 
+	 * @param queryFile 加载文件的条件
+	 * @return 返回命中的有效的文件信息列表，有效判定的几个条件为：非逻辑删除，非过期的条件匹配的文件列表
 	 */
-	Result<T> getFileById(String fileOperationId);
-	
-	/**
-	 * 根据文件名称获取资源对象
-	 * @param fileOperationName 文件名，保存后的文件名，非原文件名
-	 * @return
-	 * 		文件的实例
-	 */
-	Result<T> getFileByName(String fileOperationName);
-	
-	/**
-	 * 根据分组获取文件列表的实例
-	 * @param groupFolder
-	 * @return
-	 * 		该组下的所有文件列表
-	 */
-	Result<List<T>> getFileListByGroup(String groupFolder);
+	Result<List<T>> queryFile(@SuppressWarnings("unchecked") T... queryFiles) throws Exception;
 }
