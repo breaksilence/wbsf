@@ -127,6 +127,11 @@ public interface Result<T> {
 	 * 清空attribute的所有属性值
 	 */
 	void clearAttributes();
+
+	/**
+	 * 清空结果对象
+	 */
+	Result<T> clearResult();
 	
 	/**
 	 * 获取json

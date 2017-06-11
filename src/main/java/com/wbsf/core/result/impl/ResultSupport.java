@@ -154,6 +154,12 @@ public abstract class ResultSupport<T> implements Result<T> {
 	public void clearAttributes() {
 		this.getAttributes().clear();
 	}
+	
+	@Override
+	public Result<T> clearResult() {
+		this.result = null;
+		return this;
+	}
 
 	@Override
 	public String toJson() {
