@@ -34,8 +34,10 @@
 	        <property name="searchString" value="Mapper$" />
 	        <property name="replaceString" value="Mapper" />
         </plugin> 
-		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+        <!-- 序列化实体类 -->
+		<!-- <plugin type="org.mybatis.generator.plugins.SerializablePlugin" /> -->
 		<plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+		<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
 		<commentGenerator>
 			<property name="suppressAllComments" value="true" />
 			<property name="suppressDate" value="true" />
@@ -54,7 +56,7 @@
 		<javaClientGenerator targetPackage="${javaClientGenerator.targetPackage}"
 			targetProject="${javaClientGenerator.targetProject}" type="XMLMAPPER" />
 		
-		<table tableName="T_TEST_DEMO" domainObjectName="TestDemo" mapperName="{0}"
+		<table tableName="file_operation_t" domainObjectName="FileOpration1" mapperName="{0}"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">

@@ -423,8 +423,25 @@ public class FileOperation extends BaseEntity {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		return super.equals(obj);
+	public boolean equals(Object that) {
+		 if (this == that) {
+	            return true;
+	        }
+	        if (that == null) {
+	            return false;
+	        }
+	        if (getClass() != that.getClass()) {
+	            return false;
+	        }
+	        FileOperation other = (FileOperation) that;
+	        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+	            && (this.getFileName() == null ? other.getFileName() == null : this.getFileName().equals(other.getFileName()))
+	            && (this.getOriginalFileName() == null ? other.getOriginalFileName() == null : this.getOriginalFileName().equals(other.getOriginalFileName()))
+	            && (this.getMd5() == null ? other.getMd5() == null : this.getMd5().equals(other.getMd5()))
+	            && (this.getSize() == null ? other.getSize() == null : this.getSize().equals(other.getSize()))
+	            && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
+	            && (this.getFileUri() == null ? other.getFileUri() == null : this.getFileUri().equals(other.getFileUri()))
+	            ;
 	}
 
 	@Override
