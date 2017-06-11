@@ -26,6 +26,12 @@ public class ReusltInfoBuilder implements ResultInfo {
 		this.message = message;
 		this.success = success;
 	}
+	
+	public ReusltInfoBuilder(String code, String message) {
+		this.code = code;
+		this.message = message;
+		this.success = true;
+	}
 
 	@Override
 	public String getCode() {
@@ -42,4 +48,24 @@ public class ReusltInfoBuilder implements ResultInfo {
 		return this.success;
 	}
 
+	public ReusltInfoBuilder setCode(String code) {
+		this.code = code;
+		return this;
+	}
+
+	public ReusltInfoBuilder setMessage(String message) {
+		this.message = message;
+		return this;
+	}
+
+	public ReusltInfoBuilder setSuccess() {
+		this.success = true;
+		return this;
+	}
+	
+	public ReusltInfoBuilder setFailed() {
+		this.success = false;
+		return this;
+	}
+	
 }

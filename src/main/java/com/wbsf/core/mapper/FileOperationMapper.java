@@ -1,5 +1,9 @@
 package com.wbsf.core.mapper;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.wbsf.core.persistence.FileOperation;
 
 public interface FileOperationMapper<T extends FileOperation> extends BaseMapper<T> {
@@ -10,4 +14,19 @@ public interface FileOperationMapper<T extends FileOperation> extends BaseMapper
 	 * @return 返回包含MD5值的文件信息
 	 */
 	FileOperation loadFileByMD5(String MD5);
+	
+	/**
+	 * 对文件进行逻辑删除
+	 * @param id 资源ID
+	 * @param deleteFlag 删除标识
+	 * @return 返回删除的实际行数
+	 */
+	int deleteLogical(FileOperation fileOperation);
+	
+	/**
+	 * 查询资源
+	 * @param fileOperation
+	 * @return
+	 */
+	List<FileOperation> queryFiles(@Param("fileOperations")FileOperation... fileOperation);
 }

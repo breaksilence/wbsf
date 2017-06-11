@@ -14,7 +14,7 @@ import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
 import com.wbsf.core.exception.IllegalFileTypeException;
 import com.wbsf.core.result.Result;
-import com.wbsf.core.result.config.BaseResultEnum;
+import com.wbsf.core.result.config.ResultBaseEnum;
 import com.wbsf.core.result.impl.FailedResult;
 import com.wbsf.core.spring.utils.PropertyConfigurer;
 
@@ -43,13 +43,13 @@ public class ExceptionHandler extends SimpleMappingExceptionResolver{
 		             return getModelAndView(viewName, ex, request);
 		         } else {// JSON格式错误返回
 		        	 logger.debug("JSON格式返回" + viewName);
-		        	 Result<?> result = new FailedResult<>(BaseResultEnum.FAILED);
+		        	 Result<?> result = new FailedResult<>(ResultBaseEnum.FAILED);
 		        	 if (ex instanceof MaxUploadSizeExceededException) { 
 				         //对文件过大问题进行处理
-		        		 result.setResultConfig(BaseResultEnum.FILE_MAX_UPLOAD_SIZE_EXCEEDED_EXCEPTION);
+		        		 result.setResultConfig(ResultBaseEnum.FILE_MAX_UPLOAD_SIZE_EXCEEDED_EXCEPTION);
 		        		 result.formateMessage(PropertyConfigurer.getProperty("sys.config.maxUploadSize")); //文件上传最大不能超过的配置
 				     } else if (ex instanceof IllegalFileTypeException) {
-				    	 result.setResultConfig(BaseResultEnum.ILLEGAL_FILE_TYPE_EXCEPTION);
+				    	 result.setResultConfig(ResultBaseEnum.ILLEGAL_FILE_TYPE_EXCEPTION);
 		        		 result.formateMessage(PropertyConfigurer.getProperty("sys.config.allowFileType"));
 				     }
 		        	 //返回Json数据

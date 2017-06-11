@@ -20,7 +20,7 @@ import com.wbsf.core.controller.ControllerSupport;
 import com.wbsf.core.page.PageQuery;
 import com.wbsf.core.page.PageResult;
 import com.wbsf.core.result.Result;
-import com.wbsf.core.result.config.BaseResultEnum;
+import com.wbsf.core.result.config.ResultBaseEnum;
 import com.wbsf.core.result.impl.SuccessResult;
 import com.wbsf.core.result.utils.ResultHelper;
 import com.wbsf.modules.test.entity.TestDemo;
@@ -46,7 +46,7 @@ public class TestController extends ControllerSupport {
 	public String insertTest(@Valid TestInsertForm test, BindingResult testValid){
 		Result<TestDemo> result = ResultHelper.buildSuccess();
 		if(testValid.hasErrors()){
-			result = ResultHelper.buildFailed(BaseResultEnum.FAILED);
+			result = ResultHelper.buildFailed(ResultBaseEnum.FAILED);
 			result.putAttribute("errorField",getError(testValid));
 			return result.toJson();
 		}
@@ -69,7 +69,7 @@ public class TestController extends ControllerSupport {
 	public String pageQuery(@Valid QueryForm demo, BindingResult testValid ,PageQuery<TestDemo> pageQuery,Long maxId,Long minId){
 		Result<TestDemo> result = ResultHelper.buildSuccess();
 		if(testValid.hasErrors()){
-			result = ResultHelper.buildFailed(BaseResultEnum.FAILED);
+			result = ResultHelper.buildFailed(ResultBaseEnum.FAILED);
 			result.putAttribute("errorField",getError(testValid));
 			return result.toJson();
 		}
@@ -104,7 +104,7 @@ public class TestController extends ControllerSupport {
 	public String sessionTest(HttpServletRequest request ,HttpServletResponse response){
 		request.getSession().setAttribute("sessionTemp1", "test");
 		Result<TestDemo> result = ResultHelper.buildSuccess();
-		result.setResultConfig(BaseResultEnum.SUCCESS);
+		result.setResultConfig(ResultBaseEnum.SUCCESS);
 		return result.toJson();
 	}
 	

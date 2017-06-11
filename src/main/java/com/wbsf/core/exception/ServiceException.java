@@ -2,7 +2,7 @@ package com.wbsf.core.exception;
 
 import com.wbsf.core.result.Result;
 import com.wbsf.core.result.ResultInfo;
-import com.wbsf.core.result.config.BaseResultEnum;
+import com.wbsf.core.result.config.ResultBaseEnum;
 import com.wbsf.core.result.impl.ExceptionResult;
 import com.wbsf.core.result.impl.ReusltInfoBuilder;
 
@@ -12,7 +12,7 @@ import com.wbsf.core.result.impl.ReusltInfoBuilder;
  * @author xiangzheng
  *
  */
-public class ServiceException extends Exception {
+public class ServiceException extends RuntimeException {
 
 	/**
 	 * 
@@ -22,7 +22,7 @@ public class ServiceException extends Exception {
 	/**
 	 * 异常错误结果枚举，反应错误的状态码和附加信息
 	 */
-	private ResultInfo exceptionInfo = new ReusltInfoBuilder(BaseResultEnum.EXCEPTION.getCode(), this.getMessage(), BaseResultEnum.EXCEPTION.successFlag());;
+	private ResultInfo exceptionInfo = new ReusltInfoBuilder(ResultBaseEnum.EXCEPTION.getCode(), this.getMessage(), ResultBaseEnum.EXCEPTION.successFlag());;
 	
 	private Result<?> exceptionResult;
 	

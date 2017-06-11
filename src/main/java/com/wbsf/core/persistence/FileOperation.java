@@ -1,6 +1,8 @@
 package com.wbsf.core.persistence;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.UncheckedIOException;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -8,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 文件数据库实例
@@ -406,10 +410,24 @@ public class FileOperation extends BaseEntity {
      * @return
      */
     public File getFile(){
+    	if(StringUtils.isBlank(fileUri))
+    		throw  new UncheckedIOException(new FileNotFoundException("资源路径为空"));
     	return new File(fileUri);
     }
     
+    
+    
     @Override
+	public int hashCode() {
+		return this.id.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
+
+	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());

@@ -29,4 +29,15 @@
   <select id="loadFileByMD5" resultMap="BaseResultMap" parameterType="string">
   		select <include refid="Base_Column_List"/> from file_operation_t where  md5= #{md5,jdbcType=VARCHAR} limit 0,1
   </select>
+  
+  <delete id="deleteLogical">
+  		update file_operation_t set delete_flag = #{deleteFlag,jdbcType=INT},modify_by=#{modifyBy,jdbcType=BIGINT},modify_date=now() where id=#{id,jdbcType=BIGINT} and delete_flag != #{deleteFlag,jdbcType=INT}
+  </delete>
+  
+  <select id="queryFiles" resultMap="BaseResultMap" parameterType="com.wbsf.core.persistence.FileOperation">
+  		select <include refid="Base_Column_List"/> from file_operation_t where id in 
+  		<foreach collection="fileOperations" item="fileOperation" open="(" close=")" separator=",">
+            #{fileOperation.id,jdbcType=BIGINT}
+        </foreach>
+  </select>
 </mapper>

@@ -9,7 +9,7 @@ import com.wbsf.core.spring.utils.PropertyConfigurer;
  * @author xiangzheng
  *
  */
-public enum BaseResultEnum implements ResultInfo {
+public enum ResultBaseEnum implements ResultInfo {
 	/** 成功默认枚举类型 */
 	SUCCESS("success", PropertyConfigurer.getProperty("request.success", "操作成功！"), true),
 	SUCCESS_UPLOAD_FILE("success", PropertyConfigurer.getProperty("request.fileUploadSuccess", "文件上传成功！"), true),
@@ -39,7 +39,7 @@ public enum BaseResultEnum implements ResultInfo {
 	 * <li>true 处理成功</li>
 	 * <li>false 处理失败</li>
 	 */
-	private BaseResultEnum(String resultCode, String resultMsg ,boolean successFlag) {
+	private ResultBaseEnum(String resultCode, String resultMsg ,boolean successFlag) {
 		this.resultCode = resultCode;
 		this.resultMsg = resultMsg;
 		this.isSuccess = successFlag;

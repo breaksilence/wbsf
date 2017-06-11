@@ -13,7 +13,7 @@ import com.wbsf.core.result.impl.SuccessResult;
  * @author xiangzheng
  *
  */
-public class ResultHelper<T> {
+public class ResultHelper{
 	
 	/**
 	 * 构建成功的结果实例
