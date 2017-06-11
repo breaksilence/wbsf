@@ -9,6 +9,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,7 +30,8 @@ import com.wbsf.core.service.FileOperationService;
  * @author xiangzheng
  *
  */
-public abstract class AbstractFileService extends BaseServiceSupport<FileOperation ,FileOperationMapper<FileOperation>> implements FileOperationService<FileOperation ,FileOperationMapper<FileOperation>> {
+@Component
+public abstract class AbstractFileService extends BaseServiceSupport<FileOperation ,FileOperationMapper> implements FileOperationService {
 	private static final Logger logger = LogManager.getLogger(AbstractFileService.class);
 	
 	@Override

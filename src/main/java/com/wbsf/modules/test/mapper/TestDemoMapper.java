@@ -2,7 +2,7 @@ package com.wbsf.modules.test.mapper;
 
 import java.util.List;
 
-import com.wbsf.core.mapper.BaseMapper;
+import com.wbsf.core.BaseMapper;
 import com.wbsf.core.page.PageQuery;
 import com.wbsf.modules.test.entity.TestDemo;
 

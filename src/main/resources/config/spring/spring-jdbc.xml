@@ -70,10 +70,10 @@
 	<!-- 和Spring集成时，允许通过markerInterface属性配置通用接口（注意该属性的原有作用不变），想要让该接口自动注册，该接口就需要继承tk.mybatis.mapper.common.Marker接口，Mapper<T>默认继承该接口，所以如果自己的接口是继承Mapper<T>的，不需要再继承。 -->
 	<bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="sqlSessionFactoryBeanName" value="mainSqlSessionFactory" />
-		<property name="basePackage" value="com.wbsf.modules.*.mapper" />
+		<property name="basePackage" value="com.wbsf.modules.*.mapper,com.wbsf.core.mapper" />
 		<property name="properties">
 	        <value>
-	            mappers=com.wbsf.core.mapper.BaseMapper
+	            mappers=com.wbsf.core.BaseMapper
 	        </value>
    		 </property>
 		<!-- 通用Mapper通过属性注入进行配置，默认不配置时会注册Mapper<T>接口 <property name="properties"> 

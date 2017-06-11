@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.wbsf.core.config.FileOperationConfig;
-import com.wbsf.core.mapper.FileOperationMapper;
 import com.wbsf.core.persistence.FileOperation;
 import com.wbsf.core.result.Result;
 import com.wbsf.core.service.FileOperationService;
@@ -22,7 +21,7 @@ import com.wbsf.core.service.FileOperationService;
 public class FileOprationController extends ControllerSupport {
 
 	@Resource(name="fileOperationSupport")
-	private FileOperationService<FileOperation, FileOperationMapper<FileOperation>>  fileOperationSupport;
+	private FileOperationService  fileOperationSupport;
 	/**
 	 * 采用spring提供的上传文件的方法 
 	 * @return
