@@ -41,6 +41,10 @@ public abstract class BaseServiceSupport<T,M extends BaseMapper<T>> implements B
     public int save(T entity) {
         return mapper.insert(entity);
     }
+	
+	public int saveSelective(T entity) {
+		return mapper.insertSelective(entity);
+	}
 
 	@Override
     public int delete(Object key) {

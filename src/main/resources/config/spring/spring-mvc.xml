@@ -188,9 +188,9 @@
          <property name="defaultStatusCode" value="500"/>
 	</bean>
 	<!-- 全局统一异常处理 ↑-->
-	
+
 	<mvc:resources location="/statics/" mapping="/statics/**" cache-period="0" />
-	<mvc:resources location="/plugins" mapping="/plugins/**" cache-period="0" />
+	<mvc:resources location="/plugins/" mapping="/plugins/**" cache-period="0" />
 	<mvc:view-controller path="/" view-name="redirect:/login" />
 	
 	<!-- 拦截器 -->

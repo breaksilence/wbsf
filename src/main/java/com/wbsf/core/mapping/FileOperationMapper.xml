@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.wbsf.core.mapper.FileOprationMapper">
+<mapper namespace="com.wbsf.core.mapper.FileOperationMapper">
  
   <resultMap id="BaseResultMap" type="com.wbsf.core.persistence.FileOperation">
     <id column="id" jdbcType="BIGINT" property="id" />
@@ -31,7 +31,7 @@
   </select>
   
   <delete id="deleteLogical">
-  		update file_operation_t set delete_flag = #{deleteFlag,jdbcType=INT},modify_by=#{modifyBy,jdbcType=BIGINT},modify_date=now() where id=#{id,jdbcType=BIGINT} and delete_flag != #{deleteFlag,jdbcType=INT}
+  		update file_operation_t set delete_flag = #{deleteFlag,jdbcType=INTEGER},modify_by=#{modifyBy,jdbcType=BIGINT},modify_date=now() where id=#{id,jdbcType=BIGINT} and delete_flag != #{deleteFlag,jdbcType=INTEGER}
   </delete>
   
   <select id="queryFiles" resultMap="BaseResultMap" parameterType="com.wbsf.core.persistence.FileOperation">

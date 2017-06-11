@@ -60,6 +60,7 @@
 		<property name="mapperLocations">
 			<list>
 				<value>classpath*:com/wbsf/modules/**/mapping/*Mapper.xml</value>
+				<value>classpath*:com/wbsf/core/mapping/*Mapper.xml</value>
 				<!-- 需要时开放 -->
 				<!-- <value>classpath:com/rmsframework/mapper/**/*Mapper.xml</value> -->
 			</list>
@@ -101,7 +102,7 @@
 
 	<aop:config>
 		<aop:advisor
-			pointcut="execution(* com.wbsf.modules.*.service..*.*(..))"
+			pointcut="execution(* com.wbsf.modules.*.service..*.*(..)) || execution(* com.wbsf.core.service..*.*(..))"
 			advice-ref="mainTxAdvice" />
 	</aop:config>
 

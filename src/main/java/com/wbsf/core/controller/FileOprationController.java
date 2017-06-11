@@ -29,7 +29,7 @@ public class FileOprationController extends ControllerSupport {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "upload", method = { RequestMethod.GET, RequestMethod.POST })
-	public String springUpload(@RequestParam("file") MultipartFile[] files, @RequestParam("path")String pathKey) throws Exception {
+	public String springUpload(@RequestParam("file") MultipartFile[] files, @RequestParam(value="path",required=false)String pathKey) throws Exception {
 		// 创建一个计时器
 		StopWatch watch = new StopWatch();
 		// 计时器开始

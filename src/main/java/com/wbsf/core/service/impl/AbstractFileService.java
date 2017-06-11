@@ -100,7 +100,8 @@ public abstract class AbstractFileService extends BaseServiceSupport<FileOperati
 					operFile.setOriginalFileName(originalFileName);//设置原始文件名
 					operFile.setMd5(md5);//设置MD5
 					operFile.setState(0); //设置文件状态为游离状态
-					operFile.setType(multipartFile.getContentType()); //设置文件类型
+					String fileType = originalFileName.substring(originalFileName.lastIndexOf(".")+1);
+					operFile.setType(fileType); //设置文件类型
 					operFile.setDeleteFlag(1); //设置文件是否被逻辑删除
 					operFile.setCreateBy(super.operateUserId()); //通过spring获取当前线程是否有用户信息，如果没有则认为是系统操作
 					operFile.setExpiredDate(expiredDate);
@@ -108,7 +109,7 @@ public abstract class AbstractFileService extends BaseServiceSupport<FileOperati
 						md5FileList.add(operFile);//存入MD5列表队列中，用于校对哪些文件是历史存在的文件，并非最新上传的
 						operFile.setFileUri(sameMd5File.getFileUri()); //设置文件保存资源路劲
 					} else {
-						String storagePath = storagePath(saveName, relativeStoragePath);
+						String storagePath = storagePath(saveName+"."+fileType, relativeStoragePath);
 						operFile.setFileUri(storagePath); //设置文件保存资源路劲
 						try {
 							multipartFile.transferTo(new File(storagePath));
@@ -118,7 +119,7 @@ public abstract class AbstractFileService extends BaseServiceSupport<FileOperati
 						}
 					}
 					if (isPersistence) { //持久化标识
-						super.save(operFile);//保存文件到数据库，同时将保存的文件id回写
+						super.saveSelective(operFile);//保存文件到数据库，同时将保存的文件id回写
 					}
 					operFiles.add(operFile);
 				}else{
@@ -203,7 +204,7 @@ public abstract class AbstractFileService extends BaseServiceSupport<FileOperati
 	 */
 	protected String storageFileName(String filename) { // 2.jpg
 		// 为防止文件覆盖的现象发生，要为上传文件产生一个唯一的文件名
-		return IDGenerator.uuid() + "_" + filename;
+		return IDGenerator.uuid();
 	}  
 	
 	 /**
@@ -226,7 +227,12 @@ public abstract class AbstractFileService extends BaseServiceSupport<FileOperati
         //构造新的保存目录
         storagePathBuilder.append(relativeStoragePath).append(File.separatorChar)
         		.append(folderOneLevel).append(File.separatorChar).append(folderTwoLevel)
-        		.append(File.separatorChar).append(filename); 
+        		.append(File.separatorChar);
+        File folder = new File(storagePathBuilder.toString());
+        if(!folder.exists()){
+        	folder.mkdirs();
+        }
+        storagePathBuilder.append(filename);
         //File既可以代表文件也可以代表目录   
         return storagePathBuilder.toString();
     }
