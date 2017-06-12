@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- log4j2使用说明
-	获取logger实例方式：
-	    private static final Logger logger = LogManager.getLogger(实际类名.class.getName());
-	日志说明：
-	（1）请根据实际情况配置各项参数
-	（2）需要注意日志文件备份数和日志文件大小，注意预留目录空间
-	（3）实际部署的时候log.file.path变量需要修改成linux目录
+    获取logger实例方式：
+        private static final Logger logger = LogManager.getLogger(实际类名.class.getName());
+    日志说明：
+    （1）请根据实际情况配置各项参数
+    （2）需要注意日志文件备份数和日志文件大小，注意预留目录空间
+    （3）实际部署的时候log.file.path变量需要修改成linux目录
  -->
  <!--
     status : 这个用于设置log4j2自身内部的信息输出,可以不设置,默认为OFF,当设置成trace时,会看到log4j2内部各种详细输出
@@ -14,8 +14,8 @@
 <!-- 
     log4j2的过滤器也将返回三类状态：Accept（接受）, Deny（拒绝） 或Neutral（中立）。
 其中:
-	Accept意味着不用再调用其他过滤器了，这个LogEvent将被执行；
-	Deny意味着马上忽略这个event，并将此event的控制权交还给过滤器的调用者；
+    Accept意味着不用再调用其他过滤器了，这个LogEvent将被执行；
+    Deny意味着马上忽略这个event，并将此event的控制权交还给过滤器的调用者；
     Neutral则意味着这个event应该传递给别的过滤器，如果再没有别的过滤器可以传递了，那么就由现在这个过滤器来处理。
  -->
  <!-- 
@@ -36,7 +36,7 @@
         TRACE：用于展现程序执行的轨迹。 
     这8个级别优先级从低到高为：ALL<TRACE<DEBUG<INFO<WARN<ERROR<FATAL<OFF。
    -->
-<configuration status="info"  monitorInterval="60">
+<configuration status="info"  monitorInterval="60" xmlns="http://logging.apache.org/log4j/2.0/config">
     <!-- 定义日志的全局变量 -->
     <Properties>
         <Property name="log.file.name">wbsf.log</Property>
