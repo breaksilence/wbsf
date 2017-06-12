@@ -100,7 +100,7 @@ public abstract class AbstractFileService extends BaseServiceSupport<FileOperati
 					operFile.setOriginalFileName(originalFileName);//设置原始文件名
 					operFile.setMd5(md5);//设置MD5
 					operFile.setState(0); //设置文件状态为游离状态
-					String fileType = originalFileName.substring(originalFileName.lastIndexOf(".")+1);
+					String fileType = originalFileName.substring(originalFileName.lastIndexOf(".")+1); //获取文件类型
 					operFile.setType(fileType); //设置文件类型
 					operFile.setDeleteFlag(1); //设置文件是否被逻辑删除
 					operFile.setCreateBy(super.operateUserId()); //通过spring获取当前线程是否有用户信息，如果没有则认为是系统操作
