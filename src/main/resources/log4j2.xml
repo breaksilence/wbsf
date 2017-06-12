@@ -39,7 +39,10 @@
 <configuration status="info"  monitorInterval="60" xmlns="http://logging.apache.org/log4j/2.0/config">
     <!-- 定义日志的全局变量 -->
     <Properties>
-        <Property name="log.file.name">wbsf.log</Property>
+        <Property name="log.info.file.name">wbsf_info.log</Property>
+        <Property name="log.error.file.name">wbsf_error.log</Property>
+        <Property name="log.debug.file.name">wbsf_debug.log</Property>
+        <Property name="log.Warn.file.name">wbsf_Warn.log</Property>
         <!-- 配置日志文件输出目录 -->
         <Property name="log.file.path">D:/log/wbsf/</Property>
       </Properties>
@@ -54,11 +57,52 @@
         </Console>
         
         <!--打印出所有的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
-        <RollingFile name="RollingFile" fileName="${log.file.path}${log.file.name}"
+        <RollingFile name="RollingInfoFile" fileName="${log.file.path}${log.info.file.name}"
             filePattern="${log.file.path}$${date:yyyy-MM}/app-%d{yyyyMMddHHmmssSSS}.log.gz">
             <PatternLayout
                 pattern="%d{yyyy.MM.dd 'at' HH:mm:ss.SSS z} %-5level %class{36} %L %M - %msg%xEx%n" />
-            
+            <Filters>
+               <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+             </Filters>
+            <!-- 日志文件大小 -->
+            <SizeBasedTriggeringPolicy size="50MB" />
+            <!-- 最多保留文件数 -->
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+        <!--打印出所有的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
+        <RollingFile name="RollingErrorFile" fileName="${log.file.path}${log.error.file.name}"
+            filePattern="${log.file.path}$${date:yyyy-MM}/app-%d{yyyyMMddHHmmssSSS}.log.gz">
+            <PatternLayout
+                pattern="%d{yyyy.MM.dd 'at' HH:mm:ss.SSS z} %-5level %class{36} %L %M - %msg%xEx%n" />
+            <Filters>
+              	<ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+             </Filters>
+            <!-- 日志文件大小 -->
+            <SizeBasedTriggeringPolicy size="50MB" />
+            <!-- 最多保留文件数 -->
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+        <!--打印出所有的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
+        <RollingFile name="RollingDebugFile" fileName="${log.file.path}${log.debug.file.name}"
+            filePattern="${log.file.path}$${date:yyyy-MM}/app-%d{yyyyMMddHHmmssSSS}.log.gz">
+            <PatternLayout
+                pattern="%d{yyyy.MM.dd 'at' HH:mm:ss.SSS z} %-5level %class{36} %L %M - %msg%xEx%n" />
+             <Filters>
+        	 	<ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+        	 </Filters>
+            <!-- 日志文件大小 -->
+            <SizeBasedTriggeringPolicy size="50MB" />
+            <!-- 最多保留文件数 -->
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+        <!--打印出所有的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
+        <RollingFile name="RollingWarnFile" fileName="${log.file.path}${log.error.file.name}"
+            filePattern="${log.file.path}$${date:yyyy-MM}/app-%d{yyyyMMddHHmmssSSS}.log.gz">
+            <PatternLayout
+                pattern="%d{yyyy.MM.dd 'at' HH:mm:ss.SSS z} %-5level %class{36} %L %M - %msg%xEx%n" />
+            <Filters>
+               <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
+             </Filters>
             <!-- 日志文件大小 -->
             <SizeBasedTriggeringPolicy size="50MB" />
             <!-- 最多保留文件数 -->
@@ -70,11 +114,15 @@
     <loggers>
         <Root level="trace">
             <AppenderRef ref="Console" />
+            <AppenderRef ref="RollingErrorFile" />
         </Root>
         <!--建立一个默认的root的logger-->
         <Logger name="com.wbsf" level="info"
             additivity="true">
-            <AppenderRef ref="RollingFile" />
+            <AppenderRef ref="RollingInfoFile" />
+            <AppenderRef ref="RollingErrorFile" />
+            <AppenderRef ref="RollingDebugFile" />
+            <AppenderRef ref="RollingWarnFile" />
         </Logger>
     </loggers>
 </configuration>
