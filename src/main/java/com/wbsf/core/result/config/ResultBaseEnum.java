@@ -1,8 +1,7 @@
 package com.wbsf.core.result.config;
 
 import com.wbsf.core.result.ResultInfo;
-import com.wbsf.core.spring.utils.PropertyConfigurer;
-
+import static com.wbsf.core.spring.utils.PropertyConfigurer.getProperty;
 /**
  * 处理结果默认的枚举实现类
  * 
@@ -11,16 +10,16 @@ import com.wbsf.core.spring.utils.PropertyConfigurer;
  */
 public enum ResultBaseEnum implements ResultInfo {
 	/** 成功默认枚举类型 */
-	SUCCESS("success", PropertyConfigurer.getProperty("request.success", "操作成功！"), true),
-	SUCCESS_UPLOAD_FILE("success", PropertyConfigurer.getProperty("request.fileUploadSuccess", "文件上传成功！"), true),
+	SUCCESS("success", getProperty("request.success", "操作成功！"), true),
+	SUCCESS_UPLOAD_FILE("success", getProperty("request.fileUploadSuccess", "文件上传成功！"), true),
 	/** 失败默认枚举类型 */
-	FAILED("error", PropertyConfigurer.getProperty("request.failed", "操作失败！"), false),
+	FAILED("error", getProperty("request.failed", "操作失败！"), false),
 	/** 异常默认枚举类型 */
-	EXCEPTION("exception", PropertyConfigurer.getProperty("request.exception", "操作异常！"), false),
+	EXCEPTION("exception", getProperty("request.exception", "操作异常！"), false),
 	/** 默认的文件上传过大响应信息 */
-	FILE_MAX_UPLOAD_SIZE_EXCEEDED_EXCEPTION("exception", PropertyConfigurer.getProperty("request.fileMaxUploadSizeException","上传的文件过大！"), false),
+	FILE_MAX_UPLOAD_SIZE_EXCEEDED_EXCEPTION("exception", getProperty("request.fileMaxUploadSizeException","上传的文件过大！"), false),
 	/** 上传文件不合法的响应信息 */
-	ILLEGAL_FILE_TYPE_EXCEPTION("exception", PropertyConfigurer.getProperty("request.IllegalFileTypeException", "上传的文件类型非法"), false);
+	ILLEGAL_FILE_TYPE_EXCEPTION("exception", getProperty("request.IllegalFileTypeException", "上传的文件类型非法"), false);
 
 	/** 结果编码 */
 	private String resultCode;
