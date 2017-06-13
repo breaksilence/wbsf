@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.Page;
 import com.wbsf.core.page.PageQuery;
 import com.wbsf.core.page.PageResult;
 import com.wbsf.core.service.impl.BaseServiceSupport;
@@ -14,9 +15,10 @@ import com.wbsf.modules.test.service.TestService;
 public class TestServiceImpl extends BaseServiceSupport<TestDemo, TestDemoMapper> implements TestService {
 	@Override
 	public PageResult<TestDemo> pageQuery(PageQuery<TestDemo> pageQuery) {
-		pageQuery.startPage();
-		List<TestDemo> queryResult = mapper.pageQuery(pageQuery);
-		return pageQuery.buildResult(queryResult);
+		 try(Page<TestDemo> page = pageQuery.startPage()){ //在发生异常时能够更好的释放分页资源
+			 List<TestDemo> queryResult = mapper.pageQuery(pageQuery);
+			 return pageQuery.buildResult(queryResult);
+		 }
 	}
 	
 }

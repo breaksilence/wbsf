@@ -3,6 +3,7 @@ package com.wbsf.core.page;
 import java.util.List;
 
 import com.github.pagehelper.PageInfo;
+import com.wbsf.core.config.SystemConfig;
 import com.wbsf.core.result.impl.ResultSupport;
 
 /**
@@ -17,7 +18,7 @@ import com.wbsf.core.result.impl.ResultSupport;
 public class PageResult<T> extends ResultSupport<PageInfo<T>> {
 	
 	/** 默认分页导航展示的页数 */
-	private static final int DEFUALT_NAVIGATE_PAGES = 8;
+	private static final int DEFUALT_NAVIGATE_PAGES = SystemConfig.PAGE_NAVIGATEPAGES_DEFUALT.configInt();
 
 	public PageResult() {
 		super();

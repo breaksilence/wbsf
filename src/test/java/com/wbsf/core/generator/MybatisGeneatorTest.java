@@ -1,6 +1,8 @@
 package com.wbsf.core.generator;
 
 import org.junit.Test;
+
+import com.wbsf.core.mybatis.generator.MybatisGeneator;
 /**
  * 代码生成器测试类
  * @author xiangzheng

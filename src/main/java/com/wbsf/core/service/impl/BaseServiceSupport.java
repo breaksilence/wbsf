@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import com.wbsf.core.BaseMapper;
 import com.wbsf.core.bean.UserSession;
 import com.wbsf.core.config.SystemConfig;
+import com.wbsf.core.exception.ServiceException;
+import com.wbsf.core.result.ResultInfo;
 import com.wbsf.core.service.BaseService;
 
 /**
@@ -66,6 +68,27 @@ public abstract class BaseServiceSupport<T,M extends BaseMapper<T>> implements B
         return mapper.selectByExample(example);
     }
 	
+	@Override
+	public ServiceException throwServiceExcepiton(String message, Throwable cause) {
+		return new ServiceException(message, cause);
+	}
+	
+	protected ServiceException throwException(String message){
+		return throwServiceExcepiton(message,null);
+	}
+	
+	protected ServiceException throwException(Throwable cause){
+		return throwServiceExcepiton(null,cause);
+	}
+	
+	protected ServiceException throwException(ResultInfo exceptionInfo){
+		return new ServiceException(exceptionInfo);
+	}
+	
+	/**
+	 * 通过基础服务类获取当前用户的ID，方便操作，如果没有获得到当前用户的有效session，则认为是系统操作
+	 * @return
+	 */
 	protected Long operateUserId() {
 		UserSession userSession = (UserSession) request.getSession().getAttribute(SystemConfig.SESSION_KEY.config());
 		if(userSession != null){

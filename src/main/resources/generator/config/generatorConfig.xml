@@ -7,7 +7,7 @@
 	<!-- 详细配置请参考同级目录下的generatorApi.xml文件 -->
 	<!-- http://mbg.cndocs.tk/configreference/context.html -->
 	<properties resource="generator/config/generatorConfig.properties" />
-	<context id="MysqlContext" targetRuntime="com.wbsf.core.generator.plugins.table.TkMyBatis3Impl"
+	<context id="MysqlContext" targetRuntime="com.wbsf.core.mybatis.generator.plugins.table.TkMyBatis3Impl"
 		defaultModelType="flat">
 		<!-- 生成的Java文件的编码 -->
 		<property name="javaFileEncoding" value="UTF-8" />
@@ -25,12 +25,12 @@
 			<property name="caseSensitive" value="true" />
 		</plugin>
 		<!-- 对mapper.xml指定后缀替换 -->
-        <plugin type="com.wbsf.core.generator.plugins.rename.RenameSqlMapperPlugin">  
+        <plugin type="com.wbsf.core.mybatis.generator.plugins.rename.RenameSqlMapperPlugin">  
 	        <property name="searchString" value="Mapper" />
 	        <property name="replaceString" value="Mapper" />
         </plugin>
         <!-- 对mapper.java指定后缀替换 -->  
-        <plugin type="com.wbsf.core.generator.plugins.rename.RenameJavaMapperPlugin">  
+        <plugin type="com.wbsf.core.mybatis.generator.plugins.rename.RenameJavaMapperPlugin">  
 	        <property name="searchString" value="Mapper$" />
 	        <property name="replaceString" value="Mapper" />
         </plugin> 
