@@ -1,4 +1,4 @@
-package com.wbsf.core.generator.plugins.table;
+package com.wbsf.core.mybatis.generator.plugins.table;
 
 
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;

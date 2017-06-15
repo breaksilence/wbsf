@@ -1,4 +1,4 @@
-package com.wbsf.core.generator;
+package com.wbsf.core.mybatis.generator;
 
 import java.util.ArrayList;
 import java.util.List;

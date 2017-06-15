@@ -1,4 +1,4 @@
-package com.wbsf.core.generator.plugins.rename;
+package com.wbsf.core.mybatis.generator.plugins.rename;
 
 
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;

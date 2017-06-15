@@ -2,6 +2,8 @@ package com.wbsf.core.service;
 
 import java.util.List;
 
+import com.wbsf.core.exception.ServiceException;
+
 /**
  * 提供基础的服务层方法，主要提供单表的增/删/改/查的基础操作
  * @author hubery
@@ -51,4 +53,10 @@ public interface BaseService<T>{
      * @return
      */
     List<T> selectByExample(Object example);
+    
+    /**
+     * 抛出业务异常
+     * @return 业务系统异常
+     */
+    ServiceException throwServiceExcepiton(String message, Throwable cause);
 }

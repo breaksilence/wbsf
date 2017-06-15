@@ -9,23 +9,27 @@ import org.springframework.web.servlet.ModelAndView;
 public class EncodingInterceptor implements HandlerInterceptor {
 
 	/**
-	 * 在controller后拦截
-	 */
-	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object object, Exception exception) throws Exception {
-
-	}
-
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object object, ModelAndView modelAndView) throws Exception {
-
-	}
-
-	/**
 	 * 在controller前拦截
 	 */
+	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws Exception {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		return true;
 	}
+
+	/**
+	 * 在controller后拦截
+	 */
+	@Override
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object object, Exception exception) throws Exception {
+		
+	}
+	
+	@Override
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object object, ModelAndView modelAndView) throws Exception {
+
+	}
+
 
 }

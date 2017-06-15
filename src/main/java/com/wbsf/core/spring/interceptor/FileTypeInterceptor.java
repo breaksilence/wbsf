@@ -11,9 +11,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.wbsf.core.config.SystemConfig;
 import com.wbsf.core.exception.IllegalFileTypeException;
 import com.wbsf.core.result.config.ResultBaseEnum;
-import com.wbsf.core.spring.utils.PropertyConfigurer;
 /**
  * 全局文件类型拦截器
  */
@@ -34,7 +34,7 @@ public class FileTypeInterceptor extends HandlerInterceptorAdapter {
 				// 判断是否为限制文件类型
 				if (!checkFile(filename)) {
 					// 限制文件类型，请求转发到原始请求页面，并携带错误提示信息
-					throw new IllegalFileTypeException(MessageFormat.format(ResultBaseEnum.ILLEGAL_FILE_TYPE_EXCEPTION.getMsg(), PropertyConfigurer.getProperty("sys.config.allowFileType")));
+					throw new IllegalFileTypeException(MessageFormat.format(ResultBaseEnum.ILLEGAL_FILE_TYPE_EXCEPTION.getMsg(), SystemConfig.FILEUPLOAD_ALLOW_TYPE.config()));
 				}
 			}
 		}
@@ -46,7 +46,7 @@ public class FileTypeInterceptor extends HandlerInterceptorAdapter {
 	 */
 	private boolean checkFile(String fileName) {
 		// 设置允许上传文件类型
-		String suffixList = PropertyConfigurer.getProperty("sys.config.allowFileType");
+		String suffixList = SystemConfig.FILEUPLOAD_ALLOW_TYPE.config();
 		// 获取文件后缀
 		String suffix = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length());
 		if (suffixList.contains(suffix.trim().toLowerCase())) {

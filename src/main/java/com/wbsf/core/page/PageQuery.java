@@ -16,7 +16,7 @@ import com.wbsf.core.enums.SortType;
  *
  * @param <T>
  */
-public class PageQuery<T> {
+public class PageQuery<T>{
 
 	/** 为了满足通过实体类作为参数进行分页查询 */
 	private T vo;
@@ -234,7 +234,7 @@ public class PageQuery<T> {
 	}
 
 	/**
-	 * 开始分页线程
+	 * 开始分页线程,建议调用此方法时进行try处理，在出现异常的情况下会自动释放线程资源
 	 */
 	public Page<T> startPage() {
 		return PageHelper.startPage(pageNum, pageSize, isCount);
@@ -256,5 +256,4 @@ public class PageQuery<T> {
 		clearPage();
 		return new PageResult<T>(queryResult,navigatePages);
 	}
-	
 }

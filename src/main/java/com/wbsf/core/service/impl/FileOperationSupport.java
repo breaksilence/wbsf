@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
  * @author xiangzheng
  *
  */
-@Service("fileOperationSupport")
+@Service
 public class FileOperationSupport extends AbstractFileService {
 
 }
