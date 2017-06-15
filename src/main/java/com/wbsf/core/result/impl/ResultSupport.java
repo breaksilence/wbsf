@@ -124,10 +124,13 @@ public abstract class ResultSupport<T> implements Result<T> {
 
 	@Override
 	public Result<T> putAttributes(Map<String, Object> atrributes, boolean clearAtrributes) {
-		if (clearAtrributes)
-			this.atrributes.clear();
-		if (atrributes != null && !atrributes.isEmpty())
+		if (this.atrributes.isEmpty() && (atrributes != null)) {
+			this.atrributes = atrributes;
+		} else {
+			if (clearAtrributes && !this.atrributes.isEmpty())
+				this.atrributes.clear();
 			this.atrributes.putAll(atrributes);
+		}
 		return this;
 	}
 
