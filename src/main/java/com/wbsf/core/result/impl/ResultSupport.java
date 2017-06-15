@@ -4,6 +4,8 @@ import java.text.MessageFormat;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.alibaba.fastjson.JSONObject;
 import com.wbsf.core.result.Result;
 import com.wbsf.core.result.ResultInfo;
@@ -118,16 +120,14 @@ public abstract class ResultSupport<T> implements Result<T> {
 	}
 
 	@Override
-	public Result<T> putAttributes(Map<String, Object> atrributes) {
+	public Result<T> putAttributes(Map<String, ?> atrributes) {
 		return this.putAttributes(atrributes, false);
 	}
 
 	@Override
-	public Result<T> putAttributes(Map<String, Object> atrributes, boolean clearAtrributes) {
-		if (this.atrributes.isEmpty() && (atrributes != null)) {
-			this.atrributes = atrributes;
-		} else {
-			if (clearAtrributes && !this.atrributes.isEmpty())
+	public Result<T> putAttributes(Map<String, ?> atrributes, boolean clearAtrributes) {
+		if (atrributes != null && !atrributes.isEmpty()) {
+			if (clearAtrributes)
 				this.atrributes.clear();
 			this.atrributes.putAll(atrributes);
 		}
@@ -136,7 +136,7 @@ public abstract class ResultSupport<T> implements Result<T> {
 
 	@Override
 	public Result<T> putAttribute(String attributeKey, Object attributeValue) {
-		if (attributeKey != null && !attributeKey.trim().isEmpty()) {
+		if (StringUtils.isNotBlank(attributeKey)) {
 			this.atrributes.put(attributeKey, attributeValue);
 		}
 		return this;
