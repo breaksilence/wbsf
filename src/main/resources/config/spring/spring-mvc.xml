@@ -105,7 +105,9 @@
 	</bean>
 	
 	<!-- 基于Session的本地化解析器 -->
-	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+	   <property name="defaultLocale" value="zh"/>   
+	</bean>
 	
 	<!-- 默认的视图解析器 - -->
 	<bean id="viewResolvers"
