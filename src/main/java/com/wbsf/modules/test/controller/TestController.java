@@ -2,7 +2,10 @@ package com.wbsf.modules.test.controller;
 
 import static com.wbsf.core.spring.utils.ContextUtil.text;
 
+import java.io.IOException;
+
 import javax.annotation.Resource;
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -93,8 +96,8 @@ public class TestController extends ControllerSupport {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/i18n", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,method={RequestMethod.POST})
-	public String i18n(String locale){
+	@RequestMapping(value="/i18n", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,method={RequestMethod.POST,RequestMethod.GET})
+	public String i18n(){
 		//Locale.CHINA; 
 		return ResultHelper.buildSuccess().putAttribute("i18n", text("request.send")).toJson();
 	}
@@ -116,6 +119,18 @@ public class TestController extends ControllerSupport {
 		return new SuccessResult<>(DemoResultEnum.SUCCESS).putAttribute("numStr", numStr).toJson();
 	}
 	
-	
+	@ResponseBody
+	@RequestMapping(value="/post", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,method={RequestMethod.POST,RequestMethod.GET})
+	public String testPost() throws IOException{
+		String param1 = request.getParameter("param1");
+		int len = request.getContentLength();
+		ServletInputStream iii = request.getInputStream();
+		byte[] buffer = new byte[len];
+		iii.read(buffer, 0, len);
+		String body = new String(buffer);
+		Result<String> result = ResultHelper.buildSuccess();
+		result.setResult(param1).putAttribute("body", body);
+		return result.toJson();
+	}
 	
 }
