@@ -1,187 +1,188 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
       http://www.springframework.org/schema/beans/spring-beans.xsd
       http://www.springframework.org/schema/context
       http://www.springframework.org/schema/context/spring-context.xsd
       http://www.springframework.org/schema/mvc
-	  http://www.springframework.org/schema/mvc/spring-mvc.xsd 
-	  http://cxf.apache.org/jaxws 
-   	  http://cxf.apache.org/schemas/jaxws.xsd">
-  	
-  	<description>Spring MVC Configuration</description>
-  	
-	<mvc:resources location="/statics/" mapping="/statics/**" cache-period="0" />
-	<mvc:resources location="/plugins/" mapping="/plugins/**" cache-period="0" />
-	<mvc:view-controller path="/" view-name="redirect:/login" />
-	
-  	<mvc:annotation-driven validator="validator" conversion-service="conversionService"/>
-  	<context:property-placeholder location="classpath:config/init/sysConfig.properties"/>
-	<!-- 由ServletContextListener产生的是父容器，springMVC产生的是子容器，子容器Controller进行扫描装配时装配了@Service注解的实例，而该实例理应由父容器进行初始化以保证事务的增强处理，所以此时得到的将是原样的Service（没有经过事务加强处理，故而没有事务处理能力。 -->
-	<context:component-scan base-package="com.wbsf.modules.*.controller,com.wbsf.core.controller"
-		use-default-filters="false">
-		<context:include-filter type="annotation"
-			expression="org.springframework.stereotype.Controller" />
-		<context:exclude-filter type="annotation"
-			expression="org.springframework.stereotype.Service" />
-		<context:exclude-filter type="annotation"
-			expression="org.springframework.stereotype.Repository" />
-	</context:component-scan>
+      http://www.springframework.org/schema/mvc/spring-mvc.xsd 
+      http://cxf.apache.org/jaxws 
+      http://cxf.apache.org/schemas/jaxws.xsd">
+    
+    <description>Spring MVC Configuration</description>
+    
+    <mvc:resources location="/statics/" mapping="/statics/**" cache-period="0" />
+    <mvc:resources location="/plugins/" mapping="/plugins/**" cache-period="0" />
+    <mvc:view-controller path="/" view-name="redirect:/login" />
+    
+    <mvc:annotation-driven validator="validator" conversion-service="conversionService"/>
+    <context:property-placeholder location="classpath:config/init/sysConfig.properties"/>
+    <!-- 由ServletContextListener产生的是父容器，springMVC产生的是子容器，子容器Controller进行扫描装配时装配了@Service注解的实例，而该实例理应由父容器进行初始化以保证事务的增强处理，所以此时得到的将是原样的Service（没有经过事务加强处理，故而没有事务处理能力。 -->
+    <context:component-scan base-package="com.wbsf.modules.*.controller,com.wbsf.core.controller"
+        use-default-filters="false">
+        <context:include-filter type="annotation"
+            expression="org.springframework.stereotype.Controller" />
+        <context:exclude-filter type="annotation"
+            expression="org.springframework.stereotype.Service" />
+        <context:exclude-filter type="annotation"
+            expression="org.springframework.stereotype.Repository" />
+    </context:component-scan>
 
-	<bean id="stringHttpMessageConverter"
-		class="org.springframework.http.converter.StringHttpMessageConverter">
-		<constructor-arg value="UTF-8" />
-	</bean>
+    <bean id="stringHttpMessageConverter"
+        class="org.springframework.http.converter.StringHttpMessageConverter">
+        <constructor-arg value="UTF-8" />
+    </bean>
 
-	<!-- MarshallingHttpMessageConverter：XML的转换需要使用Spring的 Marshaller 和 Unmarshaller -->
-	<bean id="marshallingHttpMessageConverter"
-		class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
-		<property name="marshaller" ref="castorMarshaller" />
-		<property name="unmarshaller" ref="castorMarshaller" />
-	</bean>
+    <!-- MarshallingHttpMessageConverter：XML的转换需要使用Spring的 Marshaller 和 Unmarshaller -->
+    <bean id="marshallingHttpMessageConverter"
+        class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
+        <property name="marshaller" ref="castorMarshaller" />
+        <property name="unmarshaller" ref="castorMarshaller" />
+    </bean>
 
-	<!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->
-	<bean id="mappingJackson2HttpMessageConverter"
-		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-		<property name="supportedMediaTypes">
-			<list>
-				<value>application/json;charset=UTF-8</value>
-			</list>
-		</property>
-	</bean>
+    <!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->
+    <bean id="mappingJackson2HttpMessageConverter"
+        class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>application/json;charset=UTF-8</value>
+            </list>
+        </property>
+    </bean>
 
-	<bean id="castorMarshaller" class="org.springframework.oxm.castor.CastorMarshaller" />
+    <bean id="castorMarshaller" class="org.springframework.oxm.castor.CastorMarshaller" />
 
-	<!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射， 配置一个基于注解的定制的WebBindingInitializer，解决日期转换问题，方法级别的处理器映射 -->
-	<bean
-		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
-		<property name="cacheSeconds" value="0" />
-		<property name="messageConverters">
-			<list>
-				<ref bean="stringHttpMessageConverter" />
-				<ref bean="marshallingHttpMessageConverter" />
-				<ref bean="mappingJackson2HttpMessageConverter" />
-				<bean
-					class="org.springframework.http.converter.BufferedImageHttpMessageConverter" />
-				<bean
-					class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
-			</list>
-		</property>
-	</bean>
+    <!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射， 配置一个基于注解的定制的WebBindingInitializer，解决日期转换问题，方法级别的处理器映射 -->
+    <bean
+        class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="cacheSeconds" value="0" />
+        <property name="messageConverters">
+            <list>
+                <ref bean="stringHttpMessageConverter" />
+                <ref bean="marshallingHttpMessageConverter" />
+                <ref bean="mappingJackson2HttpMessageConverter" />
+                <bean
+                    class="org.springframework.http.converter.BufferedImageHttpMessageConverter" />
+                <bean
+                    class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
+            </list>
+        </property>
+    </bean>
+    
+    <!-- 该实现类比之于ResourceBundleMessageSource的唯一区别在于它可以定时刷新资源文件 ,bean名称不能为其他 -->
+    <bean id="messageSource"
+        class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <!-- 多个国际化文件配置 -->
+        <!-- <property name="basename" value="config.i18n.locale_messages"/> -->
+        <!-- 多个国际化文件的配置方式 -->
+        <property name="basenames">
+            <list>
+                <value>classpath:config/messages/locale/locale_messages</value>
+                <value>classpath:config/messages/validator/ValidationMessages</value>
+            </list>
+        </property>
+        <property name="fileEncodings" value="UTF-8" />
+        <property name="cacheSeconds" value="120" />
+        <property name="defaultEncoding" value="UTF-8" />
+    </bean>
+    
+    <bean id="validator"
+        class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="providerClass" value="org.hibernate.validator.HibernateValidator" />
+        <!-- 如果不加默认到 使用classpath下的 ValidationMessages.properties -->
+        <property name="validationMessageSource" ref="messageSource" />
+    </bean>
+    
+    <bean
+        class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor">
+        <property name="validator" ref="validator" />
+    </bean>
 
-	<!-- 该实现类比之于ResourceBundleMessageSource的唯一区别在于它可以定时刷新资源文件 ,bean名称不能为其他 -->
-	<bean id="messageSource"
-		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-		<!-- 多个国际化文件配置 -->
-		<!-- <property name="basename" value="config.i18n.locale_messages"/> -->
-		<!-- 多个国际化文件的配置方式 -->
-		<property name="basenames">
-			<list>
-				<value>classpath:config/messages/locale/locale_messages</value>
-				<value>classpath:config/messages/validator/ValidationMessages</value>
-			</list>
-		</property>
-		<property name="fileEncodings" value="UTF-8" />
-		<property name="cacheSeconds" value="120" />
-		<property name="defaultEncoding" value="UTF-8" />
-	</bean>
-	
-	<bean id="validator"
-		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
-		<property name="providerClass" value="org.hibernate.validator.HibernateValidator" />
-		<!-- 如果不加默认到 使用classpath下的 ValidationMessages.properties -->
-		<property name="validationMessageSource" ref="messageSource" />
-	</bean>
-	<bean
-		class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor">
-		<property name="validator" ref="validator" />
-	</bean>
-	
-	<!-- ①注册ConversionService -->
-	<bean id="conversionService"
-		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
-		<property name="converters">
-			<set>
-				<bean class="com.wbsf.core.spring.convert.DateConverter" />
-			</set>
-		</property>
-	</bean>
-	
-	<!-- 基于Session的本地化解析器 -->
-	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
-	   <property name="defaultLocale" value="zh"/>   
-	</bean>
-	
-	<!-- 默认的视图解析器 - -->
-	<bean id="viewResolvers"
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:order="3">
-		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
-		<property name="contentType" value="text/html" />
-		<property name="prefix" value="/views/" />
-		<property name="suffix" value=".jsp" />
-	</bean>
+    <!-- ①注册ConversionService -->
+    <bean id="conversionService"
+        class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="com.wbsf.core.spring.convert.DateConverter" />
+            </set>
+        </property>
+    </bean>
+    
+    <!-- 基于Session的本地化解析器 -->
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+       <property name="defaultLocale" value="zh_CN"/>   
+    </bean>
+    
+    <!-- 默认的视图解析器 - -->
+    <bean id="viewResolvers"
+        class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:order="3">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+        <property name="contentType" value="text/html" />
+        <property name="prefix" value="/views/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
 
-	<bean id="contentNegotiationManager"
-		class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
-		<property name="defaultContentType" value="text/html" />
-		<property name="ignoreAcceptHeader" value="true"/>
+    <bean id="contentNegotiationManager"
+        class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+        <property name="defaultContentType" value="text/html" />
+        <property name="ignoreAcceptHeader" value="true"/>
         <property name="favorPathExtension" value="true"/>
-		<property name="mediaTypes">
-			<map>
-				<entry key="json" value="application/json" />
-				<entry key="xml" value="application/xml" />
-				<entry key="html" value="text/html" />
-			</map>
-		</property>
-	</bean>
+        <property name="mediaTypes">
+            <map>
+                <entry key="json" value="application/json" />
+                <entry key="xml" value="application/xml" />
+                <entry key="html" value="text/html" />
+            </map>
+        </property>
+    </bean>
 
     <!-- 视图解析器 -->  
-	<bean
-		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
-		<property name="order" value="0" />
-		<property name="contentNegotiationManager" ref="contentNegotiationManager" />
-		<property name="viewResolvers">
-			<list>
-				<ref bean="viewResolvers" />
-			</list>
-		</property>
-		<property name="defaultViews">
-			<list>
-				<bean
-					class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
-				<bean class="org.springframework.web.servlet.view.xml.MarshallingView">
-					<property name="marshaller" ref="castorMarshaller" />
-				</bean>
-			</list>
-		</property>
-	</bean>
+    <bean
+        class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="order" value="0" />
+        <property name="contentNegotiationManager" ref="contentNegotiationManager" />
+        <property name="viewResolvers">
+            <list>
+                <ref bean="viewResolvers" />
+            </list>
+        </property>
+        <property name="defaultViews">
+            <list>
+                <bean
+                    class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+                <bean class="org.springframework.web.servlet.view.xml.MarshallingView">
+                    <property name="marshaller" ref="castorMarshaller" />
+                </bean>
+            </list>
+        </property>
+    </bean>
 
-	<!-- 上传文件大小 通过sysConfig.properties配置 -->
-	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<property name="defaultEncoding" value="UTF-8"/> 
-		<property name="maxUploadSize" value="${sys.config.maxUploadSize}"/>
-		<property name="maxInMemorySize" value="${sys.config.maxInMemorySize}"/>
-		<property name="uploadTempDir" value="${sys.config.uploadTempDir}"/>
-	</bean>
+    <!-- 上传文件大小 通过sysConfig.properties配置 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8"/> 
+        <property name="maxUploadSize" value="${sys.config.maxUploadSize}"/>
+        <property name="maxInMemorySize" value="${sys.config.maxInMemorySize}"/>
+        <property name="uploadTempDir" value="${sys.config.uploadTempDir}"/>
+    </bean>
 
-	<!-- Bean解析器,级别高于默认解析器,寻找bean对象进行二次处理 -->
-	<bean id="beanNameViewResolver"
-		class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0">
-	</bean>
-	
-	<!-- 全局统一异常处理 ↓-->
-	<bean id="globalExceptionHandler" class="com.wbsf.core.spring.handler.ExceptionHandler">
-		<property name="exceptionMappings">
-			<props>
-				<!-- 处理超过大小时的异常 -->
-				<!--遇到MaxUploadSizeExceededException异常时，自动跳转到/WEB-INF/views/errors/upload.jsp页面 -->
-				<prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">errors/upload</prop>
+    <!-- Bean解析器,级别高于默认解析器,寻找bean对象进行二次处理 -->
+    <bean id="beanNameViewResolver"
+        class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0">
+    </bean>
+    
+    <!-- 全局统一异常处理 ↓-->
+    <bean id="globalExceptionHandler" class="com.wbsf.core.spring.handler.ExceptionHandler">
+        <property name="exceptionMappings">
+            <props>
+                <!-- 处理超过大小时的异常 -->
+                <!--遇到MaxUploadSizeExceededException异常时，自动跳转到/WEB-INF/views/errors/upload.jsp页面 -->
+                <prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">errors/upload</prop>
                 <prop key="java.lang.Throwable">errors/error</prop>
-			</props>
-		</property>
-		<property name="statusCodes">     
+            </props>
+        </property>
+        <property name="statusCodes">     
              <props>     
                  <prop key="errors/500">500</prop>     
                  <prop key="errors/404">404</prop>     
@@ -193,26 +194,26 @@
          <property name="defaultErrorView" value="errors/error"/>     
          <!-- 默认HTTP状态码 -->     
          <property name="defaultStatusCode" value="500"/>
-	</bean>
-	<!-- 全局统一异常处理 ↑-->
-	
-	<!-- 拦截器 -->
-	<mvc:interceptors>
-		 <!-- 切换语言拦截器 -->
+    </bean>
+    <!-- 全局统一异常处理 ↑-->
+    
+    <!-- 拦截器 -->
+    <mvc:interceptors>
+         <!-- 切换语言拦截器 -->
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
-			<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"/>
+            <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"/>
         </mvc:interceptor>
         <!-- 统一处理请求编码拦截器 -->
-		<mvc:interceptor>
-			<mvc:mapping path="/**" />
-			<bean class="com.wbsf.core.spring.interceptor.EncodingInterceptor" />
-		</mvc:interceptor>
-		<!-- 文件拦截器用于处理文件类型校验 -->
-		<mvc:interceptor>
-			<mvc:mapping path="/file/**" />
-			<!-- 配置自定义的文件上传类型限制拦截器 -->
-        	<bean class="com.wbsf.core.spring.interceptor.FileTypeInterceptor" />
-		</mvc:interceptor>
-	</mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**" />
+            <bean class="com.wbsf.core.spring.interceptor.EncodingInterceptor" />
+        </mvc:interceptor>
+        <!-- 文件拦截器用于处理文件类型校验 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/file/**" />
+            <!-- 配置自定义的文件上传类型限制拦截器 -->
+            <bean class="com.wbsf.core.spring.interceptor.FileTypeInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>

@@ -143,7 +143,6 @@ public class TestControllerTest extends JunitTestSupport{
 		logger.info("测试国际化---start>>>time:"+startTime);
 		this.mockMvc
 		.perform(post("/test/i18n").characterEncoding("UTF-8") 
-				.accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
 				.param("locale", "zh_CN")
 				)
 		.andDo(print())
