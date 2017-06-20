@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
-	<display-name>wbsf</display-name>
+  <display-name>BearPetHospital</display-name>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:config/spring/applicationContext.xml</param-value>
@@ -8,37 +8,37 @@
 	<listener>
 		<listener-class>org.apache.logging.log4j.web.Log4jServletContextListener</listener-class>
 	</listener>
-	<listener>  
-        <listener-class>  
-            org.springframework.web.context.request.RequestContextListener  
-        </listener-class>  
-	</listener> 
-	<filter>
-		<description>spring-session</description>
-	    <filter-name>springSessionRepositoryFilter</filter-name>
-	    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-	</filter>
-	<filter-mapping>
-	    <filter-name>springSessionRepositoryFilter</filter-name>
-	    <url-pattern>/*</url-pattern>
-	        <dispatcher>REQUEST</dispatcher>
-	        <dispatcher>ERROR</dispatcher>
-	</filter-mapping>
-	<filter>
-		<filter-name>log4jServletFilter</filter-name>
-		<filter-class>org.apache.logging.log4j.web.Log4jServletFilter</filter-class>
-	</filter> 
 	<listener>
-		<description>spring listener</description>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
-	<listener>
-		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
-	</listener>
-	<listener>
+    	<listener-class>  
+        	org.springframework.web.context.request.RequestContextListener  
+        </listener-class>
+  	</listener>
+  	<filter>
+    	<description>spring-session</description>
+    	<filter-name>springSessionRepositoryFilter</filter-name>
+    	<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  	</filter>
+  	<filter-mapping>
+    	<filter-name>springSessionRepositoryFilter</filter-name>
+    	<url-pattern>/*</url-pattern>
+	    <dispatcher>REQUEST</dispatcher>
+	    <dispatcher>ERROR</dispatcher>
+  	</filter-mapping>
+  	<filter>
+	    <filter-name>log4jServletFilter</filter-name>
+	    <filter-class>org.apache.logging.log4j.web.Log4jServletFilter</filter-class>
+  	</filter>
+ 	 <listener>
+	    <description>spring listener</description>
+	    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  	</listener>
+  	<listener>
+    	<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+  	</listener>
+  	<listener>
 		<description>request listener</description>
 		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
-	</listener>
+  	</listener>
 	<filter>
 		<description>字符集过滤器</description>
 		<filter-name>encodingFilter</filter-name>
@@ -52,27 +52,35 @@
 			<param-name>forceEncoding</param-name>
 			<param-value>true</param-value>
 		</init-param>
-	</filter>
-	<filter-mapping>
+  	</filter>
+  	<filter-mapping>
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	<servlet>
-		<description>Spring MVC Servlet</description>
-		<servlet-name>wbsf</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<init-param>
-			<description>Spring MVC Config</description>
-			<param-name>contextConfigLocation</param-name>
-			<param-value>classpath:config/spring/spring-mvc.xml</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>wbsf</servlet-name>
-		<url-pattern>/</url-pattern>
-	</servlet-mapping>
-	<!-- DruidStatView -->
+	<!-- 浏览器不支持put,delete等method,由该filter将/xxx?_method=delete转换为标准的http delete方法 -->
+	<filter>
+		<filter-name>hiddenHttpMethodFilter</filter-name>
+		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>hiddenHttpMethodFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+  	<servlet>
+	    <description>Spring MVC Servlet</description>
+	    <servlet-name>wbsf</servlet-name>
+	    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+	    <init-param>
+	      <description>Spring MVC Config</description>
+	      <param-name>contextConfigLocation</param-name>
+	      <param-value>classpath:config/spring/spring-mvc.xml</param-value>
+	    </init-param>
+	    <load-on-startup>1</load-on-startup>
+  	</servlet>
+ 	<servlet-mapping>
+	    <servlet-name>wbsf</servlet-name>
+	    <url-pattern>/</url-pattern>
+  	</servlet-mapping>
 	<servlet>
 		<servlet-name>DruidStatView</servlet-name>
 		<servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
@@ -86,33 +94,31 @@
 		<url-pattern>/druid/*</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
+	    <welcome-file>index.html</welcome-file>
 		<welcome-file>index.htm</welcome-file>
 		<welcome-file>index.jsp</welcome-file>
 		<welcome-file>default.html</welcome-file>
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
-	
-	<!-- 服务异常捕获 -->  
 	<error-page>
-		<exception-type>java.lang.Throwable</exception-type>
-		<location>/error/500</location>
+	    <exception-type>java.lang.Throwable</exception-type>
+	    <location>/error/500</location>
+ 	</error-page>
+	<error-page>
+	    <error-code>500</error-code>
+	    <location>/error/500</location>
+ 	</error-page>
+	<error-page>
+	    <error-code>404</error-code>
+	    <location>/error/404</location>
 	</error-page>
 	<error-page>
-		<error-code>500</error-code>
-		<location>/error/500</location>
+	    <error-code>403</error-code>
+	    <location>/error/403</location>
 	</error-page>
 	<error-page>
-		<error-code>404</error-code>
-		<location>/error/404</location>
-	</error-page>
-	<error-page>
-		<error-code>403</error-code>
-		<location>/error/403</location>
-	</error-page>
-	<error-page>
-		<error-code>400</error-code>
-		<location>/error/400</location>
-	</error-page>
+	    <error-code>400</error-code>
+	    <location>/error/400</location>
+  	</error-page>
 </web-app>
