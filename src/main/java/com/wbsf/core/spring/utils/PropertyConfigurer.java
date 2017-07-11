@@ -1,5 +1,6 @@
 package com.wbsf.core.spring.utils;
 
+import java.text.MessageFormat;
 import java.util.Properties;
 
 import org.apache.logging.log4j.LogManager;
@@ -47,5 +48,30 @@ public class PropertyConfigurer extends PropertyPlaceholderConfigurer {
 	 */
 	public static String getProperty(String key, String defaultValue) {
 		return props.getProperty(key, defaultValue);
+	}
+	
+	/**
+	 * 根据key 获取value,如果没有获取到设置为默认值
+	 * 
+	 * @param key 配置文件的key
+	 * @param defaultValue 默认值
+	 * @return 返回配置文件key所对应的值，如果没有返回defualt
+	 */
+	public static String formateProPerty(String key,Object...formateArgs){
+		String value = getProperty(key);
+		return MessageFormat.format(value,formateArgs);
+	}
+	
+	/**
+	 * 根据key 获取value,如果没有获取到设置为默认值
+	 * 
+	 * @param key 配置文件的key
+	 * @param defaultValue 默认值
+	 * @param formateArgs 占位符格式化参数
+	 * @return 返回配置文件key所对应的值，如果没有返回defualt
+	 */
+	public static String formateProPerty(String key, String defaultValue,Object...formateArgs){
+		String value = getProperty(key, defaultValue);
+		return MessageFormat.format(value,formateArgs);
 	}
 }
