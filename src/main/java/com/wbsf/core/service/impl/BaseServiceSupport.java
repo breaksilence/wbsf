@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.wbsf.core.BaseMapper;
 import com.wbsf.core.bean.UserSession;
 import com.wbsf.core.config.SystemConfig;
 import com.wbsf.core.exception.ServiceException;
+import com.wbsf.core.mybatis.BaseMapper;
 import com.wbsf.core.result.ResultInfo;
 import com.wbsf.core.service.BaseService;
 

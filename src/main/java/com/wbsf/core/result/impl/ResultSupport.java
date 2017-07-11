@@ -17,7 +17,6 @@ import com.wbsf.core.result.ResultInfo;
  * @param <T>
  */
 public abstract class ResultSupport<T> implements Result<T> {
-	protected final static JSONObject resultJson = new JSONObject(true);
 	/** 返回结果数据 */
 	protected T result;
 	
@@ -166,6 +165,7 @@ public abstract class ResultSupport<T> implements Result<T> {
 
 	@Override
 	public String toJson() {
+		JSONObject resultJson = new JSONObject(true);
 		resultJson.put("isSuccess", this.success);
 		resultJson.put("code", this.code);
 		resultJson.put("message", this.message);

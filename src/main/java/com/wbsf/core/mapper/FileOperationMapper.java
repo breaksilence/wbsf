@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.wbsf.core.BaseMapper;
+import com.wbsf.core.mybatis.BaseMapper;
 import com.wbsf.core.persistence.FileOperation;
 
 public interface FileOperationMapper extends BaseMapper<FileOperation> {

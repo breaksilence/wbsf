@@ -1,4 +1,4 @@
-package com.wbsf.core;
+package com.wbsf.core.mybatis;
 
 import tk.mybatis.mapper.common.Mapper;
 import tk.mybatis.mapper.common.MySqlMapper;
