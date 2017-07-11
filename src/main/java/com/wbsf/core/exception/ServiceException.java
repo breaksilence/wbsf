@@ -22,7 +22,7 @@ public class ServiceException extends RuntimeException {
 	/**
 	 * 异常错误结果枚举，反应错误的状态码和附加信息
 	 */
-	private ResultInfo exceptionInfo = new ReusltInfoBuilder(ResultBaseEnum.EXCEPTION.getCode(), this.getMessage(), ResultBaseEnum.EXCEPTION.successFlag());;
+	private ResultInfo exceptionInfo = new ReusltInfoBuilder(ResultBaseEnum.EXCEPTION.getCode(), this.getMessage());;
 	
 	private Result<?> exceptionResult;
 	

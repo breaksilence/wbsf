@@ -22,9 +22,4 @@ public interface ResultInfo {
 	 */
 	String getMsg();
 	
-	/**
-	 * 获取成功状态
-	 * @return boolean
-	 */
-	boolean successFlag();
 }

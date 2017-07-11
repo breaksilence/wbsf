@@ -4,15 +4,12 @@ import com.wbsf.core.result.ResultInfo;
 
 public enum DemoResultEnum implements ResultInfo {
 	/** 成功默认枚举类型 */
-	SUCCESS("success", "success",true);
+	SUCCESS("success", "success");
 	/** 结果编码 */
 	private String resultCode;
 	
 	/** 结果消息 */
 	private String resultMsg;
-	
-	/** 处理成功状态 */
-	private boolean isSuccess;
 	
 	/**
 	 * 结果枚举构造器
@@ -22,10 +19,9 @@ public enum DemoResultEnum implements ResultInfo {
 	 * <li>true 处理成功</li>
 	 * <li>false 处理失败</li>
 	 */
-	private DemoResultEnum(String resultCode, String resultMsg ,boolean successFlag) {
+	private DemoResultEnum(String resultCode, String resultMsg) {
 		this.resultCode = resultCode;
 		this.resultMsg = resultMsg;
-		this.isSuccess = successFlag;
 	}
 
 	@Override
@@ -37,10 +33,4 @@ public enum DemoResultEnum implements ResultInfo {
 	public String getMsg() {
 		return this.resultMsg;
 	}
-
-	@Override
-	public boolean successFlag() {
-		return this.isSuccess;
-	}
-
 }

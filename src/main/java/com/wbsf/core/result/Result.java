@@ -24,7 +24,7 @@ public interface Result<T> {
 	 * @param message 返回消息
 	 * @param success 是否成功
 	 */
-	Result<T> setResultConfig(String code, String message, boolean success);
+	Result<T> setResultConfig(String code, String message);
 
 	/**
 	 * 设置结果
@@ -81,6 +81,12 @@ public interface Result<T> {
 	 * @return
 	 */
 	String getMessage();
+	
+	/**
+	 * 设置结果信息
+	 * @return 返回result自身
+	 */
+	Result<T> setMessage(String message);
 
 	/**
 	 * 设置属性

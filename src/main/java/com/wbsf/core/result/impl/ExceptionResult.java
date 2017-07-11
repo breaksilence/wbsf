@@ -19,7 +19,7 @@ public class ExceptionResult<T> extends ResultSupport<T> {
 	 * @param excption
 	 */
 	public ExceptionResult(Exception excption){
-		super(ResultBaseEnum.EXCEPTION.getCode(), excption.getMessage(), false);
+		super(ResultBaseEnum.EXCEPTION.getCode(), excption.getMessage());
 	}
 	
 	/**
@@ -27,7 +27,7 @@ public class ExceptionResult<T> extends ResultSupport<T> {
 	 * @param exceptionMsg
 	 */
 	public ExceptionResult(String exceptionMsg){
-		super(ResultBaseEnum.EXCEPTION.getCode(), exceptionMsg, false);
+		super(ResultBaseEnum.EXCEPTION.getCode(), exceptionMsg);
 	}
 	
 	/**
@@ -35,7 +35,7 @@ public class ExceptionResult<T> extends ResultSupport<T> {
 	 * @param resultInfo
 	 */
 	public ExceptionResult(ResultInfo resultInfo){
-		super(resultInfo.getCode(), resultInfo.getMsg(), false);
+		super(resultInfo.getCode(), resultInfo.getMsg());
 	}
 
 	/**

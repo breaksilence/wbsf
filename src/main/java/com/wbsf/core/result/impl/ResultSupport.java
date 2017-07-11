@@ -17,11 +17,11 @@ import com.wbsf.core.result.ResultInfo;
  * @param <T>
  */
 public abstract class ResultSupport<T> implements Result<T> {
+	
+	public static final String SUCCESS_CODE = "0";
+	
 	/** 返回结果数据 */
 	protected T result;
-	
-	/** 处理是否成功 */
-	protected boolean success = true;
 	
 	/** 请求处理返回的状态码 */
 	protected String code;
@@ -48,28 +48,19 @@ public abstract class ResultSupport<T> implements Result<T> {
 	 * @param message 结果信息
 	 * @param success 结果状态
 	 */
-	public ResultSupport(String code, String message, boolean success) {
-		setResultConfig(code, message, success);
-	}
-	
-	/**
-	 * 受保护的方法，改变处理结果的状态
-	 * @param success
-	 */
-	protected void setSuccess(boolean success) {
-		this.success = success;
+	public ResultSupport(String code, String message) {
+		setResultConfig(code, message);
 	}
 	
 	@Override
 	public Result<T> setResultConfig(ResultInfo resultInfo){
-		return setResultConfig(resultInfo.getCode() ,resultInfo.getMsg() ,resultInfo.successFlag());
+		return setResultConfig(resultInfo.getCode() ,resultInfo.getMsg());
 	}
 	
 	@Override
-	public Result<T> setResultConfig(String code, String message, boolean success) {
+	public Result<T> setResultConfig(String code, String message) {
 		this.code = code;
 		this.message = message;
-		this.success = success;
 		return this;
 	}
 	
@@ -86,12 +77,12 @@ public abstract class ResultSupport<T> implements Result<T> {
 
 	@Override
 	public boolean failed() {
-		return success != true ? true : false;
+		return !success();
 	}
 
 	@Override
 	public boolean success() {
-		return success;
+		return SUCCESS_CODE.equals(code) ;
 	}
 
 	@Override
@@ -110,6 +101,13 @@ public abstract class ResultSupport<T> implements Result<T> {
 		if(formateValues != null){
 			this.message = MessageFormat.format(this.getMessage(), formateValues);
 		}
+		return this;
+	}
+
+	
+	@Override
+	public Result<T> setMessage(String message) {
+		this.message = message;
 		return this;
 	}
 
@@ -166,7 +164,7 @@ public abstract class ResultSupport<T> implements Result<T> {
 	@Override
 	public String toJson() {
 		JSONObject resultJson = new JSONObject(true);
-		resultJson.put("isSuccess", this.success);
+		resultJson.put("status", this.success());
 		resultJson.put("code", this.code);
 		resultJson.put("message", this.message);
 		if(result != null)

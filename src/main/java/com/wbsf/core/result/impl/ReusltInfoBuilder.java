@@ -16,21 +16,10 @@ public class ReusltInfoBuilder implements ResultInfo {
 	 * 结果信息
 	 */
 	private String message;
-	/**
-	 * 结果状态
-	 */
-	private boolean success;
-	
-	public ReusltInfoBuilder(String code, String message, boolean success) {
-		this.code = code;
-		this.message = message;
-		this.success = success;
-	}
 	
 	public ReusltInfoBuilder(String code, String message) {
 		this.code = code;
 		this.message = message;
-		this.success = true;
 	}
 
 	@Override
@@ -43,11 +32,6 @@ public class ReusltInfoBuilder implements ResultInfo {
 		return this.message;
 	}
 
-	@Override
-	public boolean successFlag() {
-		return this.success;
-	}
-
 	public ReusltInfoBuilder setCode(String code) {
 		this.code = code;
 		return this;
@@ -57,15 +41,4 @@ public class ReusltInfoBuilder implements ResultInfo {
 		this.message = message;
 		return this;
 	}
-
-	public ReusltInfoBuilder setSuccess() {
-		this.success = true;
-		return this;
-	}
-	
-	public ReusltInfoBuilder setFailed() {
-		this.success = false;
-		return this;
-	}
-	
 }
