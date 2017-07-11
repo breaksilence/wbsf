@@ -84,6 +84,12 @@ public abstract class ResultSupport<T> implements Result<T> {
 	public boolean success() {
 		return SUCCESS_CODE.equals(code) ;
 	}
+	
+	@Override
+	public Result<T> setCode(String code) {
+		this.code = code;
+		return this;
+	}
 
 	@Override
 	public String getCode() {

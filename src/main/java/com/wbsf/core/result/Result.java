@@ -55,6 +55,8 @@ public interface Result<T> {
 	 */
 	boolean success();
 
+	Result<T> setCode(String code);
+	
 	/**
 	 * 获取返回的错误编码
 	 * 
