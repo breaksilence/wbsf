@@ -18,7 +18,7 @@ import com.wbsf.core.result.ResultInfo;
  */
 public abstract class ResultSupport<T> implements Result<T> {
 	
-	public static final String SUCCESS_CODE = "0";
+	public static final String[] SUCCESS_CODE ={"0","success"};
 	
 	/** 返回结果数据 */
 	protected T result;
@@ -82,7 +82,7 @@ public abstract class ResultSupport<T> implements Result<T> {
 
 	@Override
 	public boolean success() {
-		return SUCCESS_CODE.equals(code) ;
+		return SUCCESS_CODE[0].equals(code) || SUCCESS_CODE[1].equals(code.toLowerCase())  ;
 	}
 	
 	@Override
