@@ -15,6 +15,9 @@
  */
 package com.wbsf.core.spring.mybatis;
 
+import java.io.IOException;
+import java.util.Set;
+
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
@@ -22,6 +25,9 @@ import org.springframework.core.type.classreading.CachingMetadataReaderFactory;
 import org.springframework.core.type.classreading.MetadataReader;
 import org.springframework.core.type.classreading.MetadataReaderFactory;
 import org.springframework.util.ClassUtils;
+import org.springframework.util.StringUtils;
+
+import com.google.common.collect.Sets;
 
 /**
  * 包扫描辅助类,借鉴了mybatis-plus的写法
@@ -37,35 +43,36 @@ public class PackageHelper {
 	public static String convertTypeAliasesPackage(String typeAliasesPackage) {
 		ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
 		MetadataReaderFactory metadataReaderFactory = new CachingMetadataReaderFactory(resolver);
-		String pkg = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX
-				+ ClassUtils.convertClassNameToResourcePath(typeAliasesPackage) + "/*.class";
-		/*
-		 * 将加载多个绝对匹配的所有Resource
-		 * 将首先通过ClassLoader.getResource("META-INF")加载非模式路径部分，然后进行遍历模式匹配，排除重复包路径
-		 */
-		try {
-			StringBuilder resourcePathStringBuffer = new StringBuilder();
-			Resource[] resources = resolver.getResources(pkg);
-			if (resources != null && resources.length > 0) {
-				MetadataReader metadataReader;
-				for (Resource resource : resources) {
-					if (resource.isReadable()) {
-						metadataReader = metadataReaderFactory.getMetadataReader(resource);
-						if(resourcePathStringBuffer.length() != 0){
-							resourcePathStringBuffer.append(",");
+		
+		String[] typeAliasPackageArray = StringUtils.tokenizeToStringArray(typeAliasesPackage, ",; \t\n");
+		
+		Set<String> resourcePath = Sets.newHashSet();
+		for (String aliasesPackage : typeAliasPackageArray) {
+			if (!aliasesPackage.contains("*")) {
+				resourcePath.add(aliasesPackage);
+			} else {
+				String pkg = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX
+						+ ClassUtils.convertClassNameToResourcePath(aliasesPackage) + "/*.class";
+				Resource[] resources;
+				try {
+					resources = resolver.getResources(pkg);
+					if (resources != null && resources.length > 0) {
+						MetadataReader metadataReader;
+						for (Resource resource : resources) {
+							if (resource.isReadable()) {
+								metadataReader = metadataReaderFactory.getMetadataReader(resource);
+								resourcePath.add(Class.forName(metadataReader.getClassMetadata().getClassName()).getPackage().getName());
+							}
 						}
-						resourcePathStringBuffer.append(Class.forName(metadataReader.getClassMetadata().getClassName()).getPackage().getName());
 					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
 				}
 			}
-			if (resourcePathStringBuffer.toString().trim().length()>0) {
-				return resourcePathStringBuffer.toString();
-			} else {
-				throw new RuntimeException("not find typeAliasesPackage:" + pkg);
-			}
-		} catch (Exception e) {
-			throw new RuntimeException("not find typeAliasesPackage:" + pkg, e);
 		}
+		
+		return resourcePath.toString().substring(1, resourcePath.toString().length()-1);
 	}
-
 }
