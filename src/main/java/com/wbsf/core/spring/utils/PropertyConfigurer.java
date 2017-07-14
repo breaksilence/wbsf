@@ -57,7 +57,7 @@ public class PropertyConfigurer extends PropertyPlaceholderConfigurer {
 	 * @param defaultValue 默认值
 	 * @return 返回配置文件key所对应的值，如果没有返回defualt
 	 */
-	public static String formateProPerty(String key,Object...formateArgs){
+	public static String getProperty(String key,Object...formateArgs){
 		String value = getProperty(key);
 		return MessageFormat.format(value,formateArgs);
 	}
@@ -70,7 +70,7 @@ public class PropertyConfigurer extends PropertyPlaceholderConfigurer {
 	 * @param formateArgs 占位符格式化参数
 	 * @return 返回配置文件key所对应的值，如果没有返回defualt
 	 */
-	public static String formateProPerty(String key, String defaultValue,Object...formateArgs){
+	public static String getProperty(String key, String defaultValue,Object...formateArgs){
 		String value = getProperty(key, defaultValue);
 		return MessageFormat.format(value,formateArgs);
 	}
