@@ -82,7 +82,7 @@ public abstract class ResultSupport<T> implements Result<T> {
 
 	@Override
 	public boolean success() {
-		return SUCCESS_CODE[0].equals(code) || SUCCESS_CODE[1].equals(code.toLowerCase())  ;
+		return code != null && (SUCCESS_CODE[0].equals(code) || SUCCESS_CODE[1].equals(code.toLowerCase()));
 	}
 	
 	@Override
@@ -170,7 +170,7 @@ public abstract class ResultSupport<T> implements Result<T> {
 	@Override
 	public String toJson() {
 		JSONObject resultJson = new JSONObject(true);
-		resultJson.put("status", this.success());
+		resultJson.put("status", success());
 		resultJson.put("code", this.code);
 		resultJson.put("message", this.message);
 		if(result != null)

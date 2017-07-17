@@ -1,5 +1,7 @@
 package com.wbsf.core.page;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +10,9 @@ import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Maps;
 import com.wbsf.core.config.SystemConfig;
 import com.wbsf.core.enums.SortType;
+import com.wbsf.core.result.ResultInfo;
+
+import tk.mybatis.orderbyhelper.OrderByHelper;
 
 /**
  * 功能概要：分页工具帮助类 在Mapper层可以直接通过以PageQuery作为参数来进行分页查询
@@ -16,7 +21,7 @@ import com.wbsf.core.enums.SortType;
  *
  * @param <T>
  */
-public class PageQuery<T>{
+public class PageQuery<T> implements Closeable{
 
 	/** 为了满足通过实体类作为参数进行分页查询 */
 	private T vo;
@@ -236,7 +241,9 @@ public class PageQuery<T>{
 	/**
 	 * 开始分页线程,建议调用此方法时进行try处理，在出现异常的情况下会自动释放线程资源
 	 */
-	public Page<T> startPage() {
+	public Page<T> query() {
+		clearPage();
+		OrderByHelper.orderBy(getOrderBy());
 		return PageHelper.startPage(pageNum, pageSize, isCount);
 	}
 	
@@ -245,6 +252,7 @@ public class PageQuery<T>{
      */
 	public void clearPage() {
 		PageHelper.clearPage();
+		OrderByHelper.clear();
 	}
 	
 	/**
@@ -253,7 +261,20 @@ public class PageQuery<T>{
 	 * @return
 	 */
 	public PageResult<T> buildResult(List<T> queryResult){
-		clearPage();
 		return new PageResult<T>(queryResult,navigatePages);
+	}
+	
+	/**
+	 * 可以通过PageQuery直接构建PageResult
+	 * @param queryResult
+	 * @return
+	 */
+	public PageResult<T> buildResult(List<T> queryResult, ResultInfo resultInfo){
+		return new PageResult<T>(queryResult,navigatePages,resultInfo);
+	}
+
+	@Override
+	public void close() throws IOException {
+		this.clearPage();
 	}
 }

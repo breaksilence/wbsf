@@ -112,12 +112,19 @@
     
     <!-- 定义logger,只有定义了logger并引入的appender,appender才会生效-->
     <loggers>
-        <Root level="trace">
+        <Root level="info">
             <AppenderRef ref="Console" />
             <AppenderRef ref="RollingErrorFile" />
         </Root>
         <!--建立一个默认的root的logger-->
         <Logger name="com.wbsf" level="info"
+            additivity="true">
+            <AppenderRef ref="RollingInfoFile" />
+            <AppenderRef ref="RollingErrorFile" />
+            <AppenderRef ref="RollingDebugFile" />
+            <AppenderRef ref="RollingWarnFile" />
+        </Logger>
+        <Logger name="org.springframework" level="error"
             additivity="true">
             <AppenderRef ref="RollingInfoFile" />
             <AppenderRef ref="RollingErrorFile" />

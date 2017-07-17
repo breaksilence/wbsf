@@ -11,11 +11,12 @@ import static com.wbsf.core.spring.utils.PropertyConfigurer.getProperty;
 public enum ResultBaseEnum implements ResultInfo {
 	/** 成功默认枚举类型 */
 	SUCCESS("success", getProperty("request.success", "操作成功！")),
-	SUCCESS_UPLOAD_FILE("success", getProperty("request.fileUploadSuccess", "文件上传成功！")),
 	/** 失败默认枚举类型 */
 	FAILED("error", getProperty("request.failed", "操作失败！")),
 	/** 异常默认枚举类型 */
 	EXCEPTION("exception", getProperty("request.exception", "操作异常！")),
+	/** 文件上传成功 */
+	SUCCESS_UPLOAD_FILE("success", getProperty("request.fileUploadSuccess", "文件上传成功！")),
 	/** 默认的文件上传过大响应信息 */
 	FILE_MAX_UPLOAD_SIZE_EXCEEDED_EXCEPTION("exception", getProperty("request.fileMaxUploadSizeException","上传的文件过大！")),
 	/** 上传文件不合法的响应信息 */

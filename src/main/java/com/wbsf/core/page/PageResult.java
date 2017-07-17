@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 import com.wbsf.core.config.SystemConfig;
+import com.wbsf.core.result.ResultInfo;
+import com.wbsf.core.result.config.ResultBaseEnum;
 import com.wbsf.core.result.impl.ResultSupport;
 
 /**
@@ -21,17 +23,9 @@ public class PageResult<T> extends ResultSupport<PageInfo<T>> {
 	private static final int DEFUALT_NAVIGATE_PAGES = SystemConfig.PAGE_NAVIGATEPAGES_DEFUALT.configInt();
 
 	public PageResult() {
-		super();
+		super(ResultBaseEnum.SUCCESS);
 	}
-
-	/**
-	 * @param queryResult
-	 *            查询结果
-	 */
-	public PageResult(List<T> queryResult) {
-		initPage(queryResult);
-	}
-
+	
 	/**
 	 * @see <code>initpage</code>
 	 * @param queryResult
@@ -40,6 +34,19 @@ public class PageResult<T> extends ResultSupport<PageInfo<T>> {
 	 *            页码数量
 	 */
 	public PageResult(List<T> queryResult, int navigatePages) {
+		super(ResultBaseEnum.SUCCESS);
+		initPage(queryResult, navigatePages);
+	}
+	
+	/**
+	 * @see <code>initpage</code>
+	 * @param queryResult
+	 *            查询结果
+	 * @param navigatePages
+	 *            页码数量
+	 */
+	public PageResult(List<T> queryResult, int navigatePages, ResultInfo resultInfo) {
+		super(resultInfo);
 		initPage(queryResult, navigatePages);
 	}
 
@@ -65,7 +72,7 @@ public class PageResult<T> extends ResultSupport<PageInfo<T>> {
 	public PageResult<T> initPage(List<T> queryResult, int navigatePages) {
 		if (navigatePages <= 0)
 			navigatePages = DEFUALT_NAVIGATE_PAGES;
-		this.result = new PageInfo<>(queryResult, navigatePages);
+		super.result = new PageInfo<>(queryResult, navigatePages);
 		return this;
 	}
 
