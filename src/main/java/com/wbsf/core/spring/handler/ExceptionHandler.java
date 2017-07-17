@@ -30,7 +30,7 @@ public class ExceptionHandler extends SimpleMappingExceptionResolver{
 	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,  
             Exception ex) {
 			 String viewName = determineViewName(ex,request);
-			 logger.error(ex);
+			 ex.printStackTrace();
 		     if (StringUtils.isNoneBlank(viewName)) {
 		         if (!(request.getHeader("accept").contains("application/json")  || (request.getHeader("X-Requested-With")!= null && request
 		             .getHeader("X-Requested-With").contains("XMLHttpRequest") ))) {
