@@ -73,8 +73,8 @@
             6、Mapper接口的参数类型必须和传入的实际类型保持一致，这是由于在JDK版本在JDK8以下没有任何方法能获取接口的参数列表名称，
                因此，插件内部是使用参数类型和参数作为映射来匹配方法签名的；
          -->
-        <!-- <plugin interceptor="com.wbsf.core.mybatis.mook.locker.interceptor.OptimisticLocker">
+        <plugin interceptor="com.wbsf.core.mybatis.mook.locker.interceptor.OptimisticLocker">
             <property name="versionColumn" value="lock_ver"/>
-        </plugin> -->
+        </plugin>
     </plugins>
 </configuration> 
