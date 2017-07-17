@@ -4,24 +4,23 @@ import java.io.File;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.wbsf.core.spring.utils.PropertyConfigurer;
-
 /**
  * 系统默认配置
  * @author hubery
  *
  */
 public enum FileOperationConfig implements Config {
-	/** 系统session的key标识 */
-	COMMON_UPLOAD_PATH(SystemConfig.FILEUPLOAD_TEMP_DIR.config(),File.separatorChar+"temp");
+	/** 系统临时文件上传路径*/
+	UPLOAD_TEMP_PATH(SystemConfig.FILEUPLOAD_TEMP_DIR.config(),File.separatorChar+"temp"),
+	UPLOAD_DEFUALT_PATH(SystemConfig.FILEUPLOAD_ROOT_STORAGE.config(),File.separatorChar+"temp");
 	private String key;
 	
 	/** 若系统不存在默认值 */
-	private String defualtValue;
+	private String config;
 	
-	private FileOperationConfig(String key, String defualtValue) {
+	private FileOperationConfig(String key, String config) {
 		this.key = key;
-		this.defualtValue = defualtValue;
+		this.config = config;
 	}
 	
 	@Override
@@ -31,7 +30,7 @@ public enum FileOperationConfig implements Config {
 
 	@Override
 	public String config() {
-		return PropertyConfigurer.getProperty(key, this.defualtValue);
+		return this.config;
 	}
 	
 	public String config(String key) {
@@ -42,6 +41,6 @@ public enum FileOperationConfig implements Config {
 				}
 			}
 		}
-		return COMMON_UPLOAD_PATH.config();
+		return UPLOAD_TEMP_PATH.config();
 	}
 }

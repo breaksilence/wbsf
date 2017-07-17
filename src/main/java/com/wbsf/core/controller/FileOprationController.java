@@ -50,7 +50,7 @@ public class FileOprationController extends ControllerSupport {
 			// 计时器开始
 			watch.start();
 			Result<List<FileOperation>> uploadResult = fileOperationSupport
-					.saveFile(FileOperationConfig.COMMON_UPLOAD_PATH.config(), null, files);
+					.saveFile(FileOperationConfig.UPLOAD_TEMP_PATH.config(), null, files);
 			if (uploadResult.success()) {
 				uploadResult.formateMessage(uploadResult.getResult().size());
 			}
