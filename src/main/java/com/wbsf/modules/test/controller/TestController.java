@@ -3,6 +3,10 @@ package com.wbsf.modules.test.controller;
 import static com.wbsf.core.spring.utils.ContextUtil.text;
 
 import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletInputStream;
@@ -18,6 +22,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.ResourceAccessException;
 
 import com.wbsf.core.controller.ControllerSupport;
 import com.wbsf.core.page.PageQuery;
@@ -89,9 +94,8 @@ public class TestController extends ControllerSupport {
 		return null;
 	}
 	
-	@ResponseBody
-	@RequestMapping(value="/delete", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,method={RequestMethod.POST})
-	public String deleteTest(){
+	@RequestMapping(value="/delete", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,method={RequestMethod.POST,RequestMethod.GET})
+	public String deleteTest() throws ResourceAccessException{
 		return null;
 	}
 	
@@ -132,5 +136,4 @@ public class TestController extends ControllerSupport {
 		result.setResult(param1).putAttribute("body", body);
 		return result.toJson();
 	}
-	
 }

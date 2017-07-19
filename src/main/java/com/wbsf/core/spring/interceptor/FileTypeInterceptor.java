@@ -2,6 +2,7 @@ package com.wbsf.core.spring.interceptor;
 
 import java.text.MessageFormat;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.wbsf.common.utils.FileUtils;
+import com.wbsf.common.utils.StringUtils;
 import com.wbsf.core.config.SystemConfig;
 import com.wbsf.core.exception.IllegalFileTypeException;
 import com.wbsf.core.result.config.ResultBaseEnum;
@@ -18,6 +21,9 @@ import com.wbsf.core.result.config.ResultBaseEnum;
  * 全局文件类型拦截器
  */
 public class FileTypeInterceptor extends HandlerInterceptorAdapter {
+	
+	private static List<String> suffixList = StringUtils.toList(SystemConfig.FILEUPLOAD_ALLOW_TYPE.config());
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -45,13 +51,10 @@ public class FileTypeInterceptor extends HandlerInterceptorAdapter {
 	 * 判断是否为允许的上传文件类型,true表示允许
 	 */
 	private boolean checkFile(String fileName) {
-		// 设置允许上传文件类型
-		String suffixList = SystemConfig.FILEUPLOAD_ALLOW_TYPE.config();
-		// 获取文件后缀
-		String suffix = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length());
-		if (suffixList.contains(suffix.trim().toLowerCase())) {
+		if (suffixList.contains(FileUtils.getFileExtension(fileName))) {
 			return true;
+		} else {
+			return false;
 		}
-		return false;
 	}
 }

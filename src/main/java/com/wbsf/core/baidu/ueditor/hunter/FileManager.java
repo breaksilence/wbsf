@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 
+import com.wbsf.core.baidu.ueditor.ConfigManager;
 import com.wbsf.core.baidu.ueditor.PathFormat;
 import com.wbsf.core.baidu.ueditor.define.AppInfo;
 import com.wbsf.core.baidu.ueditor.define.BaseState;
@@ -58,6 +59,11 @@ public class FileManager {
 		
 	}
 	
+	/**
+	 * 附件、图片列表展示url拼接方法，如果需要权限控制可以重新fileManager
+	 * @param files
+	 * @return
+	 */
 	private State getState ( Object[] files ) {
 		
 		MultiState state = new MultiState( true );
@@ -71,7 +77,9 @@ public class FileManager {
 			}
 			file = (File)obj;
 			fileState = new BaseState( true );
-			fileState.putInfo( "url", PathFormat.format( this.getPath( file ) ) );
+			String url = PathFormat.format( this.getPath( file ) );
+			
+			fileState.putInfo( "url", url.replaceFirst(rootPath, ConfigManager.getDefualtUrlPrefix()) );
 			state.addState( fileState );
 		}
 		

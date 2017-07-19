@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.io.FileUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.wbsf.core.baidu.ueditor.define.AppInfo;
 import com.wbsf.core.baidu.ueditor.define.BaseState;
@@ -44,6 +45,30 @@ public class StorageManager {
 		return state;
 	}
 
+	public static State saveFileByMultipartFile(final MultipartFile uploadFile, String path) {
+		State state = null;
+		File tmpFile = getTmpFile();
+		try {
+			uploadFile.transferTo(tmpFile);
+			
+			state = saveTmpFile(tmpFile, path);
+			
+			if (!state.isSuccess()) {
+				tmpFile.delete();
+			}
+			
+			return state;
+		} catch (IllegalStateException | IOException e1) {
+			return new BaseState(false, AppInfo.IO_ERROR);
+		}
+		
+	}
+	
+	/**
+	 * {@link StorageManager#saveFileByMultipartFile(MultipartFile, String)} 
+	 * @return
+	 */
+	@Deprecated
 	public static State saveFileByInputStream(InputStream is, String path,
 			long maxSize) {
 		State state = null;

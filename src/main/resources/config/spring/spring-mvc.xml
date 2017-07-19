@@ -15,6 +15,7 @@
     
     <mvc:resources location="/statics/" mapping="/statics/**" cache-period="0" />
     <mvc:resources location="/plugins/" mapping="/plugins/**" cache-period="0" />
+    <mvc:resources location="/ueditor/" mapping="/ueditor/**" cache-period="0" />
     <mvc:view-controller path="/" view-name="redirect:/login" />
     
     <mvc:annotation-driven validator="validator" conversion-service="conversionService"/>
@@ -176,8 +177,7 @@
     <bean id="globalExceptionHandler" class="com.wbsf.core.spring.handler.ExceptionHandler">
         <property name="exceptionMappings">
             <props>
-                <!-- 处理超过大小时的异常 -->
-                <!--遇到MaxUploadSizeExceededException异常时，自动跳转到/WEB-INF/views/errors/upload.jsp页面 -->
+                <!-- 处理超过大小时的异常 遇到MaxUploadSizeExceededException异常时，自动跳转到/WEB-INF/views/errors/upload.jsp页面 -->
                 <prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">errors/upload</prop>
                 <prop key="java.lang.Throwable">errors/error</prop>
             </props>
@@ -188,11 +188,11 @@
                  <prop key="errors/404">404</prop>     
              </props>     
          </property>   
-         <!-- 设置日志输出级别，不定义则默认不输出警告等错误日志信息 -->     
+         <!-- 设置日志输出级别，不定义则默认不输出警告等错误日志信息  -->    
          <property name="warnLogCategory" value="WARN"/>     
-         <!-- 默认错误页面，当找不到上面mappings中指定的异常对应视图时，使用本默认配置 -->     
+         <!-- 默认错误页面，当找不到上面mappings中指定的异常对应视图时，使用本默认配置  -->    
          <property name="defaultErrorView" value="errors/error"/>     
-         <!-- 默认HTTP状态码 -->     
+         <!-- 默认HTTP状态码  -->    
          <property name="defaultStatusCode" value="500"/>
     </bean>
     <!-- 全局统一异常处理 ↑-->

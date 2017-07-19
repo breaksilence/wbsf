@@ -10,6 +10,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.util.ResourceUtils;
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.wbsf.core.baidu.ueditor.define.ActionMap;
@@ -22,35 +24,35 @@ import com.wbsf.core.baidu.ueditor.define.ActionMap;
 public final class ConfigManager {
 
 	private final String rootPath;
-	private final String originalPath;
 	@SuppressWarnings("unused")
 	private final String contextPath;
-	private static final String configFileName = "config.json";
-	private String parentPath = null;
+	
+	private final String defualtUrlPrefix;
+	
 	private JSONObject jsonConfig = null;
 	// 涂鸦上传filename定义
 	private final static String SCRAWL_FILE_NAME = "scrawl";
 	// 远程图片抓取filename定义
 	private final static String REMOTE_FILE_NAME = "remote";
+	//config 资源路径
+	private final static String CONFIG_URI = "classpath:config/init/ueditorConfig.json";
+	
+	
+	private static ConfigManager instance = null;
 	
 	/*
 	 * 通过一个给定的路径构建一个配置管理器， 该管理器要求地址路径所在目录下必须存在config.properties文件
 	 */
-	private ConfigManager ( String rootPath, String contextPath, String uri ) throws FileNotFoundException, IOException {
+	private ConfigManager ( String rootPath, String contextPath) throws FileNotFoundException, IOException {
 		
 		rootPath = rootPath.replace( "\\", "/" );
 		
 		this.rootPath = rootPath;
 		this.contextPath = contextPath;
 		
-		if ( contextPath.length() > 0 ) {
-			this.originalPath = this.rootPath + uri.substring( contextPath.length() );
-		} else {
-			this.originalPath = this.rootPath + uri;
-		}
-		
 		this.initEnv();
-		
+		// 初始化默认的url
+		defualtUrlPrefix = this.jsonConfig.getString("defualtUrlPrefix")+"/";
 	}
 	
 	/**
@@ -60,24 +62,35 @@ public final class ConfigManager {
 	 * @param uri 当前访问的uri
 	 * @return 配置管理器实例或者null
 	 */
-	public static ConfigManager getInstance ( String rootPath, String contextPath, String uri ) {
+	public static ConfigManager getInstance ( String rootPath, String contextPath) {
 		
 		try {
-			return new ConfigManager(rootPath, contextPath, uri);
+			if (instance == null) {
+				instance = new ConfigManager(rootPath, contextPath);
+			}
+			return instance;
+			
 		} catch ( Exception e ) {
 			return null;
 		}
 		
 	}
 	
+	/**
+	 * 获取默认的prefixUrl 用于统一控制地址前缀，目前图片、附件列表应用到了
+	 */
+	public static String getDefualtUrlPrefix(){
+		return instance.defualtUrlPrefix;
+	}
+	
 	// 验证配置文件加载是否正确
 	public boolean valid () {
-		return this.jsonConfig != null;
+		return instance.jsonConfig != null;
 	}
 	
 	public JSONObject getAllConfig () {
 		
-		return this.jsonConfig;
+		return instance.jsonConfig;
 		
 	}
 	
@@ -90,60 +103,60 @@ public final class ConfigManager {
 		
 			case ActionMap.UPLOAD_FILE:
 				conf.put( "isBase64", "false" );
-				conf.put( "maxSize", this.jsonConfig.getLong( "fileMaxSize" ) );
-				conf.put( "allowFiles", this.getArray( "fileAllowFiles" ) );
-				conf.put( "fieldName", this.jsonConfig.getString( "fileFieldName" ) );
-				savePath = this.jsonConfig.getString( "filePathFormat" );
+				conf.put( "maxSize", instance.jsonConfig.getLong( "fileMaxSize" ) );
+				conf.put( "allowFiles", instance.getArray( "fileAllowFiles" ) );
+				conf.put( "fieldName", instance.jsonConfig.getString( "fileFieldName" ) );
+				savePath = instance.jsonConfig.getString( "filePathFormat" );
 				break;
 				
 			case ActionMap.UPLOAD_IMAGE:
 				conf.put( "isBase64", "false" );
-				conf.put( "maxSize", this.jsonConfig.getLong( "imageMaxSize" ) );
-				conf.put( "allowFiles", this.getArray( "imageAllowFiles" ) );
-				conf.put( "fieldName", this.jsonConfig.getString( "imageFieldName" ) );
-				savePath = this.jsonConfig.getString( "imagePathFormat" );
+				conf.put( "maxSize", instance.jsonConfig.getLong( "imageMaxSize" ) );
+				conf.put( "allowFiles", instance.getArray( "imageAllowFiles" ) );
+				conf.put( "fieldName", instance.jsonConfig.getString( "imageFieldName" ) );
+				savePath = instance.jsonConfig.getString( "imagePathFormat" );
 				break;
 				
 			case ActionMap.UPLOAD_VIDEO:
-				conf.put( "maxSize", this.jsonConfig.getLong( "videoMaxSize" ) );
-				conf.put( "allowFiles", this.getArray( "videoAllowFiles" ) );
-				conf.put( "fieldName", this.jsonConfig.getString( "videoFieldName" ) );
-				savePath = this.jsonConfig.getString( "videoPathFormat" );
+				conf.put( "maxSize", instance.jsonConfig.getLong( "videoMaxSize" ) );
+				conf.put( "allowFiles", instance.getArray( "videoAllowFiles" ) );
+				conf.put( "fieldName", instance.jsonConfig.getString( "videoFieldName" ) );
+				savePath = instance.jsonConfig.getString( "videoPathFormat" );
 				break;
 				
 			case ActionMap.UPLOAD_SCRAWL:
 				conf.put( "filename", ConfigManager.SCRAWL_FILE_NAME );
-				conf.put( "maxSize", this.jsonConfig.getLong( "scrawlMaxSize" ) );
-				conf.put( "fieldName", this.jsonConfig.getString( "scrawlFieldName" ) );
+				conf.put( "maxSize", instance.jsonConfig.getLong( "scrawlMaxSize" ) );
+				conf.put( "fieldName", instance.jsonConfig.getString( "scrawlFieldName" ) );
 				conf.put( "isBase64", "true" );
-				savePath = this.jsonConfig.getString( "scrawlPathFormat" );
+				savePath = instance.jsonConfig.getString( "scrawlPathFormat" );
 				break;
 				
 			case ActionMap.CATCH_IMAGE:
 				conf.put( "filename", ConfigManager.REMOTE_FILE_NAME );
-				conf.put( "filter", this.getArray( "catcherLocalDomain" ) );
-				conf.put( "maxSize", this.jsonConfig.getLong( "catcherMaxSize" ) );
-				conf.put( "allowFiles", this.getArray( "catcherAllowFiles" ) );
-				conf.put( "fieldName", this.jsonConfig.getString( "catcherFieldName" ) + "[]" );
-				savePath = this.jsonConfig.getString( "catcherPathFormat" );
+				conf.put( "filter", instance.getArray( "catcherLocalDomain" ) );
+				conf.put( "maxSize", instance.jsonConfig.getLong( "catcherMaxSize" ) );
+				conf.put( "allowFiles", instance.getArray( "catcherAllowFiles" ) );
+				conf.put( "fieldName", instance.jsonConfig.getString( "catcherFieldName" ) + "[]" );
+				savePath = instance.jsonConfig.getString( "catcherPathFormat" );
 				break;
 				
 			case ActionMap.LIST_IMAGE:
-				conf.put( "allowFiles", this.getArray( "imageManagerAllowFiles" ) );
-				conf.put( "dir", this.jsonConfig.getString( "imageManagerListPath" ) );
-				conf.put( "count", this.jsonConfig.getIntValue( "imageManagerListSize" ) );
+				conf.put( "allowFiles", instance.getArray( "imageManagerAllowFiles" ) );
+				conf.put( "dir", instance.jsonConfig.getString( "imageManagerListPath" ) );
+				conf.put( "count", instance.jsonConfig.getIntValue( "imageManagerListSize" ) );
 				break;
 				
 			case ActionMap.LIST_FILE:
-				conf.put( "allowFiles", this.getArray( "fileManagerAllowFiles" ) );
-				conf.put( "dir", this.jsonConfig.getString( "fileManagerListPath" ) );
-				conf.put( "count", this.jsonConfig.getIntValue( "fileManagerListSize" ) );
+				conf.put( "allowFiles", instance.getArray( "fileManagerAllowFiles" ) );
+				conf.put( "dir", instance.jsonConfig.getString( "fileManagerListPath" ) );
+				conf.put( "count", instance.jsonConfig.getIntValue( "fileManagerListSize" ) );
 				break;
 				
 		}
 		
 		conf.put( "savePath", savePath );
-		conf.put( "rootPath", this.rootPath );
+		conf.put( "rootPath", instance.rootPath );
 		
 		return conf;
 		
@@ -151,15 +164,13 @@ public final class ConfigManager {
 	
 	private void initEnv () throws FileNotFoundException, IOException {
 		
-		File file = new File( this.originalPath );
+		File file = ResourceUtils.getFile(CONFIG_URI);;
 		
 		if ( !file.isAbsolute() ) {
 			file = new File( file.getAbsolutePath() );
 		}
 		
-		this.parentPath = file.getParent();
-		
-		String configContent = this.readFile( this.getConfigPath() );
+		String configContent = this.readFile( file.getAbsolutePath() );
 		
 		try{
 			JSONObject jsonConfig = JSONObject.parseObject(configContent);
@@ -168,10 +179,6 @@ public final class ConfigManager {
 			this.jsonConfig = null;
 		}
 		
-	}
-	
-	private String getConfigPath () {
-		return this.parentPath + File.separator + ConfigManager.configFileName;
 	}
 
 	private String[] getArray ( String key ) {
@@ -190,18 +197,14 @@ public final class ConfigManager {
 		
 		StringBuilder builder = new StringBuilder();
 		
-		try {
-			
-			InputStreamReader reader = new InputStreamReader( new FileInputStream( path ), "UTF-8" );
-			BufferedReader bfReader = new BufferedReader( reader );
-			
+		try (InputStreamReader reader = new InputStreamReader( new FileInputStream( path ), "UTF-8" );
+			BufferedReader bfReader = new BufferedReader( reader );)
+		{
 			String tmpContent = null;
 			
 			while ( ( tmpContent = bfReader.readLine() ) != null ) {
 				builder.append( tmpContent );
 			}
-			
-			bfReader.close();
 			
 		} catch ( UnsupportedEncodingException e ) {
 			// 忽略
