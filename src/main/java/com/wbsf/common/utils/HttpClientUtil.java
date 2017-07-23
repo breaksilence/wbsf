@@ -168,7 +168,7 @@ public class HttpClientUtil {
 		int count=0;
 		
 		for (FilePart filepart:uploadFileList) {
-			builder.addBinaryBody("file",filepart.getFile(), ContentType.MULTIPART_FORM_DATA, filepart.getUploadFileName());
+			builder.addBinaryBody(filepart.getMediaName(),filepart.getFile(), ContentType.MULTIPART_FORM_DATA, filepart.getUploadFileName());
 			count++;
 		}
 		
@@ -254,9 +254,13 @@ public class HttpClientUtil {
 	}
 	
 	public HttpClientUtil addUploadFile(File file, String uploadFileName) {
+		return addUploadFile(file, uploadFileName, null);
+	}
+	
+	public HttpClientUtil addUploadFile(File file, String uploadFileName, String mediaName) {
 		if (this.uploadFileList == null) 
 			this.uploadFileList = Lists.newArrayList();
-		uploadFileList.add(new FilePart(uploadFileName, file));
+		uploadFileList.add(new FilePart(uploadFileName, file,mediaName));
 		return this;
 	}
 	
@@ -306,12 +310,26 @@ public class HttpClientUtil {
 	class FilePart {
 		private String uploadFileName;
 		private File file;
+		private String mediaName;
 		public FilePart(String uploadFileName, File file){
 			this.file = file;
 			if (StringUtils.isBlank(uploadFileName)) {
 				this.uploadFileName = file.getName();
 			} else {
 				this.uploadFileName = uploadFileName;
+			}
+		}
+		public FilePart(String uploadFileName, File file, String mediaName){
+			this.file = file;
+			if (StringUtils.isBlank(uploadFileName)) {
+				this.uploadFileName = file.getName();
+			} else {
+				this.uploadFileName = uploadFileName;
+			}
+			if (StringUtils.isNotBlank(mediaName)) {
+				this.mediaName = mediaName;
+			} else {
+				this.mediaName = "file";
 			}
 		}
 		public String getUploadFileName() {
@@ -329,5 +347,19 @@ public class HttpClientUtil {
 		public void setFile(File file) {
 			this.file = file;
 		}
+		/**
+		 * @return the mediaName
+		 */
+		public String getMediaName() {
+			return mediaName;
+		}
+		/**
+		 * @param mediaName the mediaName to set
+		 */
+		public void setMediaName(String mediaName) {
+			this.mediaName = mediaName;
+		}
+		
+		
 	}
 }

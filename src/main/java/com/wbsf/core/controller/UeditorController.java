@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.wbsf.core.baidu.ueditor.ActionEnter;
 
+/**
+ * 百度文本编辑器
+ * @author hubery
+ *
+ */
 @RestController
 @RequestMapping(value="ueditor",method={RequestMethod.POST,RequestMethod.GET})
 public class UeditorController{
