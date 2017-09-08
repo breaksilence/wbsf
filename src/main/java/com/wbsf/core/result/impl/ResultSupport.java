@@ -97,12 +97,6 @@ public abstract class ResultSupport<T> implements Result<T> {
 	}
 
 	@Override
-	public Result<T> formateMessage(String message, Object ...  formateValues) {
-		this.message = message;
-		return formateMessage(formateValues);
-	}
-	
-	@Override
 	public Result<T> formateMessage(Object ...  formateValues) {
 		if(formateValues != null){
 			this.message = MessageFormat.format(this.getMessage(), formateValues);

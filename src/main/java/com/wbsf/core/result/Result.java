@@ -66,13 +66,6 @@ public interface Result<T> {
 
 	/**
 	 * 格式化范围消息
-	 * @param message 重置消息内容，格式化消息，为偷懒的人准备的
-	 * @param formateValues
-	 */
-	Result<T> formateMessage(String message, Object ...  formateValues);
-	
-	/**
-	 * 格式化范围消息
 	 * @param formateValues
 	 */
 	Result<T> formateMessage(Object ...  formateValues);
